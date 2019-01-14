@@ -105,8 +105,8 @@ const defaultNavigationOptions = (index)=>({
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: Mine,
-    navigationOptions: navigationOptions(false)
+    screen: Find,
+    navigationOptions: navigationOptions(true, '发现')
   }
 }, {
   navigationOptions: defaultNavigationOptions(0)
