@@ -5,6 +5,7 @@ import {
     Image,
     TouchableHighlight,
     TouchableOpacity,
+    Picker,
     StyleSheet
 } from 'react-native';
 const share_icon = require('~/assets/image/share_icon.png')
@@ -100,6 +101,6 @@ const styles = StyleSheet.create({
     moreText: {
         fontSize: FONT_SIZE(12),
         fontWeight: 'normal',
-        color: kColor_Text_Gary
+        color: kColor_Text_Gray
     }
 });
