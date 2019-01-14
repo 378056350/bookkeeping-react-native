@@ -5,12 +5,11 @@ import {
     StyleSheet
 } from 'react-native';
 
-
-export default class HomeHeader extends Component {
+export default class FindTable extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>HomeHeader</Text>
+                <Text>FindTable</Text>
             </View>
         );
     }
@@ -18,10 +17,9 @@ export default class HomeHeader extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        width: SCREEN_WIDTH,
-        height: countcoordinatesX(120),
-        backgroundColor: 'red',
+        backgroundColor: '#F5FCFF',
     }
 });

@@ -4,12 +4,13 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import FindTable from '~/component/Find/FindTable'
 
 export default class Find extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Find</Text>
+                <FindTable/>
             </View>
         );
     }

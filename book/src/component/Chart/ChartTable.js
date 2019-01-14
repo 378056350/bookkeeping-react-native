@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
+    Image,
     StyleSheet
 } from 'react-native';
 
 
-export default class HomeHeader extends Component {
+export default class ChartTable extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>HomeHeader</Text>
+                <Text>ChartTable</Text>
             </View>
         );
     }
@@ -18,10 +19,8 @@ export default class HomeHeader extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1,
         width: SCREEN_WIDTH,
-        height: countcoordinatesX(120),
-        backgroundColor: 'red',
+        backgroundColor: 'blue'
     }
 });

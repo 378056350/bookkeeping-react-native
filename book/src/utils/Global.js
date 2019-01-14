@@ -1,4 +1,4 @@
-import {Dimensions,Platform,StatusBar} from  'react-native';
+import { Dimensions, Platform, StatusBar } from  'react-native';
 import { FontSize } from './FontSize';
 import { Px2Dp } from './Tool';
 
@@ -13,7 +13,7 @@ const navigationHeight = statusBarHeight + 44;
 
 
 global.FONT_SIZE = FontSize
-global.Px2Dp = Px2Dp
+global.countcoordinatesX = Px2Dp
 
 global.SCREEN_WIDTH = width,
 global.SCREEN_HEIGHT = height,
