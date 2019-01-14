@@ -6,7 +6,7 @@ import {
 import KUILoginField from '~/common/KUILoginField/KUILoginField'
 import KUIButton from '~/common/KUIButton/KUIButton'
 
-export default class Register extends Component {
+export default class Register2 extends Component {
     render() {
         return (
             <View style={styles.container}>
@@ -17,10 +17,19 @@ export default class Register extends Component {
                     keyboardType={'numeric'}
                     isPhoneNumber={true}
                 />
+                <KUILoginField 
+                    name={'验证码'} 
+                    field={'输入验证码'} 
+                    style={styles.code}
+                    keyboardType={'numeric'}
+                    isCode={true}
+                    maxLength={6}
+                />
                 <KUIButton 
                     name={'下一步'} 
                     onPress={()=>{}}
                     style={styles.button}
+                    disabled={true}
                 />
             </View>
         );
@@ -37,6 +46,9 @@ const styles = StyleSheet.create({
     },
     phone: {
         marginTop: countcoordinatesX(40)
+    },
+    code: {
+        marginTop: countcoordinatesX(10)
     },
     button: {
         marginTop: countcoordinatesX(40),

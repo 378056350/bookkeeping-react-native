@@ -9,6 +9,9 @@ import Find from '~/component/Find/Find'
 import Mine from '~/component/Mine/Mine'
 // import Login from '~/component/Login/Login/Login'
 import Register from '~/component/Login/Register/Register'
+import Register2 from '~/component/Login/Register/Register2'
+import Register3 from '~/component/Login/Register/Register3'
+
 
 import {
   createBottomTabNavigator,
@@ -102,7 +105,7 @@ const defaultNavigationOptions = (index)=>({
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: Register,
+    screen: Register3,
     navigationOptions: navigationOptions(true, 'qew')
   }
 }, {
@@ -178,7 +181,8 @@ const styles = StyleSheet.create({
   },
   normalName: {
     marginTop: 2,
-    fontSize: FONT_SIZE(10),
+    fontSize: FONT_SIZE(8),
+    fontWeight: '100',
     color: kColor_Text_Black
   },
   selectItem: {
@@ -194,7 +198,8 @@ const styles = StyleSheet.create({
   },
   selectName: {
     marginTop: 2,
-    fontSize: FONT_SIZE(10),
+    fontSize: FONT_SIZE(8),
+    fontWeight: '100',
     color: kColor_Text_Black
   },
 });
