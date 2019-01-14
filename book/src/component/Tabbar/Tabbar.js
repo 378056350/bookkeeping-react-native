@@ -6,7 +6,7 @@ import Home from '~/component/Home/Home/Home'
 import Chart from '~/component/Chart/Chart'
 import Book from '~/component/Book/Book'
 import Find from '~/component/Find/Find'
-import Mine from '~/component/Mine/Mine'
+import Mine from '~/component/Mine/Mine/Mine'
 // import Login from '~/component/Login/Login/Login'
 import Register from '~/component/Login/Register/Register'
 import Register2 from '~/component/Login/Register/Register2'
@@ -105,8 +105,8 @@ const defaultNavigationOptions = (index)=>({
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: Register3,
-    navigationOptions: navigationOptions(true, 'qew')
+    screen: Mine,
+    navigationOptions: navigationOptions(false)
   }
 }, {
   navigationOptions: defaultNavigationOptions(0)
@@ -173,11 +173,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: SCREEN_WIDTH / 5,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   normalIcon: {
-    width: countcoordinatesX(60),
-    height: countcoordinatesX(60),
+    width: countcoordinatesX(50),
+    height: countcoordinatesX(50),
   },
   normalName: {
     marginTop: 2,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: SCREEN_WIDTH / 5,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   selectIcon: {
     width: countcoordinatesX(140),

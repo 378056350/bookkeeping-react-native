@@ -4,13 +4,12 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import MineTable from '~/component/Mine/MineTable'
 
-export default class Mine extends Component {
+export default class MineNavigation extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <MineTable/>
+                <Text>MineNavigation</Text>
             </View>
         );
     }
