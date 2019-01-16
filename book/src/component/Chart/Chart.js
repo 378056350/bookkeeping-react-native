@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import ChartNavigation from '~/component/Chart/ChartNavigation'
 import ChartSegmentedControl from '~/component/Chart/ChartSegmentedControl'
-import ChartDate from '~/component/Chart/ChartDate'
+import ChartDate from '~/component/Chart/ChartDate/ChartDate'
 import ChartTable from '~/component/Chart/ChartTable'
 import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 

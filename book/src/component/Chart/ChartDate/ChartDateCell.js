@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Image,
     StyleSheet
 } from 'react-native';
 
 
-export default class ChartDate extends Component {
+export default class ChartDateCell extends Component {
+
+
+    
     render() {
         return (
             <View style={styles.container}>
-                <Text>ChartDate</Text>
+                <Text>ChartDateCellChartDateCellChartDateCell</Text>
             </View>
         );
     }
@@ -19,10 +21,8 @@ export default class ChartDate extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: SCREEN_WIDTH,
-        height: countcoordinatesX(80),
-        backgroundColor: 'white'
+        flex: 1,
+        backgroundColor: 'green',
+        paddingRight: countcoordinatesX(20),
     }
 });

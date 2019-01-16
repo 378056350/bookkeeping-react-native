@@ -15,7 +15,7 @@ export default class ChartHUD extends Component {
         this.state = {
             isShow: false,
             isAnimation: false,
-            topAnim: new Animated.Value(-countcoordinatesX(160)),
+            topAnim: new Animated.Value(-countcoordinatesX(180)),
             opacityAnim: new Animated.Value(0),
             selectIndex: 0
         }
@@ -43,7 +43,7 @@ export default class ChartHUD extends Component {
             Animated.timing(this.state.topAnim,{ 
                 duration: 200,
                 easing: Easing.elastic(0),
-                toValue: this.state.isShow == false ? 0 : -countcoordinatesX(160)
+                toValue: this.state.isShow == false ? 0 : -countcoordinatesX(180)
             })
         ]).start((result)=>{
             this.setState({
