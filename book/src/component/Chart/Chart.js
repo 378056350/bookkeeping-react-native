@@ -7,7 +7,7 @@ import ChartNavigation from '~/component/Chart/ChartNavigation'
 import ChartSegmentedControl from '~/component/Chart/ChartSegmentedControl'
 import ChartDate from '~/component/Chart/ChartDate'
 import ChartTable from '~/component/Chart/ChartTable'
-import ChartHUD from '~/component/Chart/ChartHUD'
+import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 
 export default class Chart extends Component {
     constructor(props) {
@@ -20,7 +20,6 @@ export default class Chart extends Component {
     _navigationPress = ()=>{
         // this.setState({navigationIndex: this.state.navigationIndex == 0 ? 1 : 0})
         this.refs.hud._switchAnimation()
-        
     }
 
     render() {

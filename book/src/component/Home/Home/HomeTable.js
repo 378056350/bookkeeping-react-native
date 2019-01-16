@@ -1,16 +1,50 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
+    FlatList,
     StyleSheet
 } from 'react-native';
+import HomeSubTable from '~/component/Home/Home/HomeSubTable'
+import REListView from '~/third/REListView/REListView'
 
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            refreshing: false,
+        };
+    }
+
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        setTimeout(() => {
+            this.setState({refreshing: false});
+        }, 1000);
+    }
+
+    _renderItem = ({item, separators})=>{
+        return (
+            <HomeSubTable style={styles.subtable}/>
+        )
+    }
+
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>Home1</Text>
+                <FlatList
+                    renderItem={this._renderItem}
+                    onRefresh={this._onRefresh}
+                    refreshing={this.state.refreshing}
+                    showsVerticalScrollIndicator={false}
+                    data={[
+                        {title: 'Title Text', key: 'item1'},
+                        // {title: 'Title Text', key: 'item2'},
+                        // {title: 'Title Text', key: 'item3'}
+                    ]}
+                />
             </View>
         );
     }
@@ -21,6 +55,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
+        width: SCREEN_WIDTH,
+        backgroundColor: 'white',
+    },
+    subtable: {
+        backgroundColor: 'white',
+    },
 });

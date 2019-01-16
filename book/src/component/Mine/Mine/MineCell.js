@@ -77,13 +77,13 @@ const styles = StyleSheet.create({
         height: countcoordinatesX(35),
     },
     name: {
-        fontSize: FONT_SIZE(10),
+        fontSize: FONT_SIZE(12),
         color: kColor_Text_Black,
         fontWeight: '300',
         marginLeft: countcoordinatesX(20),
     },
     detail: {
-        fontSize: FONT_SIZE(10),
+        fontSize: FONT_SIZE(12),
         color: kColor_Text_Black,
         fontWeight: '300',
         marginRight: countcoordinatesX(10),

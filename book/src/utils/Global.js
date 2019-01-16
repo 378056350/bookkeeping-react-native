@@ -8,19 +8,20 @@ const ios = (OS == 'ios');
 const android = (OS == 'android');
 const isIPhoneX = (ios && height == 812 && width == 375);
 const statusBarHeight = (ios ? (isIPhoneX ? 44 : 20) : StatusBar.currentHeight);
-const statusTabBarHeight = (ios ? (isIPhoneX ? 34 : 0) : 0);
 const navigationHeight = statusBarHeight + 44;
+const safeAreaBottomHeight = (ios ? (isIPhoneX ? 34 : 0) : 0);
+const statusTabBarHeight = safeAreaBottomHeight + 49;
 
 
 global.FONT_SIZE = FontSize
 global.countcoordinatesX = Px2Dp
 
-global.SCREEN_WIDTH = width,
-global.SCREEN_HEIGHT = height,
+global.SCREEN_WIDTH = width
+global.SCREEN_HEIGHT = height
 global.STATUS_BAR_HEIGHT = statusBarHeight
-global.STATUS_TABBAR_HEIGHT = statusTabBarHeight
 global.NAVIGATION_HEIGHT = navigationHeight
-
+global.SAFE_AREA_BOTTOM_HEIGHT = safeAreaBottomHeight
+global.STATUS_TABBAR_HEIGHT = statusTabBarHeight
 
 global.iOS = ios,
 global.Android = android,

@@ -1,16 +1,12 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 
-// import Home from '~/component/Home/Home'
 import Home from '~/component/Home/Home/Home'
 import Chart from '~/component/Chart/Chart'
 import Book from '~/component/Book/Book'
 import Find from '~/component/Find/Find'
 import Mine from '~/component/Mine/Mine/Mine'
-// import Login from '~/component/Login/Login/Login'
-import Register from '~/component/Login/Register/Register'
-import Register2 from '~/component/Login/Register/Register2'
-import Register3 from '~/component/Login/Register/Register3'
+import Badge from '~/component/Mine/Badge/Badge'
 
 
 import {
@@ -30,7 +26,6 @@ var tabbar_discover_n = require('~/assets/image/tabbar_discover_n.png')
 var tabbar_discover_s = require('~/assets/image/tabbar_discover_s.png')
 var tabbar_mine_n = require('~/assets/image/tabbar_mine_n.png')
 var tabbar_mine_s = require('~/assets/image/tabbar_mine_s.png')
-
 
 
 // 获取文本
@@ -105,8 +100,8 @@ const defaultNavigationOptions = (index)=>({
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: Find,
-    navigationOptions: navigationOptions(true, '发现')
+    screen: Home,
+    navigationOptions: navigationOptions(false)
   }
 }, {
   navigationOptions: defaultNavigationOptions(0)
@@ -145,10 +140,10 @@ const MineStack = createStackNavigator({
 });
 
 
-export default createAppContainer(createBottomTabNavigator(
+const TabbarStack = createBottomTabNavigator(
   {
-    Home: HomeStack,
     Chart: ChartStack,
+    Home: HomeStack,
     Book: BookStack,
     Find: FindStack,
     Mine: MineStack,
@@ -162,10 +157,32 @@ export default createAppContainer(createBottomTabNavigator(
       style: {
         backgroundColor: 'white',
         borderTopColor: 'rgba(230, 230, 230, 1)',
+        height: STATUS_TABBAR_HEIGHT,
       },
     },
   }
-));
+);
+
+
+const AppRouter = createStackNavigator(
+  {
+    Tabbar: {
+      screen: TabbarStack
+    },
+    Badge: {
+      screen: Badge
+    },
+  },
+  {
+    defaultNavigationOptions: () => ({
+      header: null,
+      gesturesEnabled: true
+    }),
+  }
+)
+
+
+export default AppRouter;
 
 const styles = StyleSheet.create({
   normalItem: {

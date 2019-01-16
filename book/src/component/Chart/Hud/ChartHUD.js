@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Easing,
     Animated,
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
+import ChartHUDCell from './ChartHUDCell'
 
 export default class ChartHUD extends Component {
     
@@ -17,6 +17,7 @@ export default class ChartHUD extends Component {
             isAnimation: false,
             topAnim: new Animated.Value(-countcoordinatesX(160)),
             opacityAnim: new Animated.Value(0),
+            selectIndex: 0
         }
     }
 
@@ -35,12 +36,12 @@ export default class ChartHUD extends Component {
         this.setState({isAnimation: true})
         Animated.parallel([   
             Animated.timing(this.state.opacityAnim,{ 
-                duration: 300,
+                duration: 200,
                 easing: Easing.elastic(0),
                 toValue: this.state.isShow == false ? 1 : 0
             }),
             Animated.timing(this.state.topAnim,{ 
-                duration: 300,
+                duration: 200,
                 easing: Easing.elastic(0),
                 toValue: this.state.isShow == false ? 0 : -countcoordinatesX(160)
             })
@@ -50,6 +51,14 @@ export default class ChartHUD extends Component {
                 isAnimation: false,
             })
         })
+    }
+
+    // 点击
+    _onPress = (index)=>{
+        this.setState({
+            selectIndex: index
+        })
+        this._switchAnimation()
     }
 
     render() {
@@ -64,6 +73,18 @@ export default class ChartHUD extends Component {
                     <Animated.View style={[styles.shadow, {opacity: this.state.opacityAnim}]}/>
                 </TouchableOpacity>
                 <Animated.View style={[styles.item, {top: this.state.topAnim}]}>
+                    <ChartHUDCell 
+                        index={0} 
+                        check={this.state.selectIndex == 0} 
+                        onPress={this._onPress}
+                        style={styles.cell}
+                    />
+                    <ChartHUDCell 
+                        index={1} 
+                        check={this.state.selectIndex == 1} 
+                        onPress={this._onPress}
+                        style={styles.cell}
+                    />
                 </Animated.View>
             </View>
         );
@@ -76,7 +97,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top: NAVIGATION_HEIGHT + countcoordinatesX(80),
-        bottom: STATUS_TABBAR_HEIGHT,
+        bottom: 0,
         overflow: 'hidden'
     },
     shadowOpacity: {
@@ -96,9 +117,13 @@ const styles = StyleSheet.create({
     },
     item: {
         width: SCREEN_WIDTH,
-        height: countcoordinatesX(160),
-        backgroundColor: 'red',
+        height: countcoordinatesX(180),
+        backgroundColor: 'white',
         position: 'absolute',
         left: 0,
-    }
+    },
+    cell: {
+        height: countcoordinatesX(90),
+        width: SCREEN_WIDTH,
+    },
 });

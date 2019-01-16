@@ -18,9 +18,12 @@ export const FontSize = (size: number) => {
   }
   // iphone 6-6s
   else if (height >= 667 && height <= 735) {
+    return size + 1;
+  }
+  else if (height >= 735) {
     return size + 2;
   }
-  return size + 3;
+  return size;
 
   // if (PixelRatio === 2) {
   //   // iphone 5s and older Androids
