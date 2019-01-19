@@ -17,7 +17,6 @@ export default class ChartHUD extends Component {
             isAnimation: false,
             topAnim: new Animated.Value(-countcoordinatesX(180)),
             opacityAnim: new Animated.Value(0),
-            selectIndex: 0
         }
     }
 
@@ -55,10 +54,8 @@ export default class ChartHUD extends Component {
 
     // 点击
     _onPress = (index)=>{
-        this.setState({
-            selectIndex: index
-        })
         this._switchAnimation()
+        this.props.onPress(index)
     }
 
     render() {
@@ -75,13 +72,13 @@ export default class ChartHUD extends Component {
                 <Animated.View style={[styles.item, {top: this.state.topAnim}]}>
                     <ChartHUDCell 
                         index={0} 
-                        check={this.state.selectIndex == 0} 
+                        check={this.props.navigationIndex == 0} 
                         onPress={this._onPress}
                         style={styles.cell}
                     />
                     <ChartHUDCell 
                         index={1} 
-                        check={this.state.selectIndex == 1} 
+                        check={this.props.navigationIndex == 1} 
                         onPress={this._onPress}
                         style={styles.cell}
                     />

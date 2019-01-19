@@ -4,13 +4,18 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
+
 
 export default class Badge extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <BaseContainer 
+                navigation={this.props.navigation} 
+                title={'徽章'}
+            >
                 <Text>Badge</Text>
-            </View>
+            </BaseContainer>
         );
     }
 }

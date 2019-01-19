@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Home from '~/component/Home/Home/Home'
 import Chart from '~/component/Chart/Chart'
@@ -7,12 +7,13 @@ import Book from '~/component/Book/Book'
 import Find from '~/component/Find/Find'
 import Mine from '~/component/Mine/Mine/Mine'
 import Badge from '~/component/Mine/Badge/Badge'
+import Login from '~/component/Login/Login/Login'
 
 
 import {
   createBottomTabNavigator,
   createStackNavigator,
-  createAppContainer,
+  StackViewTransitionConfigs
 } from 'react-navigation';
 
 
@@ -59,17 +60,8 @@ const navigationImage = (index)=>{
 
 
 // 单个导航栏配置
-const navigationOptions = (has_header, title)=>({
-  header: has_header == false ? null : undefined,
-  headerTitle: title,
-  headerStyle: {
-    backgroundColor: kColor_Main_Color,
-    borderBottomWidth: 0,
-  },
-  headerTitleStyle: {
-    fontSize: FONT_SIZE(16),
-    fontWeight: 'normal',
-  },
+const navigationOptions = ()=>({
+  header: null,
 })
 
 // 导航栏栈配置
@@ -101,7 +93,7 @@ const defaultNavigationOptions = (index)=>({
 const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
-    navigationOptions: navigationOptions(false)
+    navigationOptions: navigationOptions()
   }
 }, {
   navigationOptions: defaultNavigationOptions(0)
@@ -109,7 +101,7 @@ const HomeStack = createStackNavigator({
 const ChartStack = createStackNavigator({
   Chart: {
     screen: Chart,
-    navigationOptions: navigationOptions(false)
+    navigationOptions: navigationOptions()
   },
 }, {
   navigationOptions: defaultNavigationOptions(1)
@@ -117,7 +109,7 @@ const ChartStack = createStackNavigator({
 const BookStack = createStackNavigator({
   Book: {
     screen: Book,
-    navigationOptions: navigationOptions(true)
+    navigationOptions: navigationOptions()
   },
 }, {
   navigationOptions: defaultNavigationOptions(2)
@@ -125,7 +117,7 @@ const BookStack = createStackNavigator({
 const FindStack = createStackNavigator({
   Find: {
     screen: Find,
-    navigationOptions: navigationOptions(true, '发现')
+    navigationOptions: navigationOptions()
   },
 }, {
   navigationOptions: defaultNavigationOptions(3)
@@ -133,7 +125,7 @@ const FindStack = createStackNavigator({
 const MineStack = createStackNavigator({
   Mine: {
     screen: Mine,
-    navigationOptions: navigationOptions(false)
+    navigationOptions: navigationOptions()
   }
 }, {
   navigationOptions: defaultNavigationOptions(4)
@@ -142,11 +134,11 @@ const MineStack = createStackNavigator({
 
 const TabbarStack = createBottomTabNavigator(
   {
-    Chart: ChartStack,
+    Mine: MineStack,
     Home: HomeStack,
+    Chart: ChartStack,
     Book: BookStack,
     Find: FindStack,
-    Mine: MineStack,
   },
   {
     tabBarOptions: {
@@ -163,21 +155,39 @@ const TabbarStack = createBottomTabNavigator(
   }
 );
 
+const IOS_MODAL_ROUTES = ['Login'];
+const dynamicModalTransition = (transitionProps, prevTransitionProps) => {
+  const isModal = IOS_MODAL_ROUTES.some(
+    screenName =>
+      screenName === transitionProps.scene.route.routeName ||
+      (prevTransitionProps && screenName === prevTransitionProps.scene.route.routeName)
+  );
+  return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, isModal);
+};
+
 
 const AppRouter = createStackNavigator(
   {
     Tabbar: {
-      screen: TabbarStack
+      screen: TabbarStack,
+      navigationOptions: () => ({
+        header: null,
+      })
     },
     Badge: {
-      screen: Badge
+      screen: Badge,
+      navigationOptions: ({ navigation }) => navigationOptions(navigation, true, '徽章')
+    },
+    Login: {
+      screen: Login,
+      navigationOptions: () => ({
+        header: null,
+      })
     },
   },
   {
-    defaultNavigationOptions: () => ({
-      header: null,
-      gesturesEnabled: true
-    }),
+    transitionConfig: iOS ? dynamicModalTransition : StackViewStyleInterpolator.forHorizontal,
+    cardOverlayEnabled: true
   }
 )
 

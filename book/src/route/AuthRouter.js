@@ -13,8 +13,7 @@ export default AuthRouter = createStackNavigator(
         header: null
       })
     }
-  },
-  {
+  },{
     defaultNavigationOptions: () => ({
       header: null,
       gesturesEnabled: true

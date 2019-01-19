@@ -41,7 +41,11 @@ export default class MineCell extends Component {
 
     render() {
         return (
-            <TouchableHighlight disabled={false} underlayColor={kColor_Text_Gray} onPress={()=>{}}>
+            <TouchableHighlight 
+                disabled={false} 
+                onPress={this.props.onPress} 
+                underlayColor={kColor_Text_Gray}
+            >
                 <View style={styles.container}>
                     {this.name()}
                     {this.state.isDetail && this.detail()}
@@ -50,6 +54,8 @@ export default class MineCell extends Component {
             </TouchableHighlight>
         );
     }
+
+
 }
 
 const styles = StyleSheet.create({

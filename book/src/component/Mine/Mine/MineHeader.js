@@ -3,6 +3,7 @@ import {
     View,
     Text,
     Image,
+    TouchableOpacity,
     StyleSheet
 } from 'react-native';
 
@@ -32,10 +33,12 @@ export default class MineTable extends Component {
         return (
             <View style={styles.container}>
                 <Image style={styles.punch}/>
-                <View style={styles.info}>
-                    <Image style={styles.icon}/>
-                    <Text style={styles.name}>未登录</Text>
-                </View>
+                <TouchableOpacity activeOpacity={1.0} onPress={this.props.onInfoPress}>
+                    <View style={styles.info}>
+                        <Image style={styles.icon}/>
+                        <Text style={styles.name}>未登录</Text>
+                    </View>
+                </TouchableOpacity>
                 {this.bookInfo()}
             </View>
         );

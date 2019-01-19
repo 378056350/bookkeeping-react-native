@@ -4,23 +4,18 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
 import FindTable from '~/component/Find/FindTable'
 
 export default class Find extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <BaseContainer hasBack={false}>
                 <FindTable/>
-            </View>
+            </BaseContainer>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
 });

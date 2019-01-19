@@ -14,11 +14,16 @@ const login_close = require('~/assets/image/login_close.png')
 
 
 export default class Login extends Component {
+
+    _onClose = ()=>{
+        this.props.navigation.goBack()
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <TouchableOpacity style={styles.closePress}>
+                    <TouchableOpacity onPress={this._onClose} style={styles.closePress}>
                         <Image source={login_close}/>
                     </TouchableOpacity>
                     <Image source={share_icon} style={styles.icon}/>

@@ -6,7 +6,7 @@ import {
 import ChartNavigation from '~/component/Chart/ChartNavigation'
 import ChartSegmentedControl from '~/component/Chart/ChartSegmentedControl'
 import ChartDate from '~/component/Chart/ChartDate/ChartDate'
-import ChartTable from '~/component/Chart/ChartTable'
+import ChartTable from '~/component/Chart/Table/ChartTable'
 import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 
 export default class Chart extends Component {
@@ -21,6 +21,11 @@ export default class Chart extends Component {
         // this.setState({navigationIndex: this.state.navigationIndex == 0 ? 1 : 0})
         this.refs.hud._switchAnimation()
     }
+    _hudPress = (index)=>{
+        this.setState({
+            navigationIndex: index
+        })
+    }
 
     render() {
         return (
@@ -29,7 +34,11 @@ export default class Chart extends Component {
                 <ChartSegmentedControl/>
                 <ChartDate/>
                 <ChartTable/>
-                <ChartHUD ref={'hud'}/>
+                <ChartHUD 
+                    ref={'hud'} 
+                    navigationIndex={this.state.navigationIndex}
+                    onPress={this._hudPress}
+                />
             </View>
         );
     }

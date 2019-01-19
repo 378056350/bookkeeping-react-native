@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     SectionList,
     StyleSheet
 } from 'react-native';
@@ -25,28 +24,29 @@ export default class MineTable extends Component {
         super(props);
         this.state = {
             data: [
-                { data: [{"icon": mine_badge, "name": "徽章"}]},
+                { data: [{"icon": mine_badge, "name": "徽章", row: 0, section: 0}]},
                 { data: [
-                    {"icon": mine_tallytype, "name": "类别设置"}, 
-                    {"icon": mine_remind, "name": "定时提醒"}, 
-                    {"icon": mine_sound, "name": "声音开关"}, 
-                    {"icon": mine_detail, "name": "明细详情"}
+                    {"icon": mine_tallytype, "name": "类别设置", row: 0, section: 1}, 
+                    {"icon": mine_remind, "name": "定时提醒", row: 1, section: 1}, 
+                    {"icon": mine_sound, "name": "声音开关", row: 2, section: 1}, 
+                    {"icon": mine_detail, "name": "明细详情", row: 3, section: 1}
                 ]},
                 { data: [
-                    {"icon": mine_rating, "name": "去App Store给鲨鱼记账评分"}, 
-                    {"icon": mine_feedback, "name": "意见反馈"}, 
-                    {"icon": mine_merge, "name": "同步数据"}, 
-                    {"icon": mine_help, "name": "帮助"}, 
-                    {"icon": mine_about, "name": "关于鲨鱼记账"}
+                    {"icon": mine_rating, "name": "去App Store给鲨鱼记账评分", row: 0, section: 2}, 
+                    {"icon": mine_feedback, "name": "意见反馈", row: 1, section: 2}, 
+                    {"icon": mine_merge, "name": "同步数据", row: 2, section: 2}, 
+                    {"icon": mine_help, "name": "帮助", row: 3, section: 2}, 
+                    {"icon": mine_about, "name": "关于鲨鱼记账", row: 4, section: 2}
                 ]},
             ]
         }
     }
 
+    
     // 头视图
     _header = ()=>{
         return (
-           <MineHeader/>
+           <MineHeader onInfoPress={this.props.onInfoPress}/>
         )
     }
     // 尾视图
@@ -66,7 +66,10 @@ export default class MineTable extends Component {
     // Cell
     _renderItem = (item, index, section)=>{
         return (
-            <MineCell data={item}/>
+            <MineCell 
+                data={item} 
+                onPress={()=>this.props.onItemPress(item, index, section)}
+            />
         )
     }
     // 分割线
@@ -75,7 +78,6 @@ export default class MineTable extends Component {
             <View style={styles.line}/>
         )
     }
-
     render() {
         return (
             <View style={styles.container}>
