@@ -50,6 +50,7 @@ export default class Navigation extends Component {
             <View style={styles.container}>
                 {this.contentLeft()}
                 {this.props.hasTitle && this.title()}
+                {!this.props.hasTitle && this.props.hasTitleComponent()}
                 {this.contentRight()}
             </View>
         );
@@ -59,21 +60,20 @@ export default class Navigation extends Component {
 
 Navigation.propTypes = {
     hasTitle: PropTypes.bool.isRequired,
-    hasLeft: PropTypes.bool.isRequired,
+    hasLeft:  PropTypes.bool.isRequired,
+    hasBack:  PropTypes.bool.isRequired,
     hasRight: PropTypes.bool.isRequired,
-    hasBack: PropTypes.bool.isRequired,
-    hasContentLeft: PropTypes.element.isRequired,
-    hasContentRight: PropTypes.element.isRequired,
     onBackPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
 }
 Navigation.defaultProps = {
     hasTitle: true,
-    hasLeft: false,
+    hasLeft:  false,
+    hasBack:  true,
     hasRight: false,
-    hasBack: true,
-    hasContentLeft: <View/>,
-    hasContentRight: <View/>,
+    hasContentLeft: ()=>{return(<View/>)},
+    hasContentRight: ()=>{return(<View/>)},
+    hasTitleComponent: ()=>{return(<View/>)},
     onBackPress: ()=>{},
     title: '',
 };

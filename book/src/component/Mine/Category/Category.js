@@ -4,13 +4,18 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
 
-export default class Book extends Component {
+
+export default class Category extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Book</Text>
-            </View>
+            <BaseContainer 
+                navigation={this.props.navigation} 
+                title={'类别设置'}
+            >
+                <Text>类别设置</Text>
+            </BaseContainer>
         );
     }
 }

@@ -1,12 +1,16 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 
 import Home from '~/component/Home/Home/Home'
 import Chart from '~/component/Chart/Chart'
-import Book from '~/component/Book/Book'
+import Book from '~/component/Book/Book/Book'
+import BookDetail from '~/component/Book/BookDetail/BookDetail'
+import None from '~/component/Book/Book/None'
 import Find from '~/component/Find/Find'
 import Mine from '~/component/Mine/Mine/Mine'
 import Badge from '~/component/Mine/Badge/Badge'
+import Category from '~/component/Mine/Category/Category'
+import Timing from '~/component/Mine/Timing/Timing'
 import Login from '~/component/Login/Login/Login'
 
 
@@ -84,7 +88,15 @@ const defaultNavigationOptions = (index)=>({
         </View>
       )
     }
-  })
+  }),
+  tabBarOnPress: async (obj) => {
+    const routeName = obj.navigation.state.routeName
+    if (routeName === 'None') {
+      obj.navigation.navigate('Book');
+    } else {
+      obj.navigation.navigate(routeName);
+    }
+  }
 })
   
 
@@ -106,9 +118,9 @@ const ChartStack = createStackNavigator({
 }, {
   navigationOptions: defaultNavigationOptions(1)
 });
-const BookStack = createStackNavigator({
-  Book: {
-    screen: Book,
+const NoneStack = createStackNavigator({
+  None: {
+    screen: None,
     navigationOptions: navigationOptions()
   },
 }, {
@@ -134,11 +146,11 @@ const MineStack = createStackNavigator({
 
 const TabbarStack = createBottomTabNavigator(
   {
-    Mine: MineStack,
     Home: HomeStack,
     Chart: ChartStack,
-    Book: BookStack,
+    None: NoneStack,
     Find: FindStack,
+    Mine: MineStack,
   },
   {
     tabBarOptions: {
@@ -155,7 +167,7 @@ const TabbarStack = createBottomTabNavigator(
   }
 );
 
-const IOS_MODAL_ROUTES = ['Login'];
+const IOS_MODAL_ROUTES = ['Login', 'Book'];
 const dynamicModalTransition = (transitionProps, prevTransitionProps) => {
   const isModal = IOS_MODAL_ROUTES.some(
     screenName =>
@@ -170,19 +182,31 @@ const AppRouter = createStackNavigator(
   {
     Tabbar: {
       screen: TabbarStack,
-      navigationOptions: () => ({
-        header: null,
-      })
+      navigationOptions: navigationOptions()
+    },
+    Book: {
+      screen: Book,
+      navigationOptions: navigationOptions()
+    },
+    BookDetail: {
+      screen: BookDetail,
+      navigationOptions: navigationOptions()
     },
     Badge: {
       screen: Badge,
-      navigationOptions: ({ navigation }) => navigationOptions(navigation, true, '徽章')
+      navigationOptions: navigationOptions()
+    },
+    Category: {
+      screen: Category,
+      navigationOptions: navigationOptions()
+    },
+    Timing: {
+      screen: Timing,
+      navigationOptions: navigationOptions()
     },
     Login: {
       screen: Login,
-      navigationOptions: () => ({
-        header: null,
-      })
+      navigationOptions: navigationOptions()
     },
   },
   {

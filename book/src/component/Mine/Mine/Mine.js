@@ -20,6 +20,13 @@ export default class Mine extends Component {
         
         if (section == 0) {
             this.props.navigation.navigate('Badge');
+        } else if (section == 1) {
+            if (row == 0) {
+                this.props.navigation.navigate('Category');
+            }
+            else if (row == 1) {
+                this.props.navigation.navigate('Timing');
+            }
         }
     }
 

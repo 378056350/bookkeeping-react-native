@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     View,
     Text,
@@ -28,7 +29,7 @@ export default class MineCell extends Component {
     detail = ()=>{
         return (
             <View style={styles.contentRight}>
-                <Text style={styles.detail}>asdasd</Text>
+                <Text style={styles.detail}></Text>
                 <Image resizeMode={'contain'} source={require('~/assets/image/ad_arrow.png')} style={styles.next}/>
             </View>
         )
@@ -48,15 +49,24 @@ export default class MineCell extends Component {
             >
                 <View style={styles.container}>
                     {this.name()}
-                    {this.state.isDetail && this.detail()}
-                    {!this.state.isDetail && this.switch()}
+                    {!this.props.isSwitch && this.detail()}
+                    {this.props.isSwitch && this.switch()}
                 </View>
             </TouchableHighlight>
         );
     }
-
-
 }
+
+
+MineCell.propTypes = {
+    isSwitch: PropTypes.bool.isRequired,
+}
+MineCell.defaultProps = {
+    isSwitch: false
+};
+
+
+
 
 const styles = StyleSheet.create({
     container: {

@@ -27,27 +27,11 @@ BaseContainer.propTypes = {
     onBackPress: PropTypes.func.isRequired,
     hasHeader: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
-
-    hasTitle: PropTypes.bool.isRequired,
-    hasLeft: PropTypes.bool.isRequired,
-    hasRight: PropTypes.bool.isRequired,
-    hasBack: PropTypes.bool.isRequired,
-    hasContentLeft: PropTypes.element.isRequired,
-    hasContentRight: PropTypes.element.isRequired,
-    navigation: PropTypes.object,
 }
 BaseContainer.defaultProps = {
     onBackPress: ()=>{},
     hasHeader: true,
     title: '',
-
-    hasTitle: true,
-    hasLeft: false,
-    hasRight: false,
-    hasBack: true,
-    hasContentLeft: <View/>,
-    hasContentRight: <View/>,
-    navigation: undefined,
 };
 
 const styles = StyleSheet.create({

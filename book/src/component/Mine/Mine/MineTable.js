@@ -24,12 +24,12 @@ export default class MineTable extends Component {
         super(props);
         this.state = {
             data: [
-                { data: [{"icon": mine_badge, "name": "徽章", row: 0, section: 0}]},
+                { data: [{"icon": mine_badge, "name": "徽章", row: 0, section: 0, detail: '123'}]},
                 { data: [
                     {"icon": mine_tallytype, "name": "类别设置", row: 0, section: 1}, 
                     {"icon": mine_remind, "name": "定时提醒", row: 1, section: 1}, 
-                    {"icon": mine_sound, "name": "声音开关", row: 2, section: 1}, 
-                    {"icon": mine_detail, "name": "明细详情", row: 3, section: 1}
+                    {"icon": mine_sound, "name": "声音开关", row: 2, section: 1, isSwitch: true}, 
+                    {"icon": mine_detail, "name": "明细详情", row: 3, section: 1, isSwitch: true}
                 ]},
                 { data: [
                     {"icon": mine_rating, "name": "去App Store给鲨鱼记账评分", row: 0, section: 2}, 
@@ -43,19 +43,19 @@ export default class MineTable extends Component {
     }
 
     
-    // 头视图
+    // Table Header
     _header = ()=>{
         return (
            <MineHeader onInfoPress={this.props.onInfoPress}/>
         )
     }
-    // 尾视图
+    // Table Footer
     _footer = ()=>{
         return (
             <View style={{height: countcoordinatesX(100)}}/>
         )
     }
-    // 组头视图
+    // Table Section Header
     _renderSectionHeader = ()=>{
         return (
             <View style={styles.header}>
@@ -68,6 +68,7 @@ export default class MineTable extends Component {
         return (
             <MineCell 
                 data={item} 
+                isSwitch={item.isSwitch}
                 onPress={()=>this.props.onItemPress(item, index, section)}
             />
         )
@@ -78,6 +79,7 @@ export default class MineTable extends Component {
             <View style={styles.line}/>
         )
     }
+    // 初始化
     render() {
         return (
             <View style={styles.container}>
