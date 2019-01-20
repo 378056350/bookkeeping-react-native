@@ -5,7 +5,7 @@ import {
     SectionList,
     StyleSheet
 } from 'react-native';
-import FindCell from '~/component/Find/FindCell'
+import FindCell from '~/component/Find/Find/FindCell'
 
 export default class FindTable extends Component {
 
@@ -22,7 +22,7 @@ export default class FindTable extends Component {
     // Cell
     _renderItem = (item, index, section)=>{
         return (
-            <FindCell data={item}/>
+            <FindCell data={item} onPress={this.props.onPress}/>
         )
     }
 

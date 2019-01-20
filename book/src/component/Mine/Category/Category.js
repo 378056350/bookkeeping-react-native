@@ -5,6 +5,9 @@ import {
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
+import CHeader from './CHeader'
+import CTable from './CTable'
+import CButton from './CButton'
 
 
 export default class Category extends Component {
@@ -14,7 +17,9 @@ export default class Category extends Component {
                 navigation={this.props.navigation} 
                 title={'类别设置'}
             >
-                <Text>类别设置</Text>
+                <CHeader/>
+                <CTable/>
+                <CButton/>
             </BaseContainer>
         );
     }

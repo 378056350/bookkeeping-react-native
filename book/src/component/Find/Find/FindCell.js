@@ -3,7 +3,7 @@ import {
     View,
     Text,
     Image,
-    SectionList,
+    TouchableHighlight,
     StyleSheet
 } from 'react-native';
 const ad_arrow = require('~/assets/image/ad_arrow.png')
@@ -52,10 +52,12 @@ export default class FindCell extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
-                {this.header()}
-                {this.bootom()}
-            </View>
+            <TouchableHighlight onPress={this.props.onPress} underlayColor={kColor_BG}>
+                <View style={styles.container}>
+                    {this.header()}
+                    {this.bootom()}
+                </View>
+            </TouchableHighlight>
         );
     }
 }

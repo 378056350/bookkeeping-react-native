@@ -7,14 +7,18 @@ import {
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
+import BookNavigation from '~/component/Book/Book/BookNavigation'
 
 export default class Book extends Component {
-
 
     _hasContentRight = ()=>{
         const { goBack } = this.props.navigation;
         return (
-            <TouchableOpacity activeOpacity={0.9} onPress={()=>goBack()} style={styles.cancleTouch}>
+            <TouchableOpacity 
+                activeOpacity={0.9} 
+                onPress={()=>{goBack()}} 
+                style={styles.cancleTouch}
+            >
                 <Text style={styles.cancle}>取消</Text>
             </TouchableOpacity>
         )
@@ -22,7 +26,7 @@ export default class Book extends Component {
 
     _hasTitleComponent = ()=>{
         return (
-            <Text>AAAA</Text>
+            <BookNavigation/>
         )
     }
 
@@ -30,13 +34,36 @@ export default class Book extends Component {
         return <Text style={styles.item}>asdasdasd</Text>
     }
 
+    scrollItem = ()=>{
+        var array = []
+        var subarray = []
+        for (let i=1; i<=2; i++) {
+            for (let y=1; y<=19; y++) {
+                subarray.push(<View key={y+i*19} style={[styles.item, {backgroundColor: 'orange'}]}/>)
+            }
+            array.push (
+                <ScrollView 
+                    key={i}
+                    style={{width: SCREEN_WIDTH}}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.list}>
+                        {subarray}
+                    </View>
+                </ScrollView>
+            )
+        }
+        return array
+    }
+
     render() {
         return (
             <BaseContainer 
+                navigation={this.props.navigation} 
                 hasBack={false}
                 hasRight={true}
                 hasTitle={false}
-                hasContentRight={this._hasContentRight()}
+                hasContentRight={this._hasContentRight}
                 hasTitleComponent={this._hasTitleComponent}
             >
                 <ScrollView 
@@ -45,38 +72,7 @@ export default class Book extends Component {
                     style={styles.scroll}
                     showsHorizontalScrollIndicator={false}
                 >
-                    <ScrollView style={{width: SCREEN_WIDTH}}>
-                        <View 
-                            style={styles.list}
-                        >
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                            <View style={[styles.item, {backgroundColor: 'rgba(22, 23, 23, 1)'}]}/>
-                        </View>
-                    </ScrollView>
+                    {this.scrollItem()}
                 </ScrollView>
             </BaseContainer>
         );

@@ -11,6 +11,13 @@ import NavigationBack from './NavigationBack'
 export default class Navigation extends Component {
 
 
+    componentDidMount = () => {
+      
+      
+    };
+    
+    
+
     title = ()=>{
         return (
             <Text style={styles.title}>{this.props.title}</Text>
@@ -21,14 +28,15 @@ export default class Navigation extends Component {
         if (this.props.hasLeft) {
             return (
                 <View style={styles.contentLeft}>
-                    {this.props.hasContentLeft}
+                    {this.props.hasContentLeft()}
                 </View>
             )
         } else {
-            if (this.props.hasBack) {
-                return <NavigationBack onPress={this.props.onBackPress} style={styles.contentLeft}/>
+            const navigation = this.props.navigation
+            if (navigation && navigation.state.params && navigation.state.params['mode'] === 'modal') {
+                return <View/>
             } else {
-                return <View style={styles.contentLeft}/>
+                return <NavigationBack onPress={this.props.onBackPress} style={styles.contentLeft}/>
             }
         }
     }
@@ -37,7 +45,7 @@ export default class Navigation extends Component {
         if (this.props.hasRight) {
             return (
                 <View style={styles.contentRight}>
-                    {this.props.hasContentRight}
+                    {this.props.hasContentRight()}
                 </View>
             )
         } else {
@@ -61,7 +69,6 @@ export default class Navigation extends Component {
 Navigation.propTypes = {
     hasTitle: PropTypes.bool.isRequired,
     hasLeft:  PropTypes.bool.isRequired,
-    hasBack:  PropTypes.bool.isRequired,
     hasRight: PropTypes.bool.isRequired,
     onBackPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
@@ -69,7 +76,6 @@ Navigation.propTypes = {
 Navigation.defaultProps = {
     hasTitle: true,
     hasLeft:  false,
-    hasBack:  true,
     hasRight: false,
     hasContentLeft: ()=>{return(<View/>)},
     hasContentRight: ()=>{return(<View/>)},

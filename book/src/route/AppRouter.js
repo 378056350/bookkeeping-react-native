@@ -6,10 +6,12 @@ import Chart from '~/component/Chart/Chart'
 import Book from '~/component/Book/Book/Book'
 import BookDetail from '~/component/Book/BookDetail/BookDetail'
 import None from '~/component/Book/Book/None'
-import Find from '~/component/Find/Find'
+import Find from '~/component/Find/Find/Find'
+import FindDetail from '~/component/Find/FindDetail/FindDetail'
 import Mine from '~/component/Mine/Mine/Mine'
 import Badge from '~/component/Mine/Badge/Badge'
 import Category from '~/component/Mine/Category/Category'
+import About from '~/component/Mine/About/About'
 import Timing from '~/component/Mine/Timing/Timing'
 import Login from '~/component/Login/Login/Login'
 
@@ -92,11 +94,11 @@ const defaultNavigationOptions = (index)=>({
   tabBarOnPress: async (obj) => {
     const routeName = obj.navigation.state.routeName
     if (routeName === 'None') {
-      obj.navigation.navigate('Book');
+      obj.navigation.navigate('Book', {'mode': 'modal'});
     } else {
       obj.navigation.navigate(routeName);
     }
-  }
+  },
 })
   
 
@@ -167,14 +169,16 @@ const TabbarStack = createBottomTabNavigator(
   }
 );
 
-const IOS_MODAL_ROUTES = ['Login', 'Book'];
+// push 还是 pop
 const dynamicModalTransition = (transitionProps, prevTransitionProps) => {
-  const isModal = IOS_MODAL_ROUTES.some(
-    screenName =>
-      screenName === transitionProps.scene.route.routeName ||
-      (prevTransitionProps && screenName === prevTransitionProps.scene.route.routeName)
-  );
-  return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, isModal);
+  var tranParams = transitionProps ? transitionProps.scene.route.params : undefined
+  var prevParams = prevTransitionProps ? prevTransitionProps.scene.route.params : undefined
+  if ((tranParams && !!tranParams['mode'] && tranParams['mode'] === 'modal') || 
+      (prevParams && !!prevParams['mode'] && prevParams['mode'] === 'modal')) {
+    return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, true);
+  } else {
+    return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, false);
+  }
 };
 
 
@@ -206,6 +210,14 @@ const AppRouter = createStackNavigator(
     },
     Login: {
       screen: Login,
+      navigationOptions: navigationOptions()
+    },
+    FindDetail: {
+      screen: FindDetail,
+      navigationOptions: navigationOptions()
+    },
+    About: {
+      screen: About,
       navigationOptions: navigationOptions()
     },
   },
