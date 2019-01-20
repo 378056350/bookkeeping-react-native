@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: countcoordinatesX(80),
+        height: countcoordinatesX(100),
         backgroundColor: 'white',
         paddingLeft: countcoordinatesX(30),
         paddingRight: countcoordinatesX(30),

@@ -8,8 +8,17 @@ import {
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
 import BookNavigation from '~/component/Book/Book/BookNavigation'
+import BookScroll from '~/component/Book/Book/BookScroll'
+
 
 export default class Book extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            navigationIndex: 0,
+        };
+    }
 
     _hasContentRight = ()=>{
         const { goBack } = this.props.navigation;
@@ -30,32 +39,6 @@ export default class Book extends Component {
         )
     }
 
-    _renderItem = (item)=>{
-        return <Text style={styles.item}>asdasdasd</Text>
-    }
-
-    scrollItem = ()=>{
-        var array = []
-        var subarray = []
-        for (let i=1; i<=2; i++) {
-            for (let y=1; y<=19; y++) {
-                subarray.push(<View key={y+i*19} style={[styles.item, {backgroundColor: 'orange'}]}/>)
-            }
-            array.push (
-                <ScrollView 
-                    key={i}
-                    style={{width: SCREEN_WIDTH}}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={styles.list}>
-                        {subarray}
-                    </View>
-                </ScrollView>
-            )
-        }
-        return array
-    }
-
     render() {
         return (
             <BaseContainer 
@@ -66,14 +49,7 @@ export default class Book extends Component {
                 hasContentRight={this._hasContentRight}
                 hasTitleComponent={this._hasTitleComponent}
             >
-                <ScrollView 
-                    horizontal={true} 
-                    pagingEnabled={true}
-                    style={styles.scroll}
-                    showsHorizontalScrollIndicator={false}
-                >
-                    {this.scrollItem()}
-                </ScrollView>
+                <BookScroll navigationIndex={this.state.navigationIndex}/>
             </BaseContainer>
         );
     }
@@ -92,19 +68,4 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: kColor_Text_Black,
     },
-    scroll: {
-        flex: 1,
-        backgroundColor: 'red',
-    },
-    list: {
-        flexDirection: 'row',
-        width: SCREEN_WIDTH,
-        flex: 1,
-        backgroundColor: 'green',
-        flexWrap: 'wrap',
-    },
-    item: {
-        width: SCREEN_WIDTH / 4,
-        height: SCREEN_WIDTH / 4,
-    }
 });
