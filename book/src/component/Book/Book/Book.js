@@ -2,25 +2,43 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    ScrollView,
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
+import Global from './BookGlobal'
 import BaseContainer from '~/common/Base/BaseContainer'
 import BookNavigation from '~/component/Book/Book/BookNavigation'
 import BookScroll from '~/component/Book/Book/BookScroll'
+import BookKeyboard from '~/component/Book/Book/Keyboard/BookKeyboard'
+const cateList = require('~/assets/json/Category.json')
 
 
 export default class Book extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
             navigationIndex: 0,
         };
     }
+    
+    // 点击完成
+    _onNavigationPress = (page)=>{
+        this.setState({ navigationIndex: page })
+    }
 
-    _hasContentRight = ()=>{
+    // 滚动完成
+    _onMomentumScrollEnd = (page)=>{
+        this.setState({ navigationIndex: page })
+    }
+
+    // 点击Item
+    _onItemPress = (index)=>{
+        this.refs.keyboard._switchAnimation()
+    }
+
+    // 取消
+    hasContentRight = ()=>{
         const { goBack } = this.props.navigation;
         return (
             <TouchableOpacity 
@@ -33,9 +51,14 @@ export default class Book extends Component {
         )
     }
 
-    _hasTitleComponent = ()=>{
+    // 支出/收入
+    hasTitleComponent = ()=>{
         return (
-            <BookNavigation/>
+            <BookNavigation 
+                ref={(nav) => {this.nav = nav}} 
+                onPress={this._onNavigationPress}
+                navigationIndex={this.state.navigationIndex}
+            />
         )
     }
 
@@ -46,14 +69,21 @@ export default class Book extends Component {
                 hasBack={false}
                 hasRight={true}
                 hasTitle={false}
-                hasContentRight={this._hasContentRight}
-                hasTitleComponent={this._hasTitleComponent}
+                hasContentRight={this.hasContentRight}
+                hasTitleComponent={this.hasTitleComponent}
             >
-                <BookScroll navigationIndex={this.state.navigationIndex}/>
+                <BookScroll 
+                    models={cateList}
+                    navigationIndex={this.state.navigationIndex}
+                    onMomentumScrollEnd={this._onMomentumScrollEnd}
+                    onItemPress={this._onItemPress}
+                />
+                <BookKeyboard ref={'keyboard'}/>
             </BaseContainer>
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     cancleTouch: {

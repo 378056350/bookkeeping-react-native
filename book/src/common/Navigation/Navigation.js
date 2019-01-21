@@ -11,13 +11,6 @@ import NavigationBack from './NavigationBack'
 export default class Navigation extends Component {
 
 
-    componentDidMount = () => {
-      
-      
-    };
-    
-    
-
     title = ()=>{
         return (
             <Text style={styles.title}>{this.props.title}</Text>

@@ -1,22 +1,70 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     ScrollView,
-    TouchableOpacity,
     StyleSheet
 } from 'react-native';
 import BookCell from '~/component/Book/Book/BookCell'
 
+
 export default class BookScroll extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            chooseIndexs: [-1, -1]
+        };
+    }
 
+    // 滚动开始
+    _onScrollBeginDrag = (e)=>{
+        this.setState({
+            chooseIndexs: [-1, -1]
+        })
+    }
+
+    // 滚动结束
+    _onMomentumScrollEnd = (e)=>{
+        const page = e.nativeEvent.contentOffset.x / SCREEN_WIDTH
+        this.props.onMomentumScrollEnd(page)
+    }
+
+    // 点击Item
+    _onItemPress = (index)=>{
+        var chooseIndexs = this.state.chooseIndexs;
+        chooseIndexs[this.props.navigationIndex] = index
+        this.setState({
+            chooseIndexs: chooseIndexs
+        })
+        this.props.onItemPress(index)
+    }
+
+    // 更新
+    shouldComponentUpdate = (nextProps, nextState) => {
+        if (nextProps.navigationIndex != this.props.navigationIndex) {
+            this.refs.scroll.scrollTo({x: nextProps.navigationIndex * SCREEN_WIDTH, y: 0, animated: true})
+            this.setState({chooseIndexs: [-1, -1]})
+            return true
+        }
+        return true
+    }
+
+    // 滚动控件
     scrollItem = ()=>{
         var array = []
-        var subarray = []
-        for (let i=1; i<=2; i++) {
-            for (let y=1; y<=19; y++) {
-                subarray.push(<BookCell key={y + i * 19}/>)
+        var index = 0
+        for (let i=0; i<2; i++) {
+            var subarray = []
+            var data = i === 0 ? this.props.models['pay'] : this.props.models['income']
+            for (let y=0; y<data.length; y++) {
+                subarray.push(
+                    <BookCell 
+                        key={index++} 
+                        choose={this.state.chooseIndexs[i]==y}
+                        onPress={()=>this._onItemPress(y)} 
+                        model={data[y]}
+                    />
+                )
             }
             array.push (
                 <ScrollView 
@@ -33,13 +81,17 @@ export default class BookScroll extends Component {
         return array
     }
     
+    // 初始化
     render() {
         return (
             <ScrollView 
+                ref={'scroll'}
                 horizontal={true} 
                 pagingEnabled={true}
                 style={styles.scroll}
                 showsHorizontalScrollIndicator={false}
+                onScrollBeginDrag={this._onScrollBeginDrag}
+                onMomentumScrollEnd={this._onMomentumScrollEnd}
             >
                 {this.scrollItem()}
             </ScrollView>
@@ -50,11 +102,9 @@ export default class BookScroll extends Component {
 const styles = StyleSheet.create({
     scroll: {
         flex: 1,
-        backgroundColor: 'red',
     },
     list: {
         width: SCREEN_WIDTH,
-        backgroundColor: 'green',
         flexWrap: 'wrap',
     },
     listContent: {

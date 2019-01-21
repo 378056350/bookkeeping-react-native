@@ -1,6 +1,7 @@
-import { Dimensions, Platform, StatusBar } from  'react-native';
-import { FontSize } from './FontSize';
-import { Px2Dp } from './Tool';
+import { Dimensions, Platform, StatusBar } from  'react-native'
+import { FontSize } from './FontSize'
+import { Px2Dp } from './Tool'
+import { DeviceStorage } from './DeviceStorage'
 
 const { width, height } = Dimensions.get('window');
 const OS = Platform.OS;
@@ -11,7 +12,6 @@ const statusBarHeight = (ios ? (isIPhoneX ? 44 : 20) : StatusBar.currentHeight);
 const navigationHeight = statusBarHeight + 44;
 const safeAreaBottomHeight = (ios ? (isIPhoneX ? 34 : 0) : 0);
 const statusTabBarHeight = safeAreaBottomHeight + 49;
-
 
 global.FONT_SIZE = FontSize
 global.countcoordinatesX = Px2Dp
@@ -35,3 +35,5 @@ global.kColor_Main_Color = 'rgba(255, 217, 68, 1)'
 global.kColor_Main_Dark_Color = 'rgba(241, 206, 65, 1)'
 global.kColor_Red_Color = 'rgba(255, 69, 0, 1)'          
 global.kColor_Red_Dark_Color = 'rgba(242, 67, 2, 1)'     
+
+global.DeviceStorage = DeviceStorage

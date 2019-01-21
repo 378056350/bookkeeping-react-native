@@ -5,6 +5,8 @@ import {
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
+import TTable from '~/component/Mine/Timing/TTable'
+import TButton from '~/component/Mine/Timing/TButton'
 
 
 export default class Category extends Component {
@@ -14,7 +16,8 @@ export default class Category extends Component {
                 navigation={this.props.navigation} 
                 title={'定时提醒'}
             >
-                <Text>定时提醒</Text>
+                <TTable/>
+                <TButton/>
             </BaseContainer>
         );
     }

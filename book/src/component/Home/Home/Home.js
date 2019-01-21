@@ -9,6 +9,11 @@ import HomeTable from './HomeTable'
 
 export default class Home extends Component {
 
+    componentDidMount = () => {
+        
+    }
+    
+
     render() {
         return (
             <View style={styles.container}>

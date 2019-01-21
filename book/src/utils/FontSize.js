@@ -1,8 +1,3 @@
-/**
- * @flow
- * Created by Rabbit on 2018/8/6.
- */
-
 import { PixelRatio, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');

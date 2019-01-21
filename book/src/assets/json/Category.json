@@ -1,0 +1,355 @@
+{
+	"pay": [{
+			"id": 1,
+			"icon_n": "e_catering",
+			"icon_l": "e_catering_l",
+			"icon_s": "e_catering_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "餐饮"
+		},
+		{
+			"id": 2,
+			"icon_n": "e_snack",
+			"icon_l": "e_snack_l",
+			"icon_s": "e_snack_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "零食"
+		},
+		{
+			"id": 3,
+			"icon_n": "e_shopping",
+			"icon_l": "e_shopping_l",
+			"icon_s": "e_shopping_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "购物"
+		},
+		{
+			"id": 4,
+			"icon_n": "e_traffic",
+			"icon_l": "e_traffic_l",
+			"icon_s": "e_traffic_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "交通"
+		},
+		{
+			"id": 5,
+			"icon_n": "e_sport",
+			"icon_l": "e_sport_l",
+			"icon_s": "e_sport_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "运动"
+		},
+		{
+			"id": 6,
+			"icon_n": "e_car",
+			"icon_l": "e_car_l",
+			"icon_s": "e_car_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "汽车"
+		},
+		{
+			"id": 7,
+			"icon_n": "e_medical",
+			"icon_l": "e_medical_l",
+			"icon_s": "e_medical_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "医疗"
+		},
+		{
+			"id": 8,
+			"icon_n": "e_pet",
+			"icon_l": "e_pet_l",
+			"icon_s": "e_pet_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "宠物"
+		},
+		{
+			"id": 9,
+			"icon_n": "e_books",
+			"icon_l": "e_books_l",
+			"icon_s": "e_books_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "书籍"
+		},
+		{
+			"id": 10,
+			"icon_n": "e_study",
+			"icon_l": "e_study_l",
+			"icon_s": "e_study_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "学习"
+		},
+		{
+			"id": 11,
+			"icon_n": "e_gift",
+			"icon_l": "e_gift_l",
+			"icon_s": "e_gift_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "礼物"
+		},
+		{
+			"id": 12,
+			"icon_n": "e_office",
+			"icon_l": "e_office_l",
+			"icon_s": "e_office_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "办公"
+		},
+		{
+			"id": 13,
+			"icon_n": "e_repair",
+			"icon_l": "e_repair_l",
+			"icon_s": "e_repair_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "维修"
+		},
+		{
+			"id": 14,
+			"icon_n": "e_donate",
+			"icon_l": "e_donate_l",
+			"icon_s": "e_donate_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "捐赠"
+		},
+		{
+			"id": 15,
+			"icon_n": "e_lottery",
+			"icon_l": "e_lottery_l",
+			"icon_s": "e_lottery_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "彩票"
+		},
+		{
+			"id": 16,
+			"icon_n": "e_express",
+			"icon_l": "e_express_l",
+			"icon_s": "e_express_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "快递"
+		},
+		{
+			"id": 17,
+			"icon_n": "e_social",
+			"icon_l": "e_social_l",
+			"icon_s": "e_social_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "社交"
+		},
+		{
+			"id": 18,
+			"icon_n": "e_beauty",
+			"icon_l": "e_beauty_l",
+			"icon_s": "e_beauty_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "美容"
+		},
+		{
+			"id": 19,
+			"icon_n": "e_fruite",
+			"icon_l": "e_fruite_l",
+			"icon_s": "e_fruite_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "水果"
+		},
+		{
+			"id": 20,
+			"icon_n": "e_travel",
+			"icon_l": "e_travel_l",
+			"icon_s": "e_travel_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "旅行"
+		},
+		{
+			"id": 21,
+			"icon_n": "e_entertainmente",
+			"icon_l": "e_entertainmente_l",
+			"icon_s": "e_entertainmente_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "娱乐"
+		},
+		{
+			"id": 22,
+			"icon_n": "e_money",
+			"icon_l": "e_money_l",
+			"icon_s": "e_money_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "礼金"
+		},
+		{
+			"id": 23,
+			"icon_n": "e_vegetable",
+			"icon_l": "e_vegetable_l",
+			"icon_s": "e_vegetable_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "蔬菜"
+		},
+		{
+			"id": 24,
+			"icon_n": "e_elder",
+			"icon_l": "e_elder_l",
+			"icon_s": "e_elder_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "长辈"
+		},
+		{
+			"id": 25,
+			"icon_n": "e_house",
+			"icon_l": "e_house_l",
+			"icon_s": "e_house_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "住房"
+		},
+		{
+			"id": 26,
+			"icon_n": "e_child",
+			"icon_l": "e_child_l",
+			"icon_s": "e_child_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "孩子"
+		},
+		{
+			"id": 27,
+			"icon_n": "e_communicate",
+			"icon_l": "e_communicate_l",
+			"icon_s": "e_communicate_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "通讯"
+		},
+		{
+			"id": 28,
+			"icon_n": "e_dress",
+			"icon_l": "e_dress_l",
+			"icon_s": "e_dress_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "服饰"
+		},
+		{
+			"id": 29,
+			"icon_n": "e_commodity",
+			"icon_l": "e_commodity_l",
+			"icon_s": "e_commodity_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "日用"
+		},
+		{
+			"id": 30,
+			"icon_n": "e_smoke",
+			"icon_l": "e_smoke_l",
+			"icon_s": "e_smoke_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "烟酒"
+		},
+		{
+			"id": 31,
+			"icon_n": "e_friend",
+			"icon_l": "e_friend_l",
+			"icon_s": "e_friend_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "亲友"
+		},
+		{
+			"id": 32,
+			"icon_n": "e_digital",
+			"icon_l": "e_digital_l",
+			"icon_s": "e_digital_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "数码"
+		},
+		{
+			"id": 33,
+			"icon_n": "e_home",
+			"icon_l": "e_home_l",
+			"icon_s": "e_home_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "居家"
+		}
+	],
+	"income": [{
+			"id": 34,
+			"icon_n": "i_wage",
+			"icon_l": "i_wage_l",
+			"icon_s": "i_wage_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "工资"
+		},
+		{
+			"id": 35,
+			"icon_n": "i_parttimework",
+			"icon_l": "i_parttimework_l",
+			"icon_s": "i_parttimework_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "兼职"
+		},
+		{
+			"id": 36,
+			"icon_n": "i_finance",
+			"icon_l": "i_finance_l",
+			"icon_s": "i_finance_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "理财"
+		},
+		{
+			"id": 37,
+			"icon_n": "i_money",
+			"icon_l": "i_money_l",
+			"icon_s": "i_money_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "礼金"
+		},
+		{
+			"id": 38,
+			"icon_n": "i_parttimework",
+			"icon_l": "i_parttimework_l",
+			"icon_s": "i_parttimework_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "兼职"
+		},
+		{
+			"id": 39,
+			"icon_n": "i_other",
+			"icon_l": "i_other_l",
+			"icon_s": "i_other_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "其它"
+		}
+	]
+}

@@ -222,7 +222,8 @@ const AppRouter = createStackNavigator(
     },
   },
   {
-    transitionConfig: iOS ? dynamicModalTransition : StackViewStyleInterpolator.forHorizontal,
+    // transitionConfig: iOS ? dynamicModalTransition : StackViewStyleInterpolator.forHorizontal,
+    transitionConfig: iOS ? dynamicModalTransition : dynamicModalTransition,
     cardOverlayEnabled: true
   }
 )
