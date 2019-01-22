@@ -16,7 +16,7 @@ export default class BKField extends Component {
                 <Text style={styles.name}>备注：</Text>
                 <TextInput 
                     style={styles.input} 
-                    maxLength={10} 
+                    maxLength={20} 
                     placeholder={'点击写备注'}
                     placeholderTextColor={kColor_Text_Gray}
                     iosspellCheck={false} 

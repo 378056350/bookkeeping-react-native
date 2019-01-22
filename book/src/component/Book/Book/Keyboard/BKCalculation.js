@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-
-
+// 计算
 export default class BKCalculation {
 
     // 计算
@@ -8,7 +6,7 @@ export default class BKCalculation {
 
     }
 
-    // 获取金额
+    // 获取字符串
     static getMoneyString = (string, index)=>{
         // 数字
         if (BKCalculation.isMath(index) && BKCalculation.isAllowMath(string)) {
@@ -18,13 +16,21 @@ export default class BKCalculation {
         if (BKCalculation.isPoint(index) && BKCalculation.isAllowPoint(string)) {
             return BKCalculation.enterPoint(string, index)
         }
-        // 加减
-        if (BKCalculation.isCalculation(index) && BKCalculation.isAllowCalculation(string)) {
-            return BKCalculation.enterCalculation(string, index)
-        }
         // 删除
         if (BKCalculation.isRemove(index) && BKCalculation.isAllowRemove(string)) {
             return BKCalculation.enterRemove(string, index)
+        }
+        // 加减
+        if (BKCalculation.isAddLess(index) && BKCalculation.isAllowAddLess(string)) {
+            return BKCalculation.enterAddLess(string, index)
+        }
+        // 时间
+        if (BKCalculation.isDate(index) && BKCalculation.isAllowDate(string)) {
+            
+        }
+        // 完成
+        if (BKCalculation.isComplete(index) && BKCalculation.isAllowComplete(string)) {
+            return BKCalculation.enterComplete(string, index)
         }
         return string
     }
@@ -54,15 +60,8 @@ export default class BKCalculation {
         }
         return false
     }
-    // 完成
-    static isComplete = (index)=>{
-        if (index == 15) {
-            return true
-        }
-        return false
-    }
     // 加减
-    static isCalculation = (index)=>{
+    static isAddLess = (index)=>{
         if (index == 7 || index == 11) {
             return true
         }
@@ -75,9 +74,16 @@ export default class BKCalculation {
         }
         return false
     }
+    // 完成
+    static isComplete = (index)=>{
+        if (index == 15) {
+            return true
+        }
+        return false
+    }
 
 
-    // 是否允许数字
+    // 允许数字
     static isAllowMath = (string)=>{
         var num = string.lastIndexOf('.');
         // 没有小数点
@@ -97,7 +103,7 @@ export default class BKCalculation {
             return true
         }
     }
-    // 是否允许点
+    // 允许点
     static isAllowPoint = (string)=>{
         // 字符串为空
         if (string.length == 0) {
@@ -123,23 +129,23 @@ export default class BKCalculation {
         }
         return true
     }
-    // 是否删除
+    // 允许删除
     static isAllowRemove = (string)=>{
         if (string.length != 0) {
             return true
         }
         return false
     }
-    // 是否完成
-    static isAllowComplete = (string)=>{
+    // 允许加减
+    static isAllowAddLess = (string)=>{
         return true
     }
-    // 加减
-    static isAllowCalculation = (string)=>{
-        var last = string.charAt(string.length-1)
-        if (last == ".") {
-            return false
-        }
+    // 允许时间
+    static isAllowDate = (string)=>{
+        return true
+    }
+    // 允许完成
+    static isAllowComplete = (string)=>{
         return true
     }
 
@@ -170,7 +176,7 @@ export default class BKCalculation {
         }
     }
     // 输入加减
-    static enterCalculation = (string, index)=>{
+    static enterAddLess = (string, index)=>{
         var str = BKCalculation.getButtonString(string, index)
         var last = string.charAt(string.length-1)
         if (last == "+" || last == "-") {
@@ -179,15 +185,31 @@ export default class BKCalculation {
             return string + str
         }
     }
+    // 输入完成
+    static enterComplete = (string, index)=>{
+        if (string == "+" || string == "-") {
+            return "0"
+        }
+        var last = string.charAt(string.length - 1)
+        var str = string
+        if (last == '=') {
+            str = str.substring(0, string.length - 1)
+        }
+        return eval(str) + ""
+    }
+    
 
 
-    // 更新完成按钮
+    // 更新完成按钮文本
     static updateComplete = (string) => {
-        if (string.length == 0) {
+        if (string.length <= 1) {
             return '完成'
         } 
 
         var str = string.substring(1, string.length-1)
+        console.log("======================");
+        console.log(str);
+        
         var count = 0;
         for (var i=0; i<str.length; i++) {
             if (str.charAt(i) == '+') {

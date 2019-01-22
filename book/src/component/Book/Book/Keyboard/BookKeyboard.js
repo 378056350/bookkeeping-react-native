@@ -58,11 +58,12 @@ export default class BookKeyboard extends Component {
     }
     // 点击Item
     _onItemPress = (index)=>{
-        // var arr = ["3", "123", "11.", "11.1", "11.11", "11.11+", "11.11+1", "11.11+11", "11.11+11.", "11.11+11.1", "11.11+11.11", "11.11+11.111"]
+        // var arr = ["12+12", "13-13", "12.12-12", "123+23=", "11-11="]
         // for (var i=0; i<arr.length; i++) {
-        //     console.log(arr[i] + ": " + BKCalculation.isAllowPoint(arr[i]));
+        //     console.log(arr[i] + ": " + BKCalculation.enterComplete(arr[i]));
             
         // }
+
 
         var money = BKCalculation.getMoneyString(this.state.money, index)
         this.setState({
