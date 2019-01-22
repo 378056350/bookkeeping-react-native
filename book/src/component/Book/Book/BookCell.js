@@ -31,8 +31,7 @@ const ITEM_W = (SCREEN_WIDTH - countcoordinatesX(60)) / 4
 const styles = StyleSheet.create({
     container: {
         width: ITEM_W,
-        paddingBottom: countcoordinatesX(10),
-        marginBottom: countcoordinatesX(20),
+        paddingBottom: countcoordinatesX(30),
     },
     view: {
         flex: 1,
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
         fontSize: FONT_SIZE(12),
         fontWeight: '300',
         color: kColor_Text_Black,
-        marginTop: countcoordinatesX(10),
+        paddingTop: countcoordinatesX(10),
     }
     
 });

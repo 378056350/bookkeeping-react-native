@@ -3,6 +3,7 @@ import {
     View,
     Text,
     TextInput,
+    Animated,
     StyleSheet
 } from 'react-native';
 
@@ -11,7 +12,7 @@ export default class BKField extends Component {
     // 初始化
     render() {
         return (
-            <View style={styles.container}>
+            <Animated.View style={[styles.container, {...this.props.style}]}>
                 <Text style={styles.name}>备注：</Text>
                 <TextInput 
                     style={styles.input} 
@@ -22,8 +23,8 @@ export default class BKField extends Component {
                     selectionColor={kColor_Main_Color}
                     returnKeyType={'done'}
                 />
-                <Text style={styles.money}>0</Text>
-            </View>
+                <Text style={styles.money}>{this.props.money}</Text>
+            </Animated.View>
         );
     }
 }
@@ -36,8 +37,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: countcoordinatesX(30),
         backgroundColor: 'white',
+        position: 'relative',
         borderBottomColor: kColor_Line_Color,
         borderBottomWidth: countcoordinatesX(2),
+        shadowOffset: {width: 0, height: -2},
+        shadowColor: kColor_Text_Gray,
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
     },
     name: {
         fontSize: FONT_SIZE(14),

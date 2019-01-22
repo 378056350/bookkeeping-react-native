@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Animated,
     Easing,
+    Keyboard,
     StyleSheet
 } from 'react-native';
 import BKField from './BKField'
 import BKButton from './BKButton'
+import BKCalculation from '~/component/Book/Book/Keyboard/BKCalculation'
 
 
 export default class BookKeyboard extends Component {
@@ -16,55 +17,74 @@ export default class BookKeyboard extends Component {
         super(props);
         this.state = {
             keyboardAnim: new Animated.Value(0),
+            inputAnim: new Animated.Value(0),
+            money: "0"
         };
     }
 
-    _switchAnimation() {
+    componentDidMount = () => {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardDidHide);
+    }
+    componentWillUnmount () {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    // 键盘显示
+    _keyboardDidShow = (e)=>{
+        const keyboardH = e.endCoordinates.height
+        const inputKeyH = BOOK_KEYBOARD_H
+        const inputH = countcoordinatesX(120)
+        const offsetY = inputH - (inputKeyH - keyboardH)
+
+        Animated.timing(this.state.inputAnim,{ 
+            duration: 200,
+            easing: Easing.elastic(0),
+            toValue: -offsetY
+        }).start((result)=>{
+            
+        });
+    }
+    // 键盘隐藏
+    _keyboardDidHide = (e)=>{
+        Animated.timing(this.state.inputAnim,{ 
+            duration: 200,
+            easing: Easing.elastic(0),
+            toValue: 0
+        }).start((result)=>{
+          
+        });
+    }
+    // 点击Item
+    _onItemPress = (index)=>{
+        // var arr = ["3", "123", "11.", "11.1", "11.11", "11.11+", "11.11+1", "11.11+11", "11.11+11.", "11.11+11.1", "11.11+11.11", "11.11+11.111"]
+        // for (var i=0; i<arr.length; i++) {
+        //     console.log(arr[i] + ": " + BKCalculation.isAllowPoint(arr[i]));
+            
+        // }
+
+        var money = BKCalculation.getMoneyString(this.state.money, index)
+        this.setState({
+            money: money
+        })
+    }
+    
+    // 动画
+    _switchAnimation(isShow) {
         Animated.timing(this.state.keyboardAnim,{ 
             duration: 400,
             easing: Easing.elastic(0),
-            toValue: BOOK_KEYBOARD_H
+            toValue: isShow == true ? BOOK_KEYBOARD_H : 0
         }).start((result)=>{
           
         });
     }
     
-    getButtonContent = (index)=>{
-        if (index == 0) {
-            return '7'
-        } else if (index == 1) {
-            return '8'
-        } else if (index == 2) {
-            return '9'
-        } else if (index == 3) {
-            return '今天'
-        } else if (index == 4) {
-            return '4'
-        } else if (index == 5) {
-            return '5'
-        } else if (index == 6) {
-            return '6'
-        } else if (index == 7) {
-            return '+'
-        } else if (index == 8) {
-            return '1'
-        } else if (index == 9) {
-            return '2'
-        } else if (index == 10) {
-            return '3'
-        } else if (index == 11) {
-            return '-'
-        } else if (index == 12) {
-            return '.'
-        } else if (index == 13) {
-            return '0'
-        } else if (index == 14) {
-            return 'delete'
-        } else if (index == 15) {
-            return '完成'
-        }
-    }
 
+
+    //============================ 界面 ============================//
+    // 按钮
     subitem = ()=>{
         var button = []
         for (var i=0; i<4; i++) {
@@ -72,7 +92,13 @@ export default class BookKeyboard extends Component {
             for (var y=0; y<4; y++) {
                 const key = i*4+y
                 subbutton.push(
-                    <BKButton key={key} index={key} title={this.getButtonContent(key)} style={styles.subview}/>
+                    <BKButton 
+                        key={key} 
+                        index={key} 
+                        title={BKCalculation.getButtonString(this.state.money, i*4+y)}
+                        onPress={this._onItemPress}
+                        style={styles.subview}
+                    />
                 )
             }
             button.push (
@@ -88,10 +114,10 @@ export default class BookKeyboard extends Component {
     render() {
         return (
             <Animated.View style={{height: this.state.keyboardAnim}}>
-                <View style={styles.container}>
-                    <BKField/>
+                <Animated.View style={styles.container}>
+                    <BKField money={this.state.money} style={{top: this.state.inputAnim}}/>
                     {this.subitem()}
-                </View>
+                </Animated.View>
             </Animated.View>
         );
     }
@@ -102,11 +128,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: SCREEN_WIDTH,
         height: BOOK_KEYBOARD_H,
+        backgroundColor: kColor_BG,
         paddingBottom: SAFE_AREA_BOTTOM_HEIGHT,
-        shadowOffset: {width: 0, height: -2},
-        shadowColor: kColor_Text_Gray,
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
     },
     view: {
         flex: 1,

@@ -27,6 +27,11 @@ export default class Book extends Component {
         this.setState({ navigationIndex: page })
     }
 
+    // 滚动开始
+    _onScrollBeginDrag = ()=>{
+        this.refs.keyboard._switchAnimation(false)
+    }
+
     // 滚动完成
     _onMomentumScrollEnd = (page)=>{
         this.setState({ navigationIndex: page })
@@ -34,7 +39,7 @@ export default class Book extends Component {
 
     // 点击Item
     _onItemPress = (index)=>{
-        this.refs.keyboard._switchAnimation()
+        this.refs.keyboard._switchAnimation(true)
     }
 
     // 取消
@@ -75,6 +80,7 @@ export default class Book extends Component {
                 <BookScroll 
                     models={cateList}
                     navigationIndex={this.state.navigationIndex}
+                    onScrollBeginDrag={this._onScrollBeginDrag}
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
                     onItemPress={this._onItemPress}
                 />
