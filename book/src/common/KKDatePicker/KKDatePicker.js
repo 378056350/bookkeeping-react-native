@@ -4,9 +4,12 @@ import {
     View,
     Text,
     Modal,
+    Animated, 
+    Easing,
     TouchableHighlight,
     StyleSheet
 } from 'react-native';
+import KDContent from './KDContent'
 
 
 export default class KKDatePicker extends Component {
@@ -21,31 +24,31 @@ export default class KKDatePicker extends Component {
         return (
             <Modal
                 animationType="none"
-                transparent={false}
+                transparent={true}
                 visible={this.state.modalVisible}
                 onRequestClose={() => {
                     
                 }}
             >
                 <View style={styles.container}>
-                    
+                    <View style={styles.shadow}/>
+                    <KDContent number={3}/>
                 </View>
             </Modal>
         );
     }
 }
 
-
-KKDatePicker.propTypes = {
-    disabled: PropTypes.bool.isRequired,
-}
-KKDatePicker.defaultProps = {
-    disabled: false
-};
-
-
 const styles = StyleSheet.create({
     container: {
-        marginTop: 22
+        flex: 1,
+    },
+    shadow: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)'
     }
 });
