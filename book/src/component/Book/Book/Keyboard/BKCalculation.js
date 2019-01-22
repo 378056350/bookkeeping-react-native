@@ -199,7 +199,6 @@ export default class BKCalculation {
     }
     
 
-
     // 更新完成按钮文本
     static updateComplete = (string) => {
         if (string.length <= 1) {

@@ -6,6 +6,7 @@ import {
 import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './HomeTable'
+import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
 
 export default class Home extends Component {
 
@@ -20,6 +21,7 @@ export default class Home extends Component {
                 <HomeNavigation/>
                 <HomeHeader/>
                 <HomeTable/>
+                <KKDatePicker/>
             </View>
         );
     }
