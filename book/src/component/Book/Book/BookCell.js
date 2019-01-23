@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        width: ITEM_W / 3 * 2,
-        height: ITEM_W / 3 * 2,
+        width: ITEM_W / 5 * 3,
+        height: ITEM_W / 5 * 3,
     },
     name: {
         fontSize: FONT_SIZE(12),

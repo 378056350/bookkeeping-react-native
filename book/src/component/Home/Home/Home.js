@@ -9,11 +9,11 @@ import HomeTable from './HomeTable'
 import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
 
 export default class Home extends Component {
-
-    componentDidMount = () => {
+    
+    _onConfirm = (year, month, day)=>{
         
     }
-    
+
 
     render() {
         return (
@@ -21,7 +21,7 @@ export default class Home extends Component {
                 <HomeNavigation/>
                 <HomeHeader/>
                 <HomeTable/>
-                <KKDatePicker/>
+                <KKDatePicker ref={'picker'} onConfirm={this._onConfirm}/>
             </View>
         );
     }

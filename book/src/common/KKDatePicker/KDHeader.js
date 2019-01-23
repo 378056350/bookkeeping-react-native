@@ -14,11 +14,11 @@ export default class KDHeader extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity activeOpacity={0.9} style={styles.buttonTouch}>
+                <TouchableOpacity onPress={this.props.onCancle} activeOpacity={0.8} style={styles.buttonTouch}>
                     <Text style={styles.button}>取消</Text>
                 </TouchableOpacity>
                 <Text style={styles.title}>选择日期</Text>
-                <TouchableOpacity activeOpacity={0.9} style={styles.buttonTouch}>
+                <TouchableOpacity onPress={this.props.onConfirm} activeOpacity={0.8} style={styles.buttonTouch}>
                     <Text style={styles.button}>确定</Text>
                 </TouchableOpacity>
             </View>
