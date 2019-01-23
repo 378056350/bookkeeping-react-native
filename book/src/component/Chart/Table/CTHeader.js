@@ -5,6 +5,7 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
+import CTSvg from '~/component/Chart/Table/CTSvg'
 
 
 export default class ChartTableHeader extends Component {
@@ -13,6 +14,7 @@ export default class ChartTableHeader extends Component {
             <View style={styles.container}>
                 <Text style={styles.name}>总支出: 0</Text>
                 <Text style={styles.detail}>平均值: 0</Text>
+                <CTSvg/>
             </View>
         );
     }
@@ -21,21 +23,23 @@ export default class ChartTableHeader extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: SCREEN_WIDTH,
-        height: countcoordinatesX(200),
-        paddingLeft: countcoordinatesX(30),
-        backgroundColor: 'orange',
+        width: SCREEN_WIDTH - countcoordinatesX(60),
+        // height: countcoordinatesX(300),
+        marginLeft: countcoordinatesX(30),
+        marginRight: countcoordinatesX(30),
     },
     name: {
         fontSize: FONT_SIZE(14),
-        fontWeight: '400',
+        fontWeight: '300',
         color: kColor_Text_Black,
-        marginTop: countcoordinatesX(10),
+        marginTop: countcoordinatesX(20),
+        fontFamily: 'Helvetica Neue',
     },
     detail: {
         fontSize: FONT_SIZE(12),
-        fontWeight: '400',
+        fontWeight: '300',
         color: kColor_Text_Black,
-        marginTop: countcoordinatesX(5),
+        marginBottom: countcoordinatesX(20),
+        fontFamily: 'Helvetica Neue',
     }
 });

@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: FONT_SIZE(14),
         fontWeight: '400',
+        fontFamily: 'Helvetica Neue',
         color: kColor_Text_Black,
     }
 });

@@ -9,11 +9,12 @@ import {
 export default class ChartDateCell extends Component {
 
 
-    
     render() {
         return (
             <View style={styles.container}>
-                <Text>123 </Text>
+                <Text style={[styles.name, {color: this.props.choose == true ? kColor_Text_Black : kColor_Text_Gray}]}>
+                    2018-53周
+                </Text>
             </View>
         );
     }
@@ -21,6 +22,13 @@ export default class ChartDateCell extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: countcoordinatesX(200),
+    },
+    name: {
+        fontSize: FONT_SIZE(14),
+        fontWeight: '400',
+        fontFamily: 'Helvetica Neue',
     }
 });

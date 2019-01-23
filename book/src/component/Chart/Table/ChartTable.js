@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: SCREEN_WIDTH,
+        backgroundColor: 'white',
     },
     list: {
         

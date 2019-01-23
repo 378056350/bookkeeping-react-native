@@ -4,6 +4,7 @@ import {
     Easing,
     Animated,
     StyleSheet,
+    PanResponder,
     TouchableOpacity
 } from 'react-native';
 import ChartHUDCell from './ChartHUDCell'
@@ -32,25 +33,53 @@ export default class ChartHUD extends Component {
     
     // 显示/隐藏 
     _switchAnimation = ()=>{
+        if (this.state.isShow == true) {
+            this._hide()
+        } else {
+            this._show()
+        }
+    }
+
+    _show = ()=>{
+        this.setState({isAnimation: true, isShow: true})
+        Animated.parallel([   
+            Animated.timing(this.state.opacityAnim,{ 
+                duration: 200,
+                easing: Easing.elastic(0),
+                toValue: 1
+            }),
+            Animated.timing(this.state.topAnim,{ 
+                duration: 200,
+                easing: Easing.elastic(0),
+                toValue: 0
+            })
+        ]).start((result)=>{
+            this.setState({
+                isAnimation: false,
+            })
+        })
+    }
+    _hide = ()=>{
         this.setState({isAnimation: true})
         Animated.parallel([   
             Animated.timing(this.state.opacityAnim,{ 
                 duration: 200,
                 easing: Easing.elastic(0),
-                toValue: this.state.isShow == false ? 1 : 0
+                toValue: 0
             }),
             Animated.timing(this.state.topAnim,{ 
                 duration: 200,
                 easing: Easing.elastic(0),
-                toValue: this.state.isShow == false ? 0 : -countcoordinatesX(180)
+                toValue: -countcoordinatesX(180)
             })
         ]).start((result)=>{
             this.setState({
-                isShow: this.state.isShow == true ? false : true,
                 isAnimation: false,
+                isShow: false
             })
         })
     }
+
 
     // 点击
     _onPress = (index)=>{
@@ -60,7 +89,7 @@ export default class ChartHUD extends Component {
 
     render() {
         return (
-            <View style={[styles.container, {disabled: this.state.isShow == true ? true : false}]}>
+            <View style={[styles.container, {display: this.state.isShow == true ? 'flex' : 'none'}]}>
                 <TouchableOpacity 
                     onPress={this._switchAnimation} 
                     activeOpacity={1.0} 
@@ -95,7 +124,9 @@ const styles = StyleSheet.create({
         right: 0,
         top: NAVIGATION_HEIGHT + countcoordinatesX(80),
         bottom: 0,
-        overflow: 'hidden'
+        // bottom: SCREEN_HEIGHT - (NAVIGATION_HEIGHT + countcoordinatesX(80) + STATUS_TABBAR_HEIGHT) - 10,
+        overflow: 'hidden',
+        // backgroundColor: 'red',
     },
     shadowOpacity: {
         position: 'absolute',
