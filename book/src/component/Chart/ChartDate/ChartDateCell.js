@@ -13,7 +13,7 @@ export default class ChartDateCell extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>ChartDateCellChartDateCellChartDateCell</Text>
+                <Text>123 </Text>
             </View>
         );
     }
@@ -21,8 +21,6 @@ export default class ChartDateCell extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'green',
-        paddingRight: countcoordinatesX(20),
+        
     }
 });

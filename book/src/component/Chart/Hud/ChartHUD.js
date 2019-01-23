@@ -60,7 +60,7 @@ export default class ChartHUD extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, {disabled: this.state.isShow == true ? true : false}]}>
                 <TouchableOpacity 
                     onPress={this._switchAnimation} 
                     activeOpacity={1.0} 

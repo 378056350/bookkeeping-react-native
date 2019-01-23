@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    FlatList,
+    ScrollView,
     StyleSheet
 } from 'react-native';
 import ChartDateCell from './ChartDateCell'
@@ -11,22 +11,22 @@ import ChartDateCell from './ChartDateCell'
 export default class ChartDate extends Component {
 
 
-
-    _renderItem = (item)=>{
-        return (
-            <ChartDateCell/>
-        )
+    subitem = ()=>{
+        var arr = []
+        for (var i=1; i<=20; i++) {
+            arr.push(<ChartDateCell key={i}/>)
+        }
+        return arr
     }
     
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
-                    style={styles.table}
-                    horizontal={true}
-                    data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}]}
-                    renderItem={this._renderItem}
-                />
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.content}>
+                        {this.subitem()}
+                    </View>
+                </ScrollView>
             </View>
         );
     }
@@ -38,10 +38,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: SCREEN_WIDTH,
         height: countcoordinatesX(120),
-        backgroundColor: 'red',
+        backgroundColor: 'white',
     },
-    table: {
+    scroll: {
+        flex: 1,
         width: SCREEN_WIDTH,
-        backgroundColor: 'orange',
+        height: countcoordinatesX(120),
+    },
+    content: {
+        flex: 1,
+        width: SCREEN_WIDTH,
     }
 });
