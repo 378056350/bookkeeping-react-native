@@ -38,8 +38,15 @@ export default class Book extends Component {
     }
 
     // 点击Item
-    _onItemPress = (index)=>{
-        this.refs.keyboard._switchAnimation(true)
+    _onItemPress = (index, modal)=>{
+        // 记账
+        if (modal.id != 999) {
+            this.refs.keyboard._switchAnimation(true)
+        }
+        // 设置
+        else {
+            this.props.navigation.navigate('Category', {'mode': 'push'})
+        }
     }
 
     // 取消

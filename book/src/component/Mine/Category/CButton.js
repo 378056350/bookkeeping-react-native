@@ -11,7 +11,7 @@ export default class CButton extends Component {
     
     render() {
         return (
-            <TouchableHighlight onPress={()=>{}} underlayColor={kColor_Line_Color}>
+            <TouchableHighlight onPress={this.props.onPress} underlayColor={kColor_Line_Color}>
                 <View style={styles.container}>
                     <Image style={styles.icon}/>
                     <Text style={styles.name}>添加分类</Text>

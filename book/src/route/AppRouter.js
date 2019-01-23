@@ -14,6 +14,8 @@ import Category from '~/component/Mine/Category/Category'
 import About from '~/component/Mine/About/About'
 import Timing from '~/component/Mine/Timing/Timing'
 import Login from '~/component/Login/Login/Login'
+import ACate from '~/component/Mine/ACate/ACate'
+
 
 
 import {
@@ -170,12 +172,16 @@ const TabbarStack = createBottomTabNavigator(
 );
 
 // push 还是 pop
+const PUSH_CONTENT = ['Book', 'Login']
 const dynamicModalTransition = (transitionProps, prevTransitionProps) => {
   var tranParams = transitionProps ? transitionProps.scene.route.params : undefined
   var prevParams = prevTransitionProps ? prevTransitionProps.scene.route.params : undefined
   if ((tranParams && !!tranParams['mode'] && tranParams['mode'] === 'modal') || 
       (prevParams && !!prevParams['mode'] && prevParams['mode'] === 'modal')) {
-    return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, true);
+      if ((tranParams && tranParams['mode'] === 'push') || (prevParams && prevParams['mode'] === 'push')) {
+        return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, false);
+      }
+      return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, true);
   } else {
     return StackViewTransitionConfigs.defaultTransitionConfig(transitionProps, prevTransitionProps, false);
   }
@@ -202,6 +208,10 @@ const AppRouter = createStackNavigator(
     },
     Category: {
       screen: Category,
+      navigationOptions: navigationOptions()
+    },
+    ACate: {
+      screen: ACate,
       navigationOptions: navigationOptions()
     },
     Timing: {

@@ -11,6 +11,11 @@ import CButton from './CButton'
 
 
 export default class Category extends Component {
+
+    _onButtonPress = ()=>{
+        this.props.navigation.navigate('ACate')
+    }
+
     render() {
         return (
             <BaseContainer 
@@ -19,7 +24,7 @@ export default class Category extends Component {
             >
                 <CHeader/>
                 <CTable/>
-                <CButton/>
+                <CButton onPress={this._onButtonPress}/>
             </BaseContainer>
         );
     }

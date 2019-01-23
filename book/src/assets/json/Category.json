@@ -295,6 +295,15 @@
 			"is_income": 0,
 			"is_system": 1,
 			"name": "居家"
+		},
+		{
+			"id": 999,
+			"icon_n": "cc_home_tools",
+			"icon_l": "cc_home_tools_l",
+			"icon_s": "cc_home_tools_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "设置"
 		}
 	],
 	"income": [{
@@ -350,6 +359,15 @@
 			"is_income": 1,
 			"is_system": 1,
 			"name": "其它"
+		},
+		{
+			"id": 999,
+			"icon_n": "cc_home_tools",
+			"icon_l": "cc_home_tools_l",
+			"icon_s": "cc_home_tools_s",
+			"is_income": 1,
+			"is_system": 1,
+			"name": "设置"
 		}
 	]
 }

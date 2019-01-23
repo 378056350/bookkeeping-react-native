@@ -49,36 +49,39 @@ export default class BookScroll extends Component {
     }
 
     // 点击Item
-    _onItemPress = (index)=>{
-        // 选中item
-        var chooseIndexs = this.state.chooseIndexs;
-        chooseIndexs[this.props.navigationIndex] = index
-        this.setState({
-            chooseIndexs: chooseIndexs
-        })
-        // 回调
-        this.props.onItemPress(index)
-        // Item尺寸
-        UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, width, height, pageX, pageY)=>{
-            const currentY = pageY - NAVIGATION_HEIGHT
-            const currentB = currentY + height
-            const scrollMinY = y - countcoordinatesX(10)
-            const itemY = y
-            const itemH = height
-            // Scroll尺寸
-            UIManager.measure(findNodeHandle(this.refs['list'+this.props.navigationIndex]),(x, y, width, height, pageX, pageY)=>{
-                const listH = SCREEN_HEIGHT - pageY - BOOK_KEYBOARD_H
-                const scrollMaxY = itemY - listH + itemH
-                // 不在范围内, 滚动
-                if (!(currentY >= 0 && currentB < listH)) {
-                    if (currentY < 0) {
-                        this.refs['list' + this.props.navigationIndex].scrollTo({x: 0, y: scrollMinY, animated: true})
-                    } else {
-                        this.refs['list' + this.props.navigationIndex].scrollTo({x: 0, y: scrollMaxY, animated: true})
-                    }
-                }
+    _onItemPress = (index, modal)=>{
+        // 记账
+        if (modal.id != 999) {
+            // 选中item
+            var chooseIndexs = this.state.chooseIndexs;
+            chooseIndexs[this.props.navigationIndex] = index
+            this.setState({
+                chooseIndexs: chooseIndexs
             })
-        })
+            // Item尺寸
+            UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, width, height, pageX, pageY)=>{
+                const currentY = pageY - NAVIGATION_HEIGHT
+                const currentB = currentY + height
+                const scrollMinY = y - countcoordinatesX(10)
+                const itemY = y
+                const itemH = height
+                // Scroll尺寸
+                UIManager.measure(findNodeHandle(this.refs['list'+this.props.navigationIndex]),(x, y, width, height, pageX, pageY)=>{
+                    const listH = SCREEN_HEIGHT - pageY - BOOK_KEYBOARD_H
+                    const scrollMaxY = itemY - listH + itemH
+                    // 不在范围内, 滚动
+                    if (!(currentY >= 0 && currentB < listH)) {
+                        if (currentY < 0) {
+                            this.refs['list' + this.props.navigationIndex].scrollTo({x: 0, y: scrollMinY, animated: true})
+                        } else {
+                            this.refs['list' + this.props.navigationIndex].scrollTo({x: 0, y: scrollMaxY, animated: true})
+                        }
+                    }
+                })
+            })
+        }
+        // 回调
+        this.props.onItemPress(index, modal)
     }
 
     // 更新
@@ -107,7 +110,7 @@ export default class BookScroll extends Component {
                         ref={'item' + index}
                         key={index++} 
                         choose={this.state.chooseIndexs[i]==y}
-                        onPress={()=>this._onItemPress(y)} 
+                        onPress={(modal)=>this._onItemPress(y, modal)} 
                         model={data[y]}
                     />
                 )

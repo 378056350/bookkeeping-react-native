@@ -13,7 +13,7 @@ export default class BookCell extends Component {
 
     render() {
         return (
-            <TouchableOpacity activeOpacity={0.9} onPress={this.props.onPress} style={styles.container}>
+            <TouchableOpacity activeOpacity={0.9} onPress={()=>this.props.onPress(this.props.model)} style={styles.container}>
                 <View style={styles.view}>
                     <Image 
                         resizeMode={'contain'} 
