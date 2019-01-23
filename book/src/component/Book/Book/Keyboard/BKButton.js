@@ -24,14 +24,18 @@ export default class BKButton extends Component {
                 underlayColor={this.props.index != 15 ? kColor_BG : kColor_Main_Dark_Color}
             >
                 <View style={styles.view}>
-                    <Text style={styles.name}>{this.props.title}</Text>
+                    <Text style={[styles.name, {
+                        fontSize: (BKCalculation.isDate(this.props.index) && this.props.title !== '今天') ? FONT_SIZE(12) : FONT_SIZE(16)
+                    }]}>
+                        {this.props.title}
+                    </Text>
                 </View>
             </TouchableHighlight>
         );
     }
 
     // 内容
-    getButtonContent = (index)=>{
+    getButtonContent = (index, date)=>{
         if (index == 0) {
             return '7'
         } else if (index == 1) {

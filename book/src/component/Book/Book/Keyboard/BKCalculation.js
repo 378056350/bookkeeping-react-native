@@ -152,7 +152,7 @@ export default class BKCalculation {
 
     // 输入数字
     static enterMath = (string, index)=>{
-        var math = BKCalculation.getButtonString(string, index)
+        var math = BKCalculation.getButtonString(index, string)
         // 字符串只有一个0
         if (string === "0") {
             return math
@@ -177,7 +177,7 @@ export default class BKCalculation {
     }
     // 输入加减
     static enterAddLess = (string, index)=>{
-        var str = BKCalculation.getButtonString(string, index)
+        var str = BKCalculation.getButtonString(index, string)
         var last = string.charAt(string.length-1)
         if (last == "+" || last == "-") {
             return string.substring(0, string.length-1) + str
@@ -195,7 +195,7 @@ export default class BKCalculation {
         if (last == '=') {
             str = str.substring(0, string.length - 1)
         }
-        return eval(str) + ""
+        return eval(str).toFixed(2) + ""
     }
     
 
@@ -206,8 +206,6 @@ export default class BKCalculation {
         } 
 
         var str = string.substring(1, string.length-1)
-        console.log("======================");
-        console.log(str);
         
         var count = 0;
         for (var i=0; i<str.length; i++) {
@@ -226,7 +224,7 @@ export default class BKCalculation {
 
 
     // 按钮内容
-    static getButtonString = (string, index)=>{
+    static getButtonString = (index, string, date)=>{
         if (index == 0) {
             return '7'
         } else if (index == 1) {
@@ -234,7 +232,11 @@ export default class BKCalculation {
         } else if (index == 2) {
             return '9'
         } else if (index == 3) {
-            return '今天'
+            if (date == undefined) {
+                return '今天'
+            } else {
+                return date
+            }
         } else if (index == 4) {
             return '4'
         } else if (index == 5) {

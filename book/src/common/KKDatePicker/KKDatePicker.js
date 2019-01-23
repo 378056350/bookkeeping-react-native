@@ -69,7 +69,7 @@ export default class KKDatePicker extends Component {
                     </TouchableOpacity>
                     <KDContent 
                         style={{bottom: this.state.contentAnim}} 
-                        number={1}
+                        number={this.props.number}
                         onCancle={this.hide}
                         onConfirm={this._onConfirm}
                     />
@@ -81,10 +81,12 @@ export default class KKDatePicker extends Component {
 
 
 KKDatePicker.propTypes = {
+    number: PropTypes.number.isRequired,
     onConfirm: PropTypes.func.isRequired,
 }
 KKDatePicker.defaultProps = {
-    onConfirm: ()=>{}
+    onConfirm: ()=>{},
+    number: 0,
 };
 
 

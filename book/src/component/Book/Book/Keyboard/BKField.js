@@ -20,6 +20,7 @@ export default class BKField extends Component {
                     placeholder={'点击写备注'}
                     placeholderTextColor={kColor_Text_Gray}
                     iosspellCheck={false} 
+                    contextMenuHidden={true}
                     selectionColor={kColor_Main_Color}
                     returnKeyType={'done'}
                 />
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: countcoordinatesX(120),
         fontSize: FONT_SIZE(14),
+        fontFamily: 'Helvetica Neue',
         fontWeight: '300',
         color: kColor_Text_Black,
     },
