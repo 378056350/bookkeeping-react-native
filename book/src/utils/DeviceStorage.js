@@ -2,17 +2,26 @@ import {
   AsyncStorage
 } from 'react-native';
 const cateList = require('~/assets/json/Category.json')
+const ACA = require('~/assets/json/ACA.json')
 
 // 存储键值
 export const SAVE = {
-    "PIN_FIRST_RUN": "PIN_FIRST_RUN",                       // 第一次运行
-    "PIN_CATE_SYS_HAS_PAY": "PIN_CATE_SYS_HAS_PAY",         // 系统 - 添加的 - 支出
-    "PIN_CATE_SYS_REMOVE_PAY": "PIN_CATE_SYS_REMOVE_PAY",   // 系统 - 删除的 - 支出
-    "PIN_CATE_CUS_HAS_PAY": "PIN_CATE_CUS_HAS_PAY",         // 用户 - 添加的 - 支出
+    "PIN_FIRST_RUN": "PIN_FIRST_RUN",                                     // 第一次运行
+    "PIN_CATE_SYS_HAS_PAY": "PIN_CATE_SYS_HAS_PAY",                       // 系统 - 添加的 - 支出
+    "PIN_CATE_SYS_REMOVE_PAY": "PIN_CATE_SYS_REMOVE_PAY",                 // 系统 - 删除的 - 支出
+    "PIN_CATE_CUS_HAS_PAY": "PIN_CATE_CUS_HAS_PAY",                       // 用户 - 添加的 - 支出
     "PIN_CATE_SYS_Has_PAY_SYNCED": "PIN_CATE_SYS_Has_PAY_SYNCED",         // 系统 - 添加的 - 支出 - 未同步(同步后应该为空)
     "PIN_CATE_SYS_REMOVE_PAY_SYNCED": "PIN_CATE_SYS_REMOVE_PAY_SYNCED",   // 系统 - 删除的 - 支出 - 未同步(同步后应该为空)
     "PIN_CATE_CUS_HAS_PAY_SYNCED": "PIN_CATE_CUS_HAS_PAY_SYNCED",         // 用户 - 添加的 - 支出 - 未同步(同步后应该为空)
     "PIN_CATE_CUS_REMOVE_PAY_SYNCED": "PIN_CATE_CUS_REMOVE_PAY_SYNCED",   // 用户 - 删除的 - 支出 - 未同步(同步后应该为空)
+
+    "PIN_CATE_SYS_HAS_INCOME": "PIN_CATE_SYS_HAS_INCOME",                           // 系统 - 添加的 - 收入
+    "PIN_CATE_SYS_REMOVE_INCOME": "PIN_CATE_SYS_REMOVE_INCOME",                     // 系统 - 删除的 - 收入
+    "PIN_CATE_CUS_HAS_INCOME": "PIN_CATE_CUS_HAS_INCOME",                           // 用户 - 添加的 - 收入
+    "PIN_CATE_SYS_Has_INCOME_SYNCED": "PIN_CATE_SYS_Has_INCOME_SYNCED",             // 系统 - 添加的 - 收入 - 未同步(同步后应该为空)
+    "PIN_CATE_SYS_REMOVE_INCOME_SYNCED": "PIN_CATE_SYS_REMOVE_INCOME_SYNCED",       // 系统 - 删除的 - 收入 - 未同步(同步后应该为空)
+    "PIN_CATE_CUS_HAS_INCOME_SYNCED": "PIN_CATE_CUS_HAS_INCOME_SYNCED",             // 用户 - 添加的 - 收入 - 未同步(同步后应该为空)
+    "PIN_CATE_CUS_REMOVE_INCOME_SYNCED": "PIN_CATE_CUS_REMOVE_INCOME_SYNCED",       // 用户 - 删除的 - 收入 - 未同步(同步后应该为空)
 }
 
 
@@ -35,12 +44,19 @@ export default class DeviceStorage {
             DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_PAY_SYNCED, [])
             DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_PAY_SYNCED, [])
             DeviceStorage.save(SAVE.PIN_CATE_CUS_REMOVE_PAY_SYNCED, [])
+            // 收入
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_HAS_INCOME, cateList.income)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_INCOME, [])
+            DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME, [])
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_Has_INCOME_SYNCED, [])
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_INCOME_SYNCED, [])
+            DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED, [])
+            DeviceStorage.save(SAVE.PIN_CATE_CUS_REMOVE_INCOME_SYNCED, [])
+
+            // 添加类别
             DeviceStorage.save(SAVE.PIN_FIRST_RUN, "1")
         }
-        console.log("==========================");
-        console.log(await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY));
-        console.log("==========================");
-        
+
     }
 
 
