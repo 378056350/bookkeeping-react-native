@@ -9,7 +9,6 @@ import {
 import BookCell from '~/component/Book/Book/BookCell'
 
 
-
 export default class BookScroll extends Component {
 
     constructor(props) {
@@ -118,9 +117,9 @@ export default class BookScroll extends Component {
     scrollItem = ()=>{
         var array = []
         var index = 0
-        for (let i=0; i<2; i++) {
+        for (let i=0; i<this.props.models.length; i++) {
             var subarray = []
-            var data = i === 0 ? this.props.models['pay'] : this.props.models['income']
+            var data = this.props.models[i] ? this.props.models[i] : []
             for (let y=0; y<data.length; y++) {
                 subarray.push(
                     <BookCell 

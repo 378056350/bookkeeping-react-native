@@ -10,7 +10,7 @@ import BaseContainer from '~/common/Base/BaseContainer'
 import BookNavigation from '~/component/Book/Book/BookNavigation'
 import BookScroll from '~/component/Book/Book/BookScroll'
 import BookKeyboard from '~/component/Book/Book/Keyboard/BookKeyboard'
-const cateList = require('~/assets/json/Category.json')
+import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
 
 
 export default class Book extends Component {
@@ -19,8 +19,17 @@ export default class Book extends Component {
         super(props);
         this.state = {
             navigationIndex: 0,
+            models: [[],[]]
         };
     }
+
+    componentDidMount = ()=>{
+        DeviceStorage.getCategory().then((datas) => {
+            this.setState({
+                models: datas
+            })
+        });
+    };
     
     // 点击完成
     _onNavigationPress = (page)=>{
@@ -51,11 +60,6 @@ export default class Book extends Component {
 
     // 记账回调
     _onBookPress = (money, mark, date)=>{
-        console.log("money: " + money);
-        console.log("mark: " + mark);
-        console.log("date: " + date);
-        // console.log("category: " = this.state.cho);
-        
         
         
     }
@@ -96,7 +100,7 @@ export default class Book extends Component {
                 hasTitleComponent={this.hasTitleComponent}
             >
                 <BookScroll 
-                    models={cateList}
+                    models={this.state.models}
                     navigationIndex={this.state.navigationIndex}
                     onScrollBeginDrag={this._onScrollBeginDrag}
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
