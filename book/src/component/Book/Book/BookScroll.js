@@ -59,12 +59,12 @@ export default class BookScroll extends Component {
                 chooseIndexs: chooseIndexs
             })
             // Item尺寸
-            UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, width, height, pageX, pageY)=>{
-                const currentY = pageY - NAVIGATION_HEIGHT
-                const currentB = currentY + height
-                const scrollMinY = y - countcoordinatesX(10)
-                const itemY = y
-                const itemH = height
+            UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, width, itemH, pageX, itemPageY)=>{
+                const row = Math.floor(index / 4)
+                const itemY = countcoordinatesX(20) + row * itemH
+                const currentY = itemPageY - NAVIGATION_HEIGHT
+                const currentB = currentY + itemH
+                const scrollMinY = itemY - countcoordinatesX(10)
                 // Scroll尺寸
                 UIManager.measure(findNodeHandle(this.refs['list'+this.props.navigationIndex]),(x, y, width, height, pageX, pageY)=>{
                     const listH = SCREEN_HEIGHT - pageY - BOOK_KEYBOARD_H
