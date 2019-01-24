@@ -56,6 +56,39 @@ export default class DeviceStorage {
         return await [pay, income]
     }
 
+    // 类别设置
+    static getCategorySet = async ()=>{
+        var pay1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
+        var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
+        var pay3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
+        var payInsert = [...pay1, ...pay2].map((item,index) =>{
+            return Object.assign(item, {key: index + '.' })
+        })
+        var payRemove = pay3.map((item,index) =>{
+            return Object.assign(item,{key: index + '.' })
+        })
+
+        console.log("=============================");
+        console.log(payInsert);
+        console.log(payRemove);
+        
+        var pay = [{'title': '添加', 'data': payInsert}, {'title': '删除', 'data': payRemove}]
+        
+
+        var income1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
+        var income2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
+        var income3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
+        var incomeInsert = [...income1, ...income2].map((item,index) =>{
+            return Object.assign(item, {key: index + '.' })
+        })
+        var incomeRemove = income3.map((item,index) =>{
+            return Object.assign(item,{key: index + '.' })
+        })
+        var income = [{'title': '添加', 'data': incomeInsert}, {'title': '删除', 'data': incomeRemove}]
+
+        return await [pay, income]
+    }
+
 
     /**
      * 初始化

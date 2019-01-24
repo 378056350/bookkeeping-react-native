@@ -2,15 +2,39 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
+    Animated,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
 import CHeader from './CHeader'
 import CTable from './CTable'
 import CButton from './CButton'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 
 export default class Category extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            models: [[[],[]],[[],[]]]
+        };
+
+        this.rowSwipeAnimatedValues = {};
+		Array(20).fill('').forEach((_, i) => {
+			this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+		});
+    }
+
+    componentDidMount() {
+        var models = DeviceStorage.getCategorySet()
+        console.log("================================");
+        console.log(models);
+        
+        // this.setState({
+        //     models: models
+        // })
+    }
 
     _onButtonPress = ()=>{
         this.props.navigation.navigate('ACate')
@@ -23,7 +47,7 @@ export default class Category extends Component {
                 title={'类别设置'}
             >
                 <CHeader/>
-                <CTable/>
+                <CTable models={this.state.models}/>
                 <CButton onPress={this._onButtonPress}/>
             </BaseContainer>
         );

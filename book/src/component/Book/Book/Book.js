@@ -10,7 +10,7 @@ import BaseContainer from '~/common/Base/BaseContainer'
 import BookNavigation from '~/component/Book/Book/BookNavigation'
 import BookScroll from '~/component/Book/Book/BookScroll'
 import BookKeyboard from '~/component/Book/Book/Keyboard/BookKeyboard'
-import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 
 export default class Book extends Component {

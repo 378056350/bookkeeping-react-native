@@ -15,13 +15,23 @@ export default class CTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			sectionListData: Array(5).fill('').map((_,i) => ({title: `title${i + 1}`, data: [...Array(5).fill('').map((_, j) => ({key: `${i}.${j}`, text: `item #${j}`}))]})),
+			sectionListData: []
+			// sectionListData: []
+			// sectionListData: [
+			// 	{'title': 'asd', 'data': [
+			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},
+			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},
+			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'}
+			// 	]},
+			// 	{'title': 'asd', 'data': [{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'}]}
+			// ]
+			// sectionListData: Array(5).fill('').map((_,i) => ({title: `title${i + 1}`, data: [...Array(5).fill('').map((_, j) => ({key: `${i}.${j}`, text: `item #${j}`}))]})),
 		};
 
-		this.rowSwipeAnimatedValues = {};
-		Array(20).fill('').forEach((_, i) => {
-			this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-		});
+		// this.rowSwipeAnimatedValues = {};
+		// Array(20).fill('').forEach((_, i) => {
+		// 	this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+		// });
 	}
 
 	closeRow(rowMap, rowKey) {
@@ -54,6 +64,7 @@ export default class CTable extends Component {
                 <SwipeListView
                     useSectionList
                     sections={this.state.sectionListData}
+                    // sections={this.props.models}
                     renderItem={ (data, rowMap) => (
                         <TouchableHighlight
                             onPress={ _ => console.log('You touched me') }
