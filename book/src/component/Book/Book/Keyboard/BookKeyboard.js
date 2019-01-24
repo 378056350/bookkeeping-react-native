@@ -10,6 +10,7 @@ import BKField from './BKField'
 import BKButton from './BKButton'
 import BKCalculation from '~/component/Book/Book/Keyboard/BKCalculation'
 import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
+import DateExtension from '~/utils/DateExtension'
 
 
 export default class BookKeyboard extends Component {
@@ -66,8 +67,20 @@ export default class BookKeyboard extends Component {
         }
         // 其他
         else {
-            var money = BKCalculation.getMoneyString(this.state.money, index)
-            this.setState({ money: money })
+            const money = this.state.money
+            // 显示
+            var newMoney = BKCalculation.getMoneyString(money, index)
+            this.setState({ money: newMoney })
+
+            // 点击完成
+            if (BKCalculation.isComplete(index)) {
+                // 回调
+                if (BKCalculation.isCalculation(money)) {
+                    const mark = this.refs.field.getText()
+                    const date = this.state.date != undefined ? this.state.date : DateExtension.dateToStr(new Date())
+                    this.props.onBookPress(newMoney, mark, date)
+                }
+            }
         }
 
     }
@@ -86,9 +99,9 @@ export default class BookKeyboard extends Component {
 
     // 确认
     _onConfirm = (year, month, day)=>{
-        this.setState({
-            date: year + '-' + month + '-' + day
-        })
+        const date = new Date(year, month-1, day)
+        const dateStr = DateExtension.dateToStr(date)
+        this.setState({ date: dateStr })
     }
 
 
@@ -104,7 +117,7 @@ export default class BookKeyboard extends Component {
                     <BKButton 
                         key={key} 
                         index={key} 
-                        title={BKCalculation.getButtonString(i*4+y, this.state.money, this.state.date, )}
+                        title={BKCalculation.getButtonString(i*4+y, this.state.money, this.state.date)}
                         onPress={this._onItemPress}
                         style={styles.subview}
                     />
@@ -124,7 +137,7 @@ export default class BookKeyboard extends Component {
         return (
             <Animated.View style={{height: this.state.keyboardAnim}}>
                 <Animated.View style={styles.container}>
-                    <BKField money={this.state.money} style={{top: this.state.inputAnim}}/>
+                    <BKField ref={'field'} money={this.state.money} style={{top: this.state.inputAnim}}/>
                     {this.subitem()}
                 </Animated.View>
                 <KKDatePicker ref={'picker'} number={3} onConfirm={this._onConfirm}/>

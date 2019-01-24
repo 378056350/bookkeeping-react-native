@@ -18,6 +18,7 @@ export default class Chart extends Component {
         }
     }
 
+
     _navigationPress = ()=>{
         // this.setState({navigationIndex: this.state.navigationIndex == 0 ? 1 : 0})
         this.refs.hud._switchAnimation()

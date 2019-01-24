@@ -9,6 +9,17 @@ import {
 
 export default class BKField extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { 
+            text: '' 
+        };
+    }
+
+    getText = ()=>{
+        return this.state.text
+    }
+
     // 初始化
     render() {
         return (
@@ -21,6 +32,7 @@ export default class BKField extends Component {
                     placeholderTextColor={kColor_Text_Gray}
                     iosspellCheck={false} 
                     contextMenuHidden={true}
+                    onChangeText={(text) => this.setState({text})}
                     selectionColor={kColor_Main_Color}
                     returnKeyType={'done'}
                 />

@@ -49,6 +49,17 @@ export default class Book extends Component {
         }
     }
 
+    // 记账回调
+    _onBookPress = (money, mark, date)=>{
+        console.log("money: " + money);
+        console.log("mark: " + mark);
+        console.log("date: " + date);
+        // console.log("category: " = this.state.cho);
+        
+        
+        
+    }
+
     // 取消
     hasContentRight = ()=>{
         const { goBack } = this.props.navigation;
@@ -91,7 +102,7 @@ export default class Book extends Component {
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
                     onItemPress={this._onItemPress}
                 />
-                <BookKeyboard ref={'keyboard'}/>
+                <BookKeyboard ref={'keyboard'} onBookPress={this._onBookPress}/>
             </BaseContainer>
         );
     }

@@ -81,6 +81,28 @@ export default class BKCalculation {
         }
         return false
     }
+    // 计算 
+    static isCalculation = (string)=>{
+        if (string.length <= 1) {
+            return true
+        } 
+
+        var str = string.substring(1, string.length-1)
+        
+        var count = 0;
+        for (var i=0; i<str.length; i++) {
+            if (str.charAt(i) == '+') {
+                count += 1
+            }
+            if (str.charAt(i) == '-') {
+                count += 1
+            }
+        }
+        if (count >= 1) {
+            return false
+        }
+        return true
+    }
 
 
     // 允许数字
