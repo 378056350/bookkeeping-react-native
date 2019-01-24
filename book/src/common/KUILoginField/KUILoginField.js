@@ -85,6 +85,10 @@ export default class KUILoginField extends Component {
         this.setState({name: '60s重新获取'})
     }
 
+    blur = ()=>{
+        this.refs.input.blur()
+    }
+
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer);
     }
@@ -117,6 +121,7 @@ export default class KUILoginField extends Component {
             <View style={[styles.container, {...this.props.style}]}>
                 <Text style={[styles.names, {width: countcoordinatesX(120)}]}>{this.props.name}</Text>
                 <TextInput
+                    ref={'input'}
                     style={styles.input}
                     selectionColor={kColor_Main_Color}
                     keyboardType={this.props.keyboardType}  // 0: 普通  1: 数字

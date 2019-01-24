@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: SCREEN_WIDTH,
         backgroundColor: 'white',
+        paddingTop: iOS ? STATUS_BAR_HEIGHT : 0,
     },
     top: {
         width: SCREEN_WIDTH,

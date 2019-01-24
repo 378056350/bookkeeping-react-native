@@ -15,7 +15,11 @@ export default class Register extends Component {
 
     render() {
         return (
-            <BaseContainer title={'注册'} navigation={this.props.navigation}  style={styles.container}>
+            <BaseContainer 
+                title={'注册'} 
+                navigation={this.props.navigation}  
+                style={styles.container}
+            >
                 <KUILoginField 
                     name={'手机号'} 
                     field={'请输入手机号'} 

@@ -69,6 +69,11 @@ export default class BookScroll extends Component {
                 UIManager.measure(findNodeHandle(this.refs['list'+this.props.navigationIndex]),(x, y, width, height, pageX, pageY)=>{
                     const listH = SCREEN_HEIGHT - pageY - BOOK_KEYBOARD_H
                     const scrollMaxY = itemY - listH + itemH
+                    const listContentH = this['listLayout' + this.props.navigationIndex].height
+                    // 内容过短, 不可滚动
+                    if (listContentH < listH) {
+                        return 
+                    }
                     // 不在范围内, 滚动
                     if (!(currentY >= 0 && currentB < listH)) {
                         if (currentY < 0) {
@@ -125,7 +130,7 @@ export default class BookScroll extends Component {
                     onMomentumScrollEnd={this._onVerticalMomentumScrollEnd}
                     onScrollEndDrag={this._onVerticalMomentumScrollEnd}
                 >
-                    <View style={styles.listContent}>
+                    <View style={styles.listContent} onLayout={(e) => this['listLayout' + i] = e.nativeEvent.layout}>
                         {subarray}
                     </View>
                 </ScrollView>

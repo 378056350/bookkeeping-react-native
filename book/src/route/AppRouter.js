@@ -13,15 +13,12 @@ import Badge from '~/component/Mine/Badge/Badge'
 import Category from '~/component/Mine/Category/Category'
 import About from '~/component/Mine/About/About'
 import Timing from '~/component/Mine/Timing/Timing'
-import Login from '~/component/Login/Login/Login'
-import Login2 from '~/component/Login/Login/Login2'
+import Login from '~/component/Login/Login/Login/Login'
+import Login2 from '~/component/Login/Login/Login2/Login2'
 import Register from '~/component/Login/Register/Register'
 import Register2 from '~/component/Login/Register/Register2'
 import Register3 from '~/component/Login/Register/Register3'
 import ACate from '~/component/Mine/ACate/ACate'
-
-
-
 
 
 import {
@@ -31,16 +28,16 @@ import {
 } from 'react-navigation';
 
 
-var tabbar_detail_n = require('~/assets/image/tabbar_detail_n.png')
-var tabbar_detail_s = require('~/assets/image/tabbar_detail_s.png')
-var tabbar_chart_n = require('~/assets/image/tabbar_chart_n.png')
-var tabbar_chart_s = require('~/assets/image/tabbar_chart_s.png')
-var tabbar_add_n = require('~/assets/image/tabbar_add_n.png')
-var tabbar_add_h = require('~/assets/image/tabbar_add_h.png')
-var tabbar_discover_n = require('~/assets/image/tabbar_discover_n.png')
-var tabbar_discover_s = require('~/assets/image/tabbar_discover_s.png')
-var tabbar_mine_n = require('~/assets/image/tabbar_mine_n.png')
-var tabbar_mine_s = require('~/assets/image/tabbar_mine_s.png')
+const tabbar_detail_n = require('~/assets/image/tabbar_detail_n.png')
+const tabbar_detail_s = require('~/assets/image/tabbar_detail_s.png')
+const tabbar_chart_n = require('~/assets/image/tabbar_chart_n.png')
+const tabbar_chart_s = require('~/assets/image/tabbar_chart_s.png')
+const tabbar_add_n = require('~/assets/image/tabbar_add_n.png')
+const tabbar_add_h = require('~/assets/image/tabbar_add_h.png')
+const tabbar_discover_n = require('~/assets/image/tabbar_discover_n.png')
+const tabbar_discover_s = require('~/assets/image/tabbar_discover_s.png')
+const tabbar_mine_n = require('~/assets/image/tabbar_mine_n.png')
+const tabbar_mine_s = require('~/assets/image/tabbar_mine_s.png')
 
 
 // 获取文本
@@ -71,13 +68,10 @@ const navigationImage = (index)=>{
     return [tabbar_mine_n, tabbar_mine_s]
   }
 }
-
-
 // 单个导航栏配置
 const navigationOptions = ()=>({
   header: null,
 })
-
 // 导航栏栈配置
 const defaultNavigationOptions = (index)=>({
   tabBarIcon: (({tintColor, focused}) => {
@@ -259,7 +253,6 @@ const AppRouter = createStackNavigator(
     cardOverlayEnabled: true
   }
 )
-
 
 export default AppRouter;
 
