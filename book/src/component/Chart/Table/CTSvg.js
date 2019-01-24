@@ -113,17 +113,18 @@ export default class CTSvg extends Component {
     // 折线
     polyline = ()=>{
         var arr = []
-        for (var i=0; i<chartCount; i++) {
-            const x1 = chartW / chartCount * i
-            const x2 = chartW / chartCount * (i + 1)
+        for (var i=0; i<(chartCount-1); i++) {
+            const x1 = pointLeft(i)
+            const x2 = pointLeft(i + 1)
             arr.push(
                 <Line
                     key={i}
                     x1={x1+""}
-                    y1={i * 20+""}
+                    y1={5 * 20+""}
                     x2={x2+""}
                     y2={20+""}
                     stroke={this.props.lineColor}
+                    stroke={'red'}
                     strokeWidth={countcoordinatesX(1)+""}
                 />
             )
@@ -156,7 +157,7 @@ export default class CTSvg extends Component {
             <View style={styles.container}>
                 <Svg
                     width={SCREEN_WIDTH+""}
-                    height={"100"}
+                    height={(chartH + titleH) + ""}
                     fill={'#000'}
                 >
                     {this.defaultLine()}

@@ -84,14 +84,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: SCREEN_WIDTH,
-        height: NAVIGATION_HEIGHT,
-        paddingTop: STATUS_BAR_HEIGHT,
+        height: iOS ? NAVIGATION_HEIGHT : NAVIGATION_HEIGHT - STATUS_BAR_HEIGHT,
+        paddingTop: iOS ? STATUS_BAR_HEIGHT : 0,
         backgroundColor: kColor_Main_Color,
     },
     title: {
         fontSize: FONT_SIZE(18),
-        fontWeight: '600',
-        color: kColor_Text_Black
+        fontWeight: '400',
+        color: kColor_Text_Black,
+        letterSpacing: 1,
     },
     contentLeft: {
         position: 'absolute',

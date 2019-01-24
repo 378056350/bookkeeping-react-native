@@ -15,6 +15,13 @@ const count = 20
 
 export default class ChartDate extends Component {
 
+    componentDidMount = () => {
+      
+    }
+
+    layout=(e)=>{  console.log(e)  }
+    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -28,21 +35,14 @@ export default class ChartDate extends Component {
         // 设置
         this.setState({choose: index})
         // 滚动
-
-// scrollContent
-
-        UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, width, height, pageX, pageY)=>{
-            const itemX = x
-            const itemW = width
-            UIManager.measure(findNodeHandle(this.refs.scrollContent),(x, y, width, height, pageX, pageY)=>{
-                const screenX = (SCREEN_WIDTH - itemW) / 2
-
-                var offsetX = itemX - screenX
-                offsetX = width > (offsetX + screenX * 2 + itemW) ? offsetX : width - SCREEN_WIDTH
-                offsetX = offsetX < 0 ? 0 : offsetX
-
-                this.refs.scroll.scrollTo({x: offsetX, y: 0, animated: true})
-            })
+        UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, itemW)=>{
+            const itemX = index * itemW
+            const scrollW = this.scrollLayout.width
+            const screenX = (SCREEN_WIDTH - itemW) / 2
+            var offsetX = itemX - screenX
+            offsetX = scrollW > (offsetX + screenX * 2 + itemW) ? offsetX : scrollW - SCREEN_WIDTH
+            offsetX = offsetX < 0 ? 0 : offsetX
+            this.refs.scroll.scrollTo({x: offsetX, y: 0, animated: true})
         })
         // 动画
         Animated.timing(this.state.leftAnim,{ 
@@ -73,7 +73,7 @@ export default class ChartDate extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
-                    <View style={styles.content} ref={'scrollContent'}>
+                    <View style={styles.content} onLayout={(e) => this.scrollLayout= e.nativeEvent.layout} ref={'scrollContent'}>
                         {this.subitem()}
                     </View>
                     <Animated.View style={[styles.line, {left: this.state.leftAnim}]}/>

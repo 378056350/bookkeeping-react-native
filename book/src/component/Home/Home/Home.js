@@ -3,6 +3,7 @@ import {
     View,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
 import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './HomeTable'
@@ -15,14 +16,24 @@ export default class Home extends Component {
     }
 
 
+    hasTitleComponent = ()=>{
+        return (
+            <HomeNavigation/>
+        )
+    }
+
     render() {
         return (
-            <View style={styles.container}>
-                <HomeNavigation/>
+            <BaseContainer 
+                navigation={this.props.navigation} 
+                hasLeft={true}
+                hasTitle={false} 
+                hasTitleComponent={this.hasTitleComponent}
+            >
                 <HomeHeader/>
                 <HomeTable/>
                 <KKDatePicker ref={'picker'} onConfirm={this._onConfirm}/>
-            </View>
+            </BaseContainer>
         );
     }
 }

@@ -8,6 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import ChartHUDCell from './ChartHUDCell'
+import Display from 'react-native-display';
 
 export default class ChartHUD extends Component {
     
@@ -80,7 +81,6 @@ export default class ChartHUD extends Component {
         })
     }
 
-
     // 点击
     _onPress = (index)=>{
         this._switchAnimation()
@@ -89,7 +89,7 @@ export default class ChartHUD extends Component {
 
     render() {
         return (
-            <View style={[styles.container, {display: this.state.isShow == true ? 'flex' : 'none'}]}>
+            <Display enable={this.state.isShow} style={styles.container}>
                 <TouchableOpacity 
                     onPress={this._switchAnimation} 
                     activeOpacity={1.0} 
@@ -112,7 +112,7 @@ export default class ChartHUD extends Component {
                         style={styles.cell}
                     />
                 </Animated.View>
-            </View>
+            </Display>
         );
     }
 }
@@ -122,11 +122,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        top: NAVIGATION_HEIGHT + countcoordinatesX(80),
+        top: NAVIGATION_HEIGHT + countcoordinatesX(80) - (iOS ? 0 : STATUS_BAR_HEIGHT),
         bottom: 0,
-        // bottom: SCREEN_HEIGHT - (NAVIGATION_HEIGHT + countcoordinatesX(80) + STATUS_TABBAR_HEIGHT) - 10,
         overflow: 'hidden',
-        // backgroundColor: 'red',
     },
     shadowOpacity: {
         position: 'absolute',

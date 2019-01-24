@@ -27,6 +27,7 @@ global.iOS = ios,
 global.Android = android,
 global.IS_IPHONEX = isIPhoneX
 
+global.kColor_White = 'rgba(255, 255, 255, 1)'
 global.kColor_BG = 'rgba(250, 250, 250, 1)'
 global.kColor_Line_Color = 'rgba(245, 245, 245, 1)'
 global.kColor_Three_Color = 'rgba(200, 200, 200, 1)'

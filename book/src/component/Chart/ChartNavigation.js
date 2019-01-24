@@ -13,14 +13,12 @@ export default class ChartNavigation extends Component {
     
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableOpacity onPress={this.props.onPress} activeOpacity={0.8} style={styles.touch}>
-                    <View style={styles.item}>
-                        <Text style={styles.name}>{this.props.navigationIndex == 0 ? '收入' : '支出'}</Text>
-                        <Image source={time_down} resizeMode={'contain'} style={styles.icon}/>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={this.props.onPress} activeOpacity={0.8} style={styles.touch}>
+                <View style={styles.item}>
+                    <Text style={styles.name}>{this.props.navigationIndex == 0 ? '收入' : '支出'}</Text>
+                    <Image source={time_down} resizeMode={'contain'} style={styles.icon}/>
+                </View>
+            </TouchableOpacity>
         );
     }
 }

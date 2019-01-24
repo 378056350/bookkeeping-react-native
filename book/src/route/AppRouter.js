@@ -14,7 +14,13 @@ import Category from '~/component/Mine/Category/Category'
 import About from '~/component/Mine/About/About'
 import Timing from '~/component/Mine/Timing/Timing'
 import Login from '~/component/Login/Login/Login'
+import Login2 from '~/component/Login/Login/Login2'
+import Register from '~/component/Login/Register/Register'
+import Register2 from '~/component/Login/Register/Register2'
+import Register3 from '~/component/Login/Register/Register3'
 import ACate from '~/component/Mine/ACate/ACate'
+
+
 
 
 
@@ -220,6 +226,22 @@ const AppRouter = createStackNavigator(
     },
     Login: {
       screen: Login,
+      navigationOptions: navigationOptions()
+    },
+    Login2: {
+      screen: Login2,
+      navigationOptions: navigationOptions()
+    },
+    Register: {
+      screen: Register,
+      navigationOptions: navigationOptions()
+    },
+    Register2: {
+      screen: Register2,
+      navigationOptions: navigationOptions()
+    },
+    Register3: {
+      screen: Register3,
       navigationOptions: navigationOptions()
     },
     FindDetail: {

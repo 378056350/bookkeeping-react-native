@@ -4,13 +4,14 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
 import KUILoginField from '~/common/KUILoginField/KUILoginField'
 import KUIButton from '~/common/KUIButton/KUIButton'
 
 export default class Register3 extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <BaseContainer title={'注册'} navigation={this.props.navigation}  style={styles.container}>
                 <KUILoginField 
                     name={'新密码'} 
                     field={'请输入密码'} 
@@ -34,7 +35,7 @@ export default class Register3 extends Component {
                     style={styles.button}
                     disabled={true}
                 />
-            </View>
+            </BaseContainer>
         );
     }
 }

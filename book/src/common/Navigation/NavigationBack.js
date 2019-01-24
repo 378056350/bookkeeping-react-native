@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
       paddingRight: countcoordinatesX(20),
     },
     backImage: {
-      width: countcoordinatesX(50),
+      width: countcoordinatesX(40),
       height: 44,
     },
   });

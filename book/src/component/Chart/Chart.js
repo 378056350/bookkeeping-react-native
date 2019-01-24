@@ -3,6 +3,7 @@ import {
     View,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
 import ChartNavigation from '~/component/Chart/ChartNavigation'
 import ChartSegmentedControl from '~/component/Chart/ChartSegmentedControl'
 import ChartDate from '~/component/Chart/ChartDate/ChartDate'
@@ -27,10 +28,21 @@ export default class Chart extends Component {
         })
     }
 
+    hasTitleComponent = ()=>{
+        return (
+            <ChartNavigation onPress={this._navigationPress} navigationIndex={this.state.navigationIndex}/>
+        )
+    }
+
     render() {
         return (
-            <View style={styles.container}>
-                <ChartNavigation onPress={this._navigationPress} navigationIndex={this.state.navigationIndex}/>
+            <BaseContainer 
+                navigation={this.props.navigation} 
+                hasLeft={true}
+                hasTitle={false} 
+                hasTitleComponent={this.hasTitleComponent}
+            >
+                
                 <ChartSegmentedControl/>
                 <ChartDate/>
                 <ChartTable/>
@@ -39,7 +51,7 @@ export default class Chart extends Component {
                     navigationIndex={this.state.navigationIndex}
                     onPress={this._hudPress}
                 />
-            </View>
+            </BaseContainer>
         );
     }
 }

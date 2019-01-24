@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: SCREEN_WIDTH - countcoordinatesX(60),
-        // height: countcoordinatesX(300),
         marginLeft: countcoordinatesX(30),
         marginRight: countcoordinatesX(30),
     },

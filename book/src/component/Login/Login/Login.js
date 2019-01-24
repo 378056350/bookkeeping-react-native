@@ -8,6 +8,8 @@ import {
     Picker,
     StyleSheet
 } from 'react-native';
+import BaseContainer from '~/common/Base/BaseContainer'
+import ActionSheet from 'react-native-actionsheet'
 const share_icon = require('~/assets/image/share_icon.png')
 const share_shark = require('~/assets/image/share_shark_99x27_.png')
 const login_close = require('~/assets/image/login_close.png')
@@ -19,9 +21,28 @@ export default class Login extends Component {
         this.props.navigation.goBack()
     }
 
+    // 更多登录方式
+    _onMoreLogin = ()=>{
+        this.ActionSheet.show()
+    }
+
+    // 弹框
+    _onActionSheet = (index)=>{
+        if (index == 0) {
+            this.props.navigation.navigate('Register', {'mode': 'push'})
+        } else if (index == 1) {
+            this.props.navigation.navigate('Login2', {'mode': 'push'})
+        }
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <BaseContainer 
+                navigation={this.props.navigation} 
+                hasHeader={false}
+                statusColor={kColor_White}
+                style={styles.container}
+            >
                 <View style={styles.top}>
                     <TouchableOpacity onPress={this._onClose} style={styles.closePress}>
                         <Image source={login_close}/>
@@ -33,11 +54,18 @@ export default class Login extends Component {
                     <TouchableHighlight onPress={()=>{}} activeOpacity={1.0} underlayColor={kColor_Main_Dark_Color} style={styles.login}>
                         <Text style={styles.loginText}>QQ登录</Text>
                     </TouchableHighlight>
-                    <TouchableOpacity activeOpacity={0.6} style={styles.more}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={this._onMoreLogin} style={styles.more}>
                         <Text style={styles.moreText}>更多登录方式</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    options={['注册', '手机登录', '取消']}
+                    cancelButtonIndex={2}
+                    // destructiveButtonIndex={1}
+                    onPress={this._onActionSheet}
+                />
+            </BaseContainer>
         );
     }
 }
@@ -49,7 +77,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: SCREEN_WIDTH,
         backgroundColor: 'white',
-        paddingTop: STATUS_BAR_HEIGHT,
     },
     top: {
         width: SCREEN_WIDTH,

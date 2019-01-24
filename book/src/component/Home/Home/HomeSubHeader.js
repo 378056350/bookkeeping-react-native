@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: SCREEN_WIDTH,
         height: countcoordinatesX(60),
-        // backgroundColor: 'red',
         paddingLeft: countcoordinatesX(30),
         paddingRight: countcoordinatesX(30),
+        borderBottomColor: kColor_Line_Color,
+        borderBottomWidth: countcoordinatesX(1),
     },
     contentLeft: {
         flexDirection: 'row',

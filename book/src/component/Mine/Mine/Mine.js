@@ -12,7 +12,7 @@ export default class Mine extends Component {
     // 点击个人信息
     _onInfoPress = ()=>{
         console.log("asdasdas");
-        this.props.navigation.navigate('Login');
+        this.props.navigation.navigate('Login', {'mode': 'modal'});
     }
     // 点击Cell
     _onItemPress = (item)=>{
