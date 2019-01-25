@@ -1,28 +1,64 @@
 // 记账信息
 export const BKModel = {
-  id: 0,                  // id
-  category_id: 0,         // 分类
-  price: 0,               // 价格
-  year: 0,                // 年
-  month: 0,               // 月
-  day: 0,                 // 日
-  week: 0,                // 周
-  mark: "",               // 备注
-  dateStr: "",            // 日期字符串
-  date: new Date(),       // 日期
-  dateNumber: 0,          // 日期数字
-  cmodel: new BKCModel(), // 分类modal
+  // id: 0,                  // id
+  // category_id: 0,         // 分类
+  // price: 0,               // 价格
+  // year: 0,                // 年
+  // month: 0,               // 月
+  // day: 0,                 // 日
+  // week: 0,                // 周
+  // mark: "",               // 备注
+  // dateStr: "",            // 日期字符串
+  // date: new Date(),       // 日期
+  // dateNumber: 0,          // 日期数字
+  // cmodel: new BKCModel(), // 分类modal
+
 }
 
 // 分类信息
 export const BKCModel = {
-  id: 0,
-  name: "",
-  icon_n: "",
-  icon_l: "",
-  icon_s: "",
-  is_income: false,
-  is_system: false,
+  // id: 0,
+  // name: "",
+  // icon_n: "",
+  // icon_l: "",
+  // icon_s: "",
+  // is_income: false,
+  // is_system: false,
+
+
+  // 对象在数组所在的位置
+  indexOfObject: (array, obj)=>{
+    for (var i=0; i<array.length; i++) {
+      if (array[i].id === obj.id) {
+        return i
+      }
+    }
+    return -1
+  },
+
+  // 删除数组中的对象
+  removeOfObject: (array, obj)=>{
+    for (var i=0; i<array.length; i++) {
+      if (array[i].id === obj.id) {
+        array.splice(i, 1); 
+      }
+    }
+  },
+
+  // 根据index删除对象
+  removeObjectAtIndex: (array, index)=>{
+    if (array.length > index) {
+      array.splice(index, 1);
+    }
+  },
+
+  // 添加对象
+  addObject: (array, obj)=>{
+    array.push(obj)
+  }
+
+
+  
 }
 
 // 数据统计(首页)

@@ -22,7 +22,9 @@ export default class CTable extends Component {
 
 	// 删除
 	_deleteSectionRow(rowMap, rowKey) {
-		// this._closeRow(rowMap, rowKey);
+		this._closeRow(rowMap, rowKey);
+		this.props.deleteSectionRow(rowKey)
+		
 		// var [section, row] = rowKey.split('.');
 		// const newData = [...this.state.sectionListData];
 		// const prevIndex = this.state.sectionListData[section].data.findIndex(item => item.key === rowKey);
@@ -96,10 +98,12 @@ export default class CTable extends Component {
 
 
 CTable.propTypes = {
-    models: PropTypes.array,
+	models: PropTypes.array.isRequired,
+	deleteSectionRow: PropTypes.func.isRequired,
 }
 CTable.defaultProps = {
     models: [[], []],
+	deleteSectionRow: ()=>{},
 }
 
 

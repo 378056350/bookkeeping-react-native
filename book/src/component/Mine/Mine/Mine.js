@@ -14,6 +14,7 @@ export default class Mine extends Component {
 
     componentDidMount = () => {
         DeviceStorage.initialization()
+
     }
 
     // 点击个人信息
