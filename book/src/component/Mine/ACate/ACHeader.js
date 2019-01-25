@@ -6,7 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 const ACA = require('~/assets/json/ACA.json')
-import { ACAImage } from '~/assets/json/ImageManager'
+import { ImageManager } from '~/assets/json/ImageManager'
 
 
 export default class ACHeader extends Component {
@@ -19,7 +19,7 @@ export default class ACHeader extends Component {
         const choose = this.props.choose
         return (
             <View style={styles.container}>
-                <Image source={ACAImage[ACA[choose.section].list[choose.row].icon_s]} style={styles.icon}/>
+                <Image source={ImageManager[ACA[choose.section].list[choose.row].icon_s]} style={styles.icon}/>
                 <TextInput 
                     ref={'input'}
                     style={styles.input}
@@ -31,6 +31,7 @@ export default class ACHeader extends Component {
                     value={this.props.text}
                     contextMenuHidden={true}
                     returnKeyType={'done'}
+                    autoCorrect={false}
                 />
             </View>
         );

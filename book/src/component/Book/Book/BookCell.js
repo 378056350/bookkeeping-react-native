@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
-import { CategoryImage } from '~/assets/json/ImageManager';
+import { ImageManager } from '~/assets/json/ImageManager';
 
 
 export default class BookCell extends Component {
@@ -17,7 +17,7 @@ export default class BookCell extends Component {
                 <View style={styles.view}>
                     <Image 
                         resizeMode={'contain'} 
-                        source={this.props.choose == true ? CategoryImage[this.props.model.icon_s] : CategoryImage[this.props.model.icon_n]} 
+                        source={this.props.choose == true ? ImageManager[this.props.model.icon_s] : ImageManager[this.props.model.icon_n]} 
                         style={styles.icon}
                     />
                     <Text style={styles.name}>{this.props.model.name}</Text>

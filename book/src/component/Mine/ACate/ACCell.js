@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
-import { ACAImage } from '~/assets/json/ImageManager'
+import { ImageManager } from '~/assets/json/ImageManager'
 
 
 export default class ACCell extends Component {
@@ -17,7 +17,7 @@ export default class ACCell extends Component {
         for (let i=0; i<this.props.modal.length; i++) {
             const choose = this.props.choose
             const modal = this.props.modal
-            const image = ACAImage[(choose.section == this.props.section && choose.row == i) ? modal[i].icon_s : modal[i].icon_n] 
+            const image = ImageManager[(choose.section == this.props.section && choose.row == i) ? modal[i].icon_s : modal[i].icon_n] 
             arr.push(
                 <TouchableOpacity 
                     key={i} 
