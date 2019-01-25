@@ -8,16 +8,11 @@ import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './HomeTable'
 import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
-import DeviceStorage from '~/utils/DeviceStorage'
 
 export default class Home extends Component {
     
     _onConfirm = (year, month, day)=>{
         
-    }
-
-    componentDidMount = () => {
-        DeviceStorage.initialization()
     }
     
 

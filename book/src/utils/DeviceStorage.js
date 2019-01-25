@@ -62,29 +62,26 @@ export default class DeviceStorage {
         var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
         var pay3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
         var payInsert = [...pay1, ...pay2].map((item,index) =>{
-            return Object.assign(item, {key: index + '.' })
+            return Object.assign(item, {key: index })
         })
         var payRemove = pay3.map((item,index) =>{
-            return Object.assign(item,{key: index + '.' })
+            return Object.assign(item,{key: index })
         })
 
-        console.log("=============================");
-        console.log(payInsert);
-        console.log(payRemove);
-        
-        var pay = [{'title': '添加', 'data': payInsert}, {'title': '删除', 'data': payRemove}]
+        var pay = [{'title': 0, 'data': payInsert}, {'title': 1, 'data': payRemove}]
         
 
         var income1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
         var income2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
         var income3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
         var incomeInsert = [...income1, ...income2].map((item,index) =>{
-            return Object.assign(item, {key: index + '.' })
+            return Object.assign(item, {key: index })
         })
         var incomeRemove = income3.map((item,index) =>{
-            return Object.assign(item,{key: index + '.' })
+            return Object.assign(item,{key: index })
         })
-        var income = [{'title': '添加', 'data': incomeInsert}, {'title': '删除', 'data': incomeRemove}]
+        // var income = [{'title': '添加', 'data': incomeInsert}, {'title': '删除', 'data': incomeRemove}]
+        var income = [{'title': 0, 'data': incomeInsert}, {'title': 1, 'data': incomeInsert}]
 
         return await [pay, income]
     }
@@ -98,6 +95,9 @@ export default class DeviceStorage {
         const isFirst = await DeviceStorage.load(SAVE.PIN_FIRST_RUN)
         // 初始化
         if (isFirst !== 1) {
+            console.log("============================");
+            console.log("初始化开始");
+            
             // 支出
             DeviceStorage.save(SAVE.PIN_CATE_SYS_HAS_PAY, cateList.pay)
             DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_PAY, [])

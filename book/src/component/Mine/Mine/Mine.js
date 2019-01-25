@@ -6,8 +6,14 @@ import {
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
 import MineTable from '~/component/Mine/Mine/MineTable'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 export default class Mine extends Component {
+
+
+    componentDidMount = () => {
+        DeviceStorage.initialization()
+    }
 
     // 点击个人信息
     _onInfoPress = ()=>{

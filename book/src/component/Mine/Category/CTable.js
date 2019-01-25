@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
 	View,
 	Text,
 	Animated,
-	TouchableOpacity,
 	TouchableHighlight,
 	StyleSheet,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import CSectionHeader from './CSectionHeader'
+import CActionItem from './CActionItem'
+import CCell from './CCell'
 
 
 export default class CTable extends Component {
@@ -28,10 +31,10 @@ export default class CTable extends Component {
 			// sectionListData: Array(5).fill('').map((_,i) => ({title: `title${i + 1}`, data: [...Array(5).fill('').map((_, j) => ({key: `${i}.${j}`, text: `item #${j}`}))]})),
 		};
 
-		// this.rowSwipeAnimatedValues = {};
-		// Array(20).fill('').forEach((_, i) => {
-		// 	this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-		// });
+		this.rowSwipeAnimatedValues = {};
+		Array(20).fill('').forEach((_, i) => {
+			this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
+		});
 	}
 
 	closeRow(rowMap, rowKey) {
@@ -58,41 +61,63 @@ export default class CTable extends Component {
 		this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
 	}
 
+
+
+
+
+
+
+
+	// 操作
+	renderHiddenItem = (data, rowMap)=>{
+		return (
+			<CActionItem onClosePress={()=>{
+			  	this.closeRow(rowMap, data.item.key)
+			}} onDeletePress={()=>{
+				console.log("123456");
+				this.deleteSectionRow(rowMap, data.item.key)
+			}}/>
+		)
+	}
+
+	// 间隔线
+	ItemSeparatorComponent = ()=>{
+		return (
+			<View style={styles.line}/>
+		)
+	}
+
+	// 头视图
+	renderSectionHeader = (section)=>{
+		return (
+			<CSectionHeader section={section.title}/>
+		)
+	}
+
+	// Cell
+	renderItem = (data, rowMap)=>{
+		return (
+			<CCell model={data.item} section={data.section.title}/>
+		)
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
                 <SwipeListView
                     useSectionList
-                    sections={this.state.sectionListData}
-                    // sections={this.props.models}
-                    renderItem={ (data, rowMap) => (
-                        <TouchableHighlight
-                            onPress={ _ => console.log('You touched me') }
-                            style={styles.rowFront}
-                            underlayColor={'#AAA'}
-                        >
-                            <View>
-                                <Text>I am {data.item.text} in a SwipeListView</Text>
-                            </View>
-                        </TouchableHighlight>
-                    )}
-                    renderHiddenItem={ (data, rowMap) => (
-                        <View style={styles.rowBack}>
-                            <Text>Left</Text>
-                            <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={ _ => this.closeRow(rowMap, data.item.key) }>
-                                <Text style={styles.backTextWhite}>Close</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={ _ => this.deleteSectionRow(rowMap, data.item.key) }>
-                                <Text style={styles.backTextWhite}>Delete</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    renderSectionHeader={({section}) => <Text>{section.title}</Text>}
+                    sections={this.props.models}
+                    renderItem={this.renderItem}
+                    renderHiddenItem={this.renderHiddenItem}
+					ItemSeparatorComponent={this.ItemSeparatorComponent}
+					renderSectionHeader={this.renderSectionHeader}
                     rightOpenValue={-150}
                     previewRowKey={'0'}
                     previewOpenValue={-40}
                     previewOpenDelay={3000}
-                    onRowDidOpen={this.onRowDidOpen}
+					onRowDidOpen={this.onRowDidOpen}
+					onSwipeValueChange={this.onSwipeValueChange}
+					stickySectionHeadersEnabled={false}
                     showsVerticalScrollIndicator={false}
                 />
 			</View>
@@ -100,9 +125,16 @@ export default class CTable extends Component {
 	}
 }
 
+CTable.propTypes = {
+    models: PropTypes.array,
+}
+CTable.defaultProps = {
+    models: [],
+};
+
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: 'white',
+		backgroundColor: kColor_BG,
 		flex: 1
 	},
 	backTextWhite: {
@@ -116,32 +148,13 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		height: 50,
 	},
-	rowBack: {
-		alignItems: 'center',
-		backgroundColor: '#DDD',
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		paddingLeft: 15,
-	},
-	backRightBtn: {
-		alignItems: 'center',
-		bottom: 0,
-		justifyContent: 'center',
-		position: 'absolute',
-		top: 0,
-		width: 75
-	},
-	backRightBtnLeft: {
-		backgroundColor: 'blue',
-		right: 75
-	},
-	backRightBtnRight: {
-		backgroundColor: 'red',
-		right: 0
-	},
 	trash: {
 		height: 25,
 		width: 25,
+	},
+	line: {
+		width: SCREEN_WIDTH,
+		height: countcoordinatesX(1),
+		backgroundColor: kColor_Line_Color,
 	}
 });

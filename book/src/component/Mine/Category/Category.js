@@ -17,23 +17,16 @@ export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            models: [[[],[]],[[],[]]]
+            models: []
         };
-
-        this.rowSwipeAnimatedValues = {};
-		Array(20).fill('').forEach((_, i) => {
-			this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-		});
     }
 
     componentDidMount() {
-        var models = DeviceStorage.getCategorySet()
-        console.log("================================");
-        console.log(models);
-        
-        // this.setState({
-        //     models: models
-        // })
+        DeviceStorage.getCategorySet().then((models)=>{
+            this.setState({
+                models: models[1]
+            })
+        })
     }
 
     _onButtonPress = ()=>{
@@ -55,10 +48,5 @@ export default class Category extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
+    
 });
