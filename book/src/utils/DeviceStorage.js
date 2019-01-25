@@ -1,6 +1,7 @@
 import {
   AsyncStorage
 } from 'react-native';
+import { BKCModel } from '~/services/Interfaces'
 const cateList = require('~/assets/json/Category.json')
 const ACA = require('~/assets/json/ACA.json')
 
@@ -43,7 +44,52 @@ export const SAVE = {
 
 export default class DeviceStorage {
 
-    // 获取记账分类
+    /**
+     * 添加自定义分类(添加分类页面)
+     */
+    static addCusCategory = async (text, model, is_income)=>{
+        var cateSysHasPayArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
+        var cateSysRemovePayArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
+        var cateCusHasPayArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
+        var cateCusHasPaySyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY_SYNCED)
+
+        var cateSysHasIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
+        var cateSysRemoveIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
+        var cateCusHasIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
+        var cateCusHasIncomeSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED)
+        
+        var newmodel = {
+            "id": cateSysHasPayArr.count + cateSysRemovePayArr.count + cateCusHasPayArr.count + cateSysHasIncomeArr.count + cateSysRemoveIncomeArr.count + cateCusHasIncomeArr.count,
+            "name": text,
+            "icon_n": model.icon_n,
+            "icon_l": model.icon_l,
+            "icon_s": model.icon_s,
+            "is_income": is_income,
+            "is_system": 0,
+        }
+        
+        // 支出
+        if (is_income == false) {
+            BKCModel.addObject(cateCusHasPayArr, newmodel)
+            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_PAY, cateCusHasPayArr)
+
+            BKCModel.addObject(cateCusHasPaySyncedArr, newmodel)
+            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_PAY_SYNCED, cateCusHasPaySyncedArr)
+        }
+        // 收入
+        else {
+            BKCModel.addObject(cateCusHasIncomeArr, newmodel)
+            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME, cateCusHasIncomeArr)
+
+            BKCModel.addObject(cateCusHasIncomeSyncedArr, newmodel)
+            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED, cateCusHasIncomeSyncedArr)
+        }
+    }
+
+
+    /**
+     * 获取记账分类
+     */
     static getCategory = async ()=>{
         var data1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
         var data2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
@@ -56,7 +102,9 @@ export default class DeviceStorage {
         return await [pay, income]
     }
 
-    // 类别设置
+    /**
+     * 类别设置
+     */
     static getCategorySet = async ()=>{
         var pay1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
         var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)

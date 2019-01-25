@@ -1,5 +1,6 @@
 
 export default class DateExtension {
+    // 日期 转 '2018-12-12'
     static dateToStr = (Date)=>{
         var str = '-'
         var obj = {

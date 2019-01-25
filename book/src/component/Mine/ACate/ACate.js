@@ -3,6 +3,7 @@ import {
     View,
     Text,
     TouchableOpacity,
+    DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
@@ -11,11 +12,24 @@ import ACHeader from './ACHeader'
 import ACTable from './ACTable'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
-import { BKCModel } from '~/services/Interfaces'
 const ACA = require('~/assets/json/ACA.json')
 
 
 export default class ACate extends Component {
+
+    /**
+		// ,
+		// {
+		// 	"id": 999,
+		// 	"icon_n": "cc_home_tools",
+		// 	"icon_l": "cc_home_tools_l",
+		// 	"icon_s": "cc_home_tools_s",
+		// 	"is_income": 0,
+		// 	"is_system": 1,
+		// 	"name": "设置"
+		// }
+		*/
+
     constructor(props) {
         super(props);
         this.state = {
@@ -38,6 +52,7 @@ export default class ACate extends Component {
 
     // 完成
     _onComplete = async ()=>{
+        // 判断
         this.refs.header.blur()
         const text = this.state.text
         const model = ACA[this.state.choose.section].list[this.state.choose.row]
@@ -47,48 +62,14 @@ export default class ACate extends Component {
             return 
         }
         this.refs.toast.show('添加中', DURATION.FOREVER)
-
-        var cateSysHasPayArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
-        var cateSysRemovePayArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
-        var cateCusHasPayArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
-        var cateCusHasPaySyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY_SYNCED)
-
-        var cateSysHasIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
-        var cateSysRemoveIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
-        var cateCusHasIncomeArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
-        var cateCusHasIncomeSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED)
-        
-        var newmodel = {
-            "id": cateSysHasPayArr.count + cateSysRemovePayArr.count + cateCusHasPayArr.count + cateSysHasIncomeArr.count + cateSysRemoveIncomeArr.count + cateCusHasIncomeArr.count,
-            "name": text,
-            "icon_n": model.icon_n,
-            "icon_l": model.icon_l,
-            "icon_s": model.icon_s,
-            "is_income": is_income,
-            "is_system": 0,
-        }
-        
-        // 支出
-        if (is_income == false) {
-            BKCModel.addObject(cateCusHasPayArr, newmodel)
-            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_PAY, cateCusHasPayArr)
-
-            BKCModel.addObject(cateCusHasPaySyncedArr, newmodel)
-            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_PAY_SYNCED, cateCusHasPaySyncedArr)
-        }
-        // 收入
-        else {
-            BKCModel.addObject(cateCusHasIncomeArr, newmodel)
-            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME, cateCusHasIncomeArr)
-
-            BKCModel.addObject(cateCusHasIncomeSyncedArr, newmodel)
-            await DeviceStorage.save(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED, cateCusHasIncomeSyncedArr)
-        }
-
+        // 添加分类
+        await DeviceStorage.addCusCategory(text, model, is_income)
+        // 通知
+        DeviceEventEmitter.emit(EVENT.ADD_CUS_BOOK_EVENT, {});
+        // 返回
         setTimeout(() => {
             this.props.navigation.goBack()
-        }, 2000);
-        
+        }, 1000);
     }
 
 
@@ -125,6 +106,7 @@ export default class ACate extends Component {
                 />
                 <Toast 
                     ref="toast" 
+                    position={"center"}
                     style={{backgroundColor: kColor_Text_Black}}
                     fadeInDuration={250}
                     fadeOutDuration={250}

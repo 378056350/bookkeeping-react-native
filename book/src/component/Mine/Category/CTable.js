@@ -21,7 +21,10 @@ export default class CTable extends Component {
 	}
 
 	// 删除
-	_deleteSectionRow(rowMap, rowKey) {
+	_deleteSectionRow = (rowMap, rowKey)=>{
+		console.log("======================");
+		console.log("rowKey: " + rowKey);
+		
 		this._closeRow(rowMap, rowKey);
 		this.props.deleteSectionRow(rowKey)
 		
@@ -68,7 +71,12 @@ export default class CTable extends Component {
 	// Cell
 	renderItem = (data, rowMap)=>{
 		return (
-			<CCell model={data.item} section={data.section.title}/>
+			<CCell 
+				model={data.item} 
+				rowMap={rowMap} 
+				section={data.section.title}
+				actionPress={this._deleteSectionRow}
+			/>
 		)
 	}
 

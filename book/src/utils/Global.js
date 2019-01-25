@@ -2,6 +2,7 @@ import { Dimensions, Platform, StatusBar } from  'react-native'
 import { FontSize } from './FontSize'
 import { Px2Dp } from './Tool'
 import { DeviceStorage } from './DeviceStorage'
+import { EVENT } from './DeviceEvent'
 
 const { width, height } = Dimensions.get('window');
 const OS = Platform.OS;
@@ -39,3 +40,4 @@ global.kColor_Red_Color = 'rgba(255, 69, 0, 1)'
 global.kColor_Red_Dark_Color = 'rgba(242, 67, 2, 1)'     
 
 global.DeviceStorage = DeviceStorage
+global.EVENT = EVENT

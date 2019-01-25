@@ -4,6 +4,7 @@ import {
     Text,
     Alert,
     Animated,
+    DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
@@ -24,13 +25,27 @@ export default class Category extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
+        this.getData()
+        // 通知
+        DeviceEventEmitter.addListener(EVENT.ADD_CUS_BOOK_EVENT, this.getData);
+    }
+
+    componentWillUnmount = () => {
+        // 销毁通知
+        DeviceEventEmitter.removeListener(EVENT.ADD_CUS_BOOK_EVENT, this.getData)
+    }
+    
+    getData = ()=>{
+        // 获取分类
         DeviceStorage.getCategorySet().then((models)=>{
             this.setState({
                 models: models
             })
         })
     }
+
+    
 
     // 添加分类
     _onButtonPress = ()=>{
