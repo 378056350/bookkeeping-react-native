@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
 	View,
-	Text,
-	Animated,
-	TouchableHighlight,
 	StyleSheet,
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -15,55 +12,28 @@ import CCell from './CCell'
 
 export default class CTable extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			sectionListData: []
-			// sectionListData: []
-			// sectionListData: [
-			// 	{'title': 'asd', 'data': [
-			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},
-			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},
-			// 		{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'}
-			// 	]},
-			// 	{'title': 'asd', 'data': [{'key': '123', 'text': '123'},{'key': '123', 'text': '123'},{'key': '123', 'text': '123'}]}
-			// ]
-			// sectionListData: Array(5).fill('').map((_,i) => ({title: `title${i + 1}`, data: [...Array(5).fill('').map((_, j) => ({key: `${i}.${j}`, text: `item #${j}`}))]})),
-		};
 
-		this.rowSwipeAnimatedValues = {};
-		Array(20).fill('').forEach((_, i) => {
-			this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-		});
-	}
-
-	closeRow(rowMap, rowKey) {
+	// 关闭
+	_closeRow(rowMap, rowKey) {
 		if (rowMap[rowKey]) {
 			rowMap[rowKey].closeRow();
 		}
 	}
 
-	deleteSectionRow(rowMap, rowKey) {
-		this.closeRow(rowMap, rowKey);
-		var [section, row] = rowKey.split('.');
-		const newData = [...this.state.sectionListData];
-		const prevIndex = this.state.sectionListData[section].data.findIndex(item => item.key === rowKey);
-		newData[section].data.splice(prevIndex, 1);
-		this.setState({sectionListData: newData});
+	// 删除
+	_deleteSectionRow(rowMap, rowKey) {
+		// this._closeRow(rowMap, rowKey);
+		// var [section, row] = rowKey.split('.');
+		// const newData = [...this.state.sectionListData];
+		// const prevIndex = this.state.sectionListData[section].data.findIndex(item => item.key === rowKey);
+		// newData[section].data.splice(prevIndex, 1);
+		// this.setState({sectionListData: newData});
 	}
 
-	onRowDidOpen = (rowKey, rowMap) => {
-		console.log('This row opened', rowKey);
+	// 某行开始操作
+	_onRowDidOpen = (rowKey, rowMap) => {
+		// console.log('This row opened', rowKey);
 	}
-
-	onSwipeValueChange = (swipeData) => {
-		const { key, value } = swipeData;
-		this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
-	}
-
-
-
-
 
 
 
@@ -72,10 +42,9 @@ export default class CTable extends Component {
 	renderHiddenItem = (data, rowMap)=>{
 		return (
 			<CActionItem onClosePress={()=>{
-			  	this.closeRow(rowMap, data.item.key)
+			  	this._closeRow(rowMap, data.item.key)
 			}} onDeletePress={()=>{
-				console.log("123456");
-				this.deleteSectionRow(rowMap, data.item.key)
+				this._deleteSectionRow(rowMap, data.item.key)
 			}}/>
 		)
 	}
@@ -105,18 +74,18 @@ export default class CTable extends Component {
 		return (
 			<View style={styles.container}>
                 <SwipeListView
+					ref={'list'}
                     useSectionList
-                    sections={this.props.models}
+                    sections={this.props.models[this.props.handleIndexChange]}
                     renderItem={this.renderItem}
                     renderHiddenItem={this.renderHiddenItem}
 					ItemSeparatorComponent={this.ItemSeparatorComponent}
 					renderSectionHeader={this.renderSectionHeader}
-                    rightOpenValue={-150}
+                    rightOpenValue={-75}
                     previewRowKey={'0'}
                     previewOpenValue={-40}
                     previewOpenDelay={3000}
-					onRowDidOpen={this.onRowDidOpen}
-					onSwipeValueChange={this.onSwipeValueChange}
+					onRowDidOpen={this._onRowDidOpen}
 					stickySectionHeadersEnabled={false}
                     showsVerticalScrollIndicator={false}
                 />
@@ -125,36 +94,23 @@ export default class CTable extends Component {
 	}
 }
 
+
 CTable.propTypes = {
     models: PropTypes.array,
 }
 CTable.defaultProps = {
-    models: [],
-};
+    models: [[], []],
+}
+
 
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: kColor_BG,
 		flex: 1
 	},
-	backTextWhite: {
-		color: '#FFF'
-	},
-	rowFront: {
-		alignItems: 'center',
-		backgroundColor: '#CCC',
-		borderBottomColor: 'black',
-		borderBottomWidth: 1,
-		justifyContent: 'center',
-		height: 50,
-	},
-	trash: {
-		height: 25,
-		width: 25,
-	},
 	line: {
 		width: SCREEN_WIDTH,
 		height: countcoordinatesX(1),
 		backgroundColor: kColor_Line_Color,
-	}
-});
+	},
+})

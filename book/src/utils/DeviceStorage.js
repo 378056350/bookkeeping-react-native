@@ -62,12 +62,11 @@ export default class DeviceStorage {
         var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
         var pay3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
         var payInsert = [...pay1, ...pay2].map((item,index) =>{
-            return Object.assign(item, {key: index })
+            return Object.assign(item, {key: '0.'+index })
         })
         var payRemove = pay3.map((item,index) =>{
-            return Object.assign(item,{key: index })
+            return Object.assign(item,{key: '1.'+index })
         })
-
         var pay = [{'title': 0, 'data': payInsert}, {'title': 1, 'data': payRemove}]
         
 
@@ -75,14 +74,12 @@ export default class DeviceStorage {
         var income2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
         var income3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
         var incomeInsert = [...income1, ...income2].map((item,index) =>{
-            return Object.assign(item, {key: index })
+            return Object.assign(item, {key: '0.'+index })
         })
         var incomeRemove = income3.map((item,index) =>{
-            return Object.assign(item,{key: index })
+            return Object.assign(item,{key: '1.'+index })
         })
-        // var income = [{'title': '添加', 'data': incomeInsert}, {'title': '删除', 'data': incomeRemove}]
-        var income = [{'title': 0, 'data': incomeInsert}, {'title': 1, 'data': incomeInsert}]
-
+        var income = [{'title': 0, 'data': incomeInsert}, {'title': 1, 'data': incomeRemove}]
         return await [pay, income]
     }
 

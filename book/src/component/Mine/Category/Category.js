@@ -17,14 +17,15 @@ export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            models: []
+            models: [[],[]],
+            handleIndexChange: 0,
         };
     }
 
     componentDidMount() {
         DeviceStorage.getCategorySet().then((models)=>{
             this.setState({
-                models: models[1]
+                models: models
             })
         })
     }
@@ -39,8 +40,14 @@ export default class Category extends Component {
                 navigation={this.props.navigation} 
                 title={'类别设置'}
             >
-                <CHeader/>
-                <CTable models={this.state.models}/>
+                <CHeader 
+                    onTabPress={(index)=>{this.setState({handleIndexChange: index})}} 
+                    handleIndexChange={this.state.handleIndexChange}
+                />
+                <CTable 
+                    models={this.state.models}
+                    handleIndexChange={this.state.handleIndexChange}
+                />
                 <CButton onPress={this._onButtonPress}/>
             </BaseContainer>
         );

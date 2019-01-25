@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
     View,
 	Text,
-	TouchableOpacity,
+	TouchableHighlight,
     StyleSheet
 } from 'react-native';
 
@@ -11,15 +11,14 @@ export default class CActionItem extends PureComponent {
 
     render() {
         return (
-			// this.closeRow(rowMap, data.item.key) 
-			//  _ => this.deleteSectionRow(rowMap, data.item.key)
             <View style={styles.rowBack}>
-                <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={this.props.onClosePress}>
-                    <Text style={styles.backTextWhite}>Close</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={this.props.onDeletePress}>
-                    <Text style={styles.backTextWhite}>Delete</Text>
-                </TouchableOpacity>
+				<TouchableHighlight 
+					underlayColor={kColor_Red_Dark_Color} 
+					style={[styles.backRightBtn, styles.backRightBtnRight]} 
+					onPress={this.props.onDeletePress}
+				>
+                    <Text style={styles.backTextWhite}>删除</Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -52,12 +51,13 @@ const styles = StyleSheet.create({
 		top: 0,
 		width: 75
 	},
-	backRightBtnLeft: {
-		backgroundColor: 'blue',
-		right: 75
-	},
 	backRightBtnRight: {
-		backgroundColor: 'red',
+		backgroundColor: kColor_Red_Color,
 		right: 0
 	},
+	backTextWhite: {
+		fontSize: FONT_SIZE(14),
+		fontWeight: '400',
+		color: 'white',
+	}
 });
