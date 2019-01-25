@@ -161,13 +161,18 @@ export default class Category extends Component {
         }
         // 自定义
         else {
-            BKCModel.removeOfObject(models[index][0].data, model)
-            this.setState({models: models})
+            
         }
+        
 
         /**
          // 自定义
         else {
+            NSInteger index = self.header.seg.selectedSegmentIndex;
+            BKCModel *model = cell.model;
+            [self.models[index].insert removeObject:model];
+            [self setModels:self.models];
+            
             
             if (index == 0) {
                 NSMutableArray *cusHasPayArr = [NSUserDefaults objectForKey:PIN_CATE_CUS_HAS_PAY];
@@ -218,8 +223,11 @@ export default class Category extends Component {
                 [NSUserDefaults setObject:book forKey:PIN_BOOK];
                 [NSUserDefaults setObject:book forKey:PIN_BOOK_SYNCED];
             }
+            
+            
         }
-
+    
+    
         // 删除同类别信息
         NSMutableArray<BKModel *> *arrm = [NSUserDefaults objectForKey:PIN_BOOK];
         NSString *preStr = [NSString stringWithFormat:@"cmodel.Id == %ld", cell.model.Id];
@@ -229,7 +237,8 @@ export default class Category extends Component {
         
         [NSUserDefaults setObject:arrm forKey:PIN_BOOK];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOT_BOOK_DELETE object:nil];
-        
+    
+    
          */
 
         
