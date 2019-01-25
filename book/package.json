@@ -13,6 +13,7 @@
     "react-native": "0.57.8",
     "react-native-actionsheet": "^2.4.2",
     "react-native-display": "^1.0.8",
+    "react-native-easy-toast": "^1.1.0",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-segmented-control-tab": "^3.3.1",
     "react-native-splash-screen": "^3.1.1",

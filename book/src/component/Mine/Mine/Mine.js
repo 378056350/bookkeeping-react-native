@@ -7,6 +7,7 @@ import {
 import BaseContainer from '~/common/Base/BaseContainer'
 import MineTable from '~/component/Mine/Mine/MineTable'
 import DeviceStorage from '~/utils/DeviceStorage'
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 export default class Mine extends Component {
 
@@ -17,7 +18,6 @@ export default class Mine extends Component {
 
     // 点击个人信息
     _onInfoPress = ()=>{
-        console.log("asdasdas");
         this.props.navigation.navigate('Login', {'mode': 'modal'});
     }
     // 点击Cell
@@ -60,6 +60,7 @@ export default class Mine extends Component {
                     onInfoPress={this._onInfoPress}
                     onItemPress={this._onItemPress}
                 />
+                <Toast ref="toast" position={"center"} style={{backgroundColor: kColor_Text_Black}}/>
             </BaseContainer>
         );
     }
