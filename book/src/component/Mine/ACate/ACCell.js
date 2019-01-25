@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
-import { ACAImage } from '~/assets/json/ACAImage'
+import { ACAImage } from '~/assets/json/ImageManager'
 
 
 export default class ACCell extends Component {
@@ -19,7 +19,12 @@ export default class ACCell extends Component {
             const modal = this.props.modal
             const image = ACAImage[(choose.section == this.props.section && choose.row == i) ? modal[i].icon_s : modal[i].icon_n] 
             arr.push(
-                <TouchableOpacity key={i + 1} onPress={()=>this.props.onPress(i, this.props.section)} activeOpacity={0.9} style={styles.iconTouch}>
+                <TouchableOpacity 
+                    key={i} 
+                    activeOpacity={0.9}
+                    style={styles.iconTouch} 
+                    onPress={()=>this.props.onPress(i, this.props.section)} 
+                >
                     <Image resizeMode={'contain'} source={image} style={styles.icon}/>
                 </TouchableOpacity>
             )
@@ -43,8 +48,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     iconTouch: {
-        width: (SCREEN_WIDTH - countcoordinatesX(20)) / 5,
-        height: (SCREEN_WIDTH - countcoordinatesX(20)) / 5,
+        // iPhone5s 不减1会有问题
+        width: (SCREEN_WIDTH - countcoordinatesX(20) - 1) / 5,
+        height: (SCREEN_WIDTH - countcoordinatesX(20) - 1) / 5,
         justifyContent: 'center',
         alignItems: 'center',
     },

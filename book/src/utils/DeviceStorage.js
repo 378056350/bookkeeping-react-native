@@ -92,8 +92,6 @@ export default class DeviceStorage {
         const isFirst = await DeviceStorage.load(SAVE.PIN_FIRST_RUN)
         // 初始化
         if (isFirst !== 1) {
-            console.log("============================");
-            console.log("初始化开始");
             
             // 支出
             DeviceStorage.save(SAVE.PIN_CATE_SYS_HAS_PAY, cateList.pay)

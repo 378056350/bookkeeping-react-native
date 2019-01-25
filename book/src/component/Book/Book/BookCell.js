@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
-import { CategoryImage } from '~/assets/json/CategoryImage';
+import { CategoryImage } from '~/assets/json/ImageManager';
 
 
 export default class BookCell extends Component {

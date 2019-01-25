@@ -36,7 +36,12 @@ export default class ACTable extends Component {
     }
     _renderItem = ({ item, index, section })=>{
         return (
-            <ACCell modal={item} onPress={this.props.onPress} section={section.section} choose={this.props.choose}/>
+            <ACCell 
+                modal={item} 
+                onPress={this.props.onPress} 
+                section={section.section} 
+                choose={this.props.choose}
+            />
         )
     }
     
@@ -62,6 +67,7 @@ const styles = StyleSheet.create({
         paddingBottom: SAFE_AREA_BOTTOM_HEIGHT,
         paddingLeft: countcoordinatesX(10),
         paddingRight: countcoordinatesX(10),
+        width: SCREEN_WIDTH,
     },
     header: {
         justifyContent: 'center',

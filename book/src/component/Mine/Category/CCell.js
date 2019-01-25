@@ -5,7 +5,7 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
-import { CategoryImage } from '~/assets/json/CategoryImage'
+import { CategoryImage } from '~/assets/json/ImageManager'
 const category_add = require('~/assets/image/category_add.png')
 const category_delete = require('~/assets/image/category_delete.png')
 

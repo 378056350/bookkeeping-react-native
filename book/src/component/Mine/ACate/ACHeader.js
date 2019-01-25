@@ -6,21 +6,29 @@ import {
     StyleSheet
 } from 'react-native';
 const ACA = require('~/assets/json/ACA.json')
-import { ACAImage } from '~/assets/json/ACAImage'
+import { ACAImage } from '~/assets/json/ImageManager'
 
 
 export default class ACHeader extends Component {
+
+    blur = ()=>{
+        this.refs.input.blur()
+    }
+
     render() {
         const choose = this.props.choose
         return (
             <View style={styles.container}>
                 <Image source={ACAImage[ACA[choose.section].list[choose.row].icon_s]} style={styles.icon}/>
                 <TextInput 
+                    ref={'input'}
                     style={styles.input}
                     placeholder={'请输入类别名称(不超过4个汉字)'}
                     selectionColor={kColor_Main_Color}
                     placeholderTextColor={kColor_Text_Gray}
+                    onChangeText={(text) => this.props.onChangeText(text)}
                     maxLength={4}
+                    value={this.props.text}
                     contextMenuHidden={true}
                     returnKeyType={'done'}
                 />
