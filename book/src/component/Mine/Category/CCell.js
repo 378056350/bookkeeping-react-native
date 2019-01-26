@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: FONT_SIZE(12),
         fontWeight: 'normal',
+        fontFamily: 'Helvetica Neue',
         color: kColor_Text_Gray,
         marginLeft: countcoordinatesX(20),
     }

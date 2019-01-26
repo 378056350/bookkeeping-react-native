@@ -59,7 +59,7 @@ export default class DeviceStorage {
         var cateCusHasIncomeSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME_SYNCED)
         
         var newmodel = {
-            "id": cateSysHasPayArr.count + cateSysRemovePayArr.count + cateCusHasPayArr.count + cateSysHasIncomeArr.count + cateSysRemoveIncomeArr.count + cateCusHasIncomeArr.count,
+            "id": (cateSysHasPayArr.length + cateSysRemovePayArr.length + cateCusHasPayArr.length + cateSysHasIncomeArr.length + cateSysRemoveIncomeArr.length + cateCusHasIncomeArr.length + 1),
             "name": text,
             "icon_n": model.icon_n,
             "icon_l": model.icon_l,
@@ -67,6 +67,7 @@ export default class DeviceStorage {
             "is_income": is_income,
             "is_system": 0,
         }
+
         
         // 支出
         if (is_income == false) {
@@ -86,9 +87,8 @@ export default class DeviceStorage {
         }
     }
 
-
     /**
-     * 获取记账分类
+     * 获取记账分类(记账页面)
      */
     static getCategory = async ()=>{
         var data1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
@@ -103,33 +103,62 @@ export default class DeviceStorage {
     }
 
     /**
-     * 类别设置
+     * 类别设置(类别设置页面)
      */
     static getCategorySet = async ()=>{
         var pay1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
         var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
         var pay3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
-        var payInsert = [...pay1, ...pay2].map((item,index) =>{
-            return Object.assign(item, {key: '0.'+index })
-        })
-        var payRemove = pay3.map((item,index) =>{
-            return Object.assign(item,{key: '1.'+index })
-        })
+        // var payInsert = [...pay1, ...pay2].map((item,index) =>{
+        //     return Object.assign(item, {key: '0.'+index })
+        // })
+        // var payRemove = pay3.map((item,index) =>{
+        //     return Object.assign(item,{key: '1.'+index })
+        // })
+        var payInsert = [...pay1, ...pay2]
+        var payRemove = pay3
         var pay = [{'title': 0, 'data': payInsert}, {'title': 1, 'data': payRemove}]
         
 
         var income1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
         var income2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
         var income3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
-        var incomeInsert = [...income1, ...income2].map((item,index) =>{
-            return Object.assign(item, {key: '0.'+index })
-        })
-        var incomeRemove = income3.map((item,index) =>{
-            return Object.assign(item,{key: '1.'+index })
-        })
+        // var incomeInsert = [...income1, ...income2].map((item,index) =>{
+        //     return Object.assign(item, {key: '0.'+index })
+        // })
+        // var incomeRemove = income3.map((item,index) =>{
+        //     return Object.assign(item,{key: '1.'+index })
+        // })
+        var incomeInsert = [...income1, ...income2]
+        var incomeRemove = income3
         var income = [{'title': 0, 'data': incomeInsert}, {'title': 1, 'data': incomeRemove}]
-        return await [pay, income]
+
+        var models = DeviceStorage.sortCategorySet([pay, income])
+        return await models
     }
+    
+    /**
+     * 整理类别设置key
+     */
+    static sortCategorySet = (models)=>{
+        var newmodels = []
+        for (var i=0; i<models.length; i++) {
+            var submodels = models[i]
+            var newsubmodels = []
+            for (var y=0; y<2; y++) {
+                var subdataModels = submodels[y].data
+                subdataModels = subdataModels.map((item,index) =>{
+                    return Object.assign(item, {key: y + '.' + index })
+                })
+                var newdatamodel = {'title': y, 'data': subdataModels}
+                newsubmodels.push(newdatamodel)
+            }
+            newmodels.push(newsubmodels)
+        }
+        return newmodels
+    }
+    
+
 
 
     /**

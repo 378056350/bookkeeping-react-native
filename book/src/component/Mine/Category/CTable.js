@@ -22,9 +22,6 @@ export default class CTable extends Component {
 
 	// 删除
 	_deleteSectionRow = (rowMap, rowKey)=>{
-		console.log("======================");
-		console.log("rowKey: " + rowKey);
-		
 		this._closeRow(rowMap, rowKey);
 		this.props.deleteSectionRow(rowKey)
 		

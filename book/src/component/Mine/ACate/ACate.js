@@ -87,10 +87,11 @@ export default class ACate extends Component {
     }
 
     render() {
+        const { state } = this.props.navigation
         return (
             <BaseContainer 
                 navigation={this.props.navigation} 
-                title={'添加支出类别'}
+                title={state.params['isIncome'] === 0 ? '添加支出类别' : '添加收入类别'}
                 hasRight={true}
                 hasContentRight={this.hasContentRight}
             >
