@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import {
-    View,
-    Text,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
 import MineTable from '~/component/Mine/Mine/MineTable'
-import DeviceStorage from '~/utils/DeviceStorage'
-import Toast, {DURATION} from 'react-native-easy-toast'
 
 export default class Mine extends Component {
-
-
-    componentDidMount = () => {
-        DeviceStorage.initialization()
-
-    }
 
     // 点击个人信息
     _onInfoPress = ()=>{
@@ -61,7 +51,6 @@ export default class Mine extends Component {
                     onInfoPress={this._onInfoPress}
                     onItemPress={this._onItemPress}
                 />
-                <Toast ref="toast" position={"center"} style={{backgroundColor: kColor_Text_Black}}/>
             </BaseContainer>
         );
     }

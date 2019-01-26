@@ -1,3 +1,6 @@
+import DeviceStorage from '~/utils/DeviceStorage'
+
+
 // 记账信息
 export const BKModel = {
   // id: 0,                  // id
@@ -12,6 +15,16 @@ export const BKModel = {
   // date: new Date(),       // 日期
   // dateNumber: 0,          // 日期数字
   // cmodel: new BKCModel(), // 分类modal
+
+  getId: async ()=>{
+    var id = await DeviceStorage.load("BOOK_ID")
+    if (id == null) {
+      await DeviceStorage.save("BOOK_ID", 1)
+      return 1
+    }
+    await DeviceStorage.save("BOOK_ID", id + 1)
+    return id
+  }
 
 }
 

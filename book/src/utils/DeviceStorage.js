@@ -38,6 +38,9 @@ export const SAVE = {
     "PIN_TIMING": "PIN_TIMING",                                 // 定时通知
     "PIN_TIMING_HAS_SYNCED": "PIN_TIMING_HAS_SYNCED",           // 定时添加通知 - 未同步
     "PIN_TIMING_REMOVE_SYNCED": "PIN_TIMING_REMOVE_SYNCED",     // 定时删除通知 - 未同步
+
+
+    
 }
 
 
@@ -45,7 +48,7 @@ export const SAVE = {
 export default class DeviceStorage {
 
     /**
-     * 添加自定义分类(添加分类页面)
+     * 添加自定义分类(添加分类 页面)
      */
     static addCusCategory = async (text, model, is_income)=>{
         var cateSysHasPayArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
@@ -88,22 +91,32 @@ export default class DeviceStorage {
     }
 
     /**
-     * 获取记账分类(记账页面)
+     * 获取记账分类(记账 页面)
      */
     static getCategory = async ()=>{
+        var setting = {
+			"id": 999,
+			"icon_n": "cc_home_tools",
+			"icon_l": "cc_home_tools_l",
+			"icon_s": "cc_home_tools_s",
+			"is_income": 0,
+			"is_system": 1,
+			"name": "设置"
+		}
+
         var data1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
         var data2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
-        var pay = [...data1, ...data2]
+        var pay = [...data1, ...data2, setting]
 
         var data3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
         var data4 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
-        var income = [...data3, ...data4]
+        var income = [...data3, ...data4, setting]
 
         return await [pay, income]
     }
 
     /**
-     * 类别设置(类别设置页面)
+     * 类别设置(类别设置 页面)
      */
     static getCategorySet = async ()=>{
         var pay1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)

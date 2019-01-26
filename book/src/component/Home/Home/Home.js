@@ -8,15 +8,20 @@ import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './HomeTable'
 import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
+import DeviceStorage from '~/utils/DeviceStorage'
+
 
 export default class Home extends Component {
-    
+
+    componentDidMount = () => {
+        DeviceStorage.initialization()
+
+    }
+
     _onConfirm = (year, month, day)=>{
         
     }
     
-
-
     hasTitleComponent = ()=>{
         return (
             <HomeNavigation/>
@@ -40,10 +45,5 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
+    
 });

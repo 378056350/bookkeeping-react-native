@@ -6,7 +6,7 @@ import {
     findNodeHandle,
     StyleSheet
 } from 'react-native';
-import BookCell from '~/component/Book/Book/BookCell'
+import BookCell from '~/component/Book/Book/Scroll/BookCell'
 
 
 export default class BookScroll extends Component {
