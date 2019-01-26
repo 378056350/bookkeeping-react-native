@@ -21,15 +21,9 @@ export default class CTable extends Component {
 	}
 
 	// 删除
-	_deleteSectionRow = (rowMap, rowKey)=>{
+	_actionRow = (rowMap, rowKey)=>{
 		this._closeRow(rowMap, rowKey);
-		this.props.deleteSectionRow(rowKey)
-		
-		// var [section, row] = rowKey.split('.');
-		// const newData = [...this.state.sectionListData];
-		// const prevIndex = this.state.sectionListData[section].data.findIndex(item => item.key === rowKey);
-		// newData[section].data.splice(prevIndex, 1);
-		// this.setState({sectionListData: newData});
+		this.props.actionRow(rowKey)
 	}
 
 	// 某行开始操作
@@ -43,11 +37,15 @@ export default class CTable extends Component {
 	// 操作
 	renderHiddenItem = (data, rowMap)=>{
 		return (
-			<CActionItem onClosePress={()=>{
-			  	this._closeRow(rowMap, data.item.key)
-			}} onDeletePress={()=>{
-				this._deleteSectionRow(rowMap, data.item.key)
-			}}/>
+			<CActionItem 
+				section={parseInt(data.item.key.split('.')[0])}
+				onClosePress={()=>{
+					this._closeRow(rowMap, data.item.key)
+				}} 
+				onActionPress={()=>{
+					this._actionRow(rowMap, data.item.key)
+				}}
+			/>
 		)
 	}
 
@@ -72,7 +70,7 @@ export default class CTable extends Component {
 				model={data.item} 
 				rowMap={rowMap} 
 				section={data.section.title}
-				actionPress={this._deleteSectionRow}
+				actionPress={this._actionRow}
 			/>
 		)
 	}

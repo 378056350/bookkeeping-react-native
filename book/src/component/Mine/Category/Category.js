@@ -51,18 +51,26 @@ export default class Category extends Component {
     _onButtonPress = ()=>{
         this.props.navigation.navigate('ACate', {'isIncome': this.state.handleIndexChange})
     }
-    // 删除警告
-    _showWarning = (rowKey)=>{
-        Alert.alert(
-            '警告',
-            '删除类别会同时删除该类别下的所有历史收支记录',
-            [
-              {text: '确定', onPress: () => this._deleteSectionRow(rowKey)},
-              {text: '取消', onPress: () => {}, style: 'cancel'},
-            ], { 
-                cancelable: false 
-            }
-        )
+    // 操作
+    _onActionShow = (rowKey)=>{
+        var section = parseInt(rowKey.split('.')[0])
+        // 删除
+        if (section == 0) {
+            Alert.alert(
+                '警告',
+                '删除类别会同时删除该类别下的所有历史收支记录',
+                [
+                  {text: '确定', onPress: () => this._deleteSectionRow(rowKey)},
+                  {text: '取消', onPress: () => {}, style: 'cancel'},
+                ], { 
+                    cancelable: false 
+                }
+            )
+        }
+        // 添加 
+        else {
+            this._insertSectionRow(rowKey)
+        }
     }
     // 删除
     _deleteSectionRow = async (rowKey)=>{
@@ -76,6 +84,7 @@ export default class Category extends Component {
         if (model.is_system == true) {
             BKCModel.addObject(models[index][1].data, model)
             BKCModel.removeOfObject(models[index][0].data, model)
+            models = DeviceStorage.sortCategorySet(models)
             this.setState({models: models})
 
             // 支出
@@ -236,6 +245,60 @@ export default class Category extends Component {
 
         
     }
+    // 添加
+    _insertSectionRow = async (rowKey)=>{
+        var key = parseInt(rowKey.split('.')[1])
+        
+        const index = this.state.handleIndexChange
+        var models = this.state.models
+        var model = models[index][1].data[key]
+
+        BKCModel.addObject(models[index][0].data, model)
+        BKCModel.removeOfObject(models[index][1].data, model)
+        models = DeviceStorage.sortCategorySet(models)
+        this.setState({models: models})
+
+        // 支出
+        if (index == 0) {
+            var sysHasArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
+            var sysRemoveArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
+            var sysHasSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_Has_PAY_SYNCED)
+            var sysRemoveSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY_SYNCED)
+            BKCModel.addObject(sysHasArr, model)
+
+            if (BKCModel.indexOfObject(sysRemoveSyncedArr, model) != -1) {
+                BKCModel.removeOfObject(sysRemoveSyncedArr, model)
+            } else {
+                BKCModel.addObject(sysHasSyncedArr, model)
+            }
+            BKCModel.removeOfObject(sysRemoveArr, model)
+
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_HAS_PAY, sysHasArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_PAY, sysRemoveArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_Has_PAY_SYNCED, sysHasSyncedArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_PAY_SYNCED, sysRemoveSyncedArr)
+        }
+        // 收入
+        else if (index == 1) {
+            var sysHasArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
+            var sysRemoveArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
+            var sysHasSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_Has_INCOME_SYNCED)
+            var sysRemoveSyncedArr = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME_SYNCED)
+            BKCModel.addObject(sysHasArr, model)
+
+            if (BKCModel.indexOfObject(sysRemoveSyncedArr, model) != -1) {
+                BKCModel.removeOfObject(sysRemoveSyncedArr, model)
+            } else {
+                BKCModel.addObject(sysHasSyncedArr, model)
+            }
+            BKCModel.removeOfObject(sysRemoveArr, model)
+
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_HAS_INCOME, sysHasArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_INCOME, sysRemoveArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_Has_INCOME_SYNCED, sysHasSyncedArr)
+            DeviceStorage.save(SAVE.PIN_CATE_SYS_REMOVE_INCOME_SYNCED, sysRemoveSyncedArr)
+        }
+    }
 
 
     render() {
@@ -251,7 +314,7 @@ export default class Category extends Component {
                 <CTable 
                     models={this.state.models}
                     handleIndexChange={this.state.handleIndexChange}
-                    deleteSectionRow={this._showWarning}
+                    actionRow={this._onActionShow}
                 />
                 <CButton onPress={this._onButtonPress}/>
             </BaseContainer>

@@ -10,14 +10,15 @@ import {
 export default class CActionItem extends PureComponent {
 
     render() {
+		const { section } = this.props
         return (
             <View style={styles.rowBack}>
 				<TouchableHighlight 
-					underlayColor={kColor_Red_Dark_Color} 
-					style={[styles.backRightBtn, styles.backRightBtnRight]} 
-					onPress={this.props.onDeletePress}
+					underlayColor={section == 0 ? kColor_Red_Dark_Color : kColor_Green_Dark_Color} 
+					style={[styles.backRightBtn,  {'backgroundColor': section == 0 ? kColor_Red_Color : kColor_Green_Color}]} 
+					onPress={this.props.onActionPress}
 				>
-                    <Text style={styles.backTextWhite}>删除</Text>
+                    <Text style={styles.backTextWhite}>{section == 0 ? '删除' : '添加'}</Text>
                 </TouchableHighlight>
             </View>
         );
@@ -49,10 +50,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		position: 'absolute',
 		top: 0,
-		width: 75
-	},
-	backRightBtnRight: {
-		backgroundColor: kColor_Red_Color,
+		width: 75,
 		right: 0
 	},
 	backTextWhite: {

@@ -113,6 +113,7 @@ export default class TTable extends Component {
 					previewOpenDelay={3000}
 					onRowDidOpen={this.onRowDidOpen}
 					onSwipeValueChange={this.onSwipeValueChange}
+                    showsVerticalScrollIndicator={false}
 				/>
 			</View>
 		);

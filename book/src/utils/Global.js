@@ -36,8 +36,10 @@ global.kColor_Text_Black = 'rgba(50, 50, 50, 1)'
 global.kColor_Text_Gray = 'rgba(153, 153, 153, 1)'
 global.kColor_Main_Color = 'rgba(255, 217, 68, 1)'
 global.kColor_Main_Dark_Color = 'rgba(241, 206, 65, 1)'
-global.kColor_Red_Color = 'rgba(255, 69, 0, 1)'          
-global.kColor_Red_Dark_Color = 'rgba(242, 67, 2, 1)'     
+global.kColor_Red_Color = 'rgba(255, 24, 0, 1)'          
+global.kColor_Red_Dark_Color = 'rgba(242, 24, 2, 1)'   
+global.kColor_Green_Color = 'rgba(0, 220, 120, 1)'          
+global.kColor_Green_Dark_Color = 'rgba(0, 200, 120, 1)'          
 
 global.DeviceStorage = DeviceStorage
 global.EVENT = EVENT

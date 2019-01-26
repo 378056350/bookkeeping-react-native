@@ -6,6 +6,7 @@ import {
     TouchableHighlight,
     StyleSheet
 } from 'react-native';
+const cate_add = require('~/assets/image/cate_add.png')
 
 export default class CButton extends Component {
     
@@ -13,7 +14,7 @@ export default class CButton extends Component {
         return (
             <TouchableHighlight onPress={this.props.onPress} underlayColor={kColor_Line_Color}>
                 <View style={styles.container}>
-                    <Image style={styles.icon}/>
+                    <Image source={cate_add} style={styles.icon}/>
                     <Text style={styles.name}>添加分类</Text>
                 </View>
             </TouchableHighlight>
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     icon: {
         width: countcoordinatesX(30),
         height: countcoordinatesX(30),
-        backgroundColor: 'black',
     },
     name: {
         fontSize: FONT_SIZE(14),
