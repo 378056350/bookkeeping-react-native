@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableOpacity,
+    DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
 import Global from './BookGlobal'
@@ -9,7 +10,7 @@ import BaseContainer from '~/common/Base/BaseContainer'
 import BookNavigation from '~/component/Book/Book/BookNavigation'
 import BookScroll from '~/component/Book/Book/Scroll/BookScroll'
 import BookKeyboard from '~/component/Book/Book/Keyboard/BookKeyboard'
-import DeviceStorage from '~/utils/DeviceStorage'
+import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
 import { BKModel } from '~/services/Interfaces'
 
 
@@ -59,36 +60,43 @@ export default class Book extends Component {
     }
 
     // 记账回调
-    _onBookPress = (money, mark, dateStr)=>{
-        var date = new Date(dateStr)
-        
-        const id = BKModel.getId()
-        var bkmodel = {
+    _onBookPress = async (money, mark, dateStr)=>{
+        const date = new Date(dateStr)
+        const id = await BKModel.getId()
+        const model = this.refs.scroll.getChooseModel()
+        const bkmodel = {
             "id": id,
             "price": money,
             "year": date.getFullYear(),
             "month": date.getMonth() + 1,
             "day": date.getDate(),
             "mark": mark,
-            "category_id": "999999",
-            "cmodel": "cmodel"
+            "category_id": model.id,
+            "cmodel": model
         }
-        
 
-        // NSInteger index = self.scroll.contentOffset.x / SCREEN_WIDTH;
-        // BKCCollection *collection = self.collections[index];
-        // BKCModel *cmodel = collection.model.list[collection.selectIndex.row];
-        // BKModel *model = [[BKModel alloc] init];
-        
-        // model.Id = [[BKModel getId] integerValue];
-        // model.price = [[NSDecimalNumber decimalNumberWithString:price] doubleValue];
-        // model.year = date.year;
-        // model.month = date.month;
-        // model.day = date.day;
-        // model.mark = mark;
-        // model.category_id = cmodel.Id;
-        // model.cmodel = cmodel;
-        
+        const { params } = this.props.navigation.state
+        // 修改
+        if (!!params['model']) {
+
+        } 
+        // 新增
+        else {
+            var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+            var bookSyncedArr = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
+            console.log("========================");
+            console.log(bookArr);
+            BKModel.addObject(bookArr, bkmodel)
+            BKModel.addObject(bookSyncedArr, bkmodel)
+            await DeviceStorage.save(SAVE.PIN_BOOK, bookArr)
+            await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArr)
+        }
+
+        // 通知
+        DeviceEventEmitter.emit(EVENT.ADD_BOOK_EVENT, {});
+
+
+
         // // 新增
         // if (!_model) {
             
@@ -168,6 +176,7 @@ export default class Book extends Component {
                 hasTitleComponent={this.hasTitleComponent}
             >
                 <BookScroll 
+                    ref={'scroll'}
                     models={this.state.models}
                     navigationIndex={this.state.navigationIndex}
                     onScrollBeginDrag={this._onScrollBeginDrag}

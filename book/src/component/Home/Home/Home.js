@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
+    DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
@@ -15,7 +16,16 @@ export default class Home extends Component {
 
     componentDidMount = () => {
         DeviceStorage.initialization()
+        DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
+        this.getData()
+    }
 
+    componentWillUnmount = () => {
+        DeviceEventEmitter.removeListener(EVENT.ADD_BOOK_EVENT, this.getData)
+    }
+
+    getData = ()=>{
+        
     }
 
     _onConfirm = (year, month, day)=>{

@@ -24,6 +24,37 @@ export const BKModel = {
     }
     await DeviceStorage.save("BOOK_ID", id + 1)
     return id
+  },
+
+  // 对象在数组所在的位置
+  indexOfObject: (array, obj)=>{
+    for (var i=0; i<array.length; i++) {
+      if (array[i].id === obj.id) {
+        return i
+      }
+    }
+    return -1
+  },
+
+  // 删除数组中的对象
+  removeOfObject: (array, obj)=>{
+    for (var i=0; i<array.length; i++) {
+      if (array[i].id === obj.id) {
+        array.splice(i, 1); 
+      }
+    }
+  },
+
+  // 根据index删除对象
+  removeObjectAtIndex: (array, index)=>{
+    if (array.length > index) {
+      array.splice(index, 1);
+    }
+  },
+
+  // 添加对象
+  addObject: (array, obj)=>{
+    array.push(obj)
   }
 
 }

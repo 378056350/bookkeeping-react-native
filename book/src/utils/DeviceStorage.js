@@ -115,6 +115,7 @@ export default class DeviceStorage {
         return await [pay, income]
     }
 
+
     /**
      * 类别设置(类别设置 页面)
      */

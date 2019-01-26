@@ -94,10 +94,12 @@ export default class BookScroll extends Component {
         })
     }
 
-    // // 获取选中分类
-    // getCategoryIndex = ()=>{
-
-    // }
+    // 获取选中分类
+    getChooseModel = ()=>{
+        var index = this.state.chooseIndexs[this.props.navigationIndex]
+        var model = this.props.models[this.props.navigationIndex][index]
+        return model
+    }
 
 
     // 更新
