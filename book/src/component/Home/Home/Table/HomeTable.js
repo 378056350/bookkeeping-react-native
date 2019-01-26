@@ -4,7 +4,7 @@ import {
     FlatList,
     StyleSheet
 } from 'react-native';
-import HomeSubTable from '~/component/Home/Home/HomeSubTable'
+import HomeSubTable from '~/component/Home/Home/SubTable/HomeSubTable'
 import REListView from '~/third/REListView/REListView'
 
 
@@ -26,7 +26,10 @@ export default class Home extends Component {
 
     _renderItem = ({item, separators})=>{
         return (
-            <HomeSubTable style={styles.subtable}/>
+            <HomeSubTable 
+                models={this.props.models} 
+                style={styles.subtable}
+            />
         )
     }
 
@@ -44,6 +47,7 @@ export default class Home extends Component {
                         // {title: 'Title Text', key: 'item2'},
                         // {title: 'Title Text', key: 'item3'}
                     ]}
+                    models={this.props.models}
                 />
             </View>
         );

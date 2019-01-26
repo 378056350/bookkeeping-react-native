@@ -18,5 +18,13 @@ export default class DateExtension {
         return nn = nn < 10 ? '0' + nn : nn;
     }
 
+    // 日期 转 星期
+    static week = (date)=>{
+        var a = new Array("日", "一", "二", "三", "四", "五", "六");  
+        var week = date.getDay();  
+        var str = "星期"+ a[week];  
+        return str
+    }
+
 
 }

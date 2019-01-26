@@ -4,17 +4,27 @@ import {
     DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
+import HomeGlobal from './HomeGlobal'
 import BaseContainer from '~/common/Base/BaseContainer'
 import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
-import HomeTable from './HomeTable'
-import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
-import DeviceStorage from '~/utils/DeviceStorage'
+import HomeTable from './Table/HomeTable'
+import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
 
 
 export default class Home extends Component {
 
-    componentDidMount = () => {
+    constructor(props) {
+        const date = new Date()
+        super(props);
+        this.state = {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            models: [],
+        };
+    }
+
+    componentDidMount = async () => {
         DeviceStorage.initialization()
         DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
         this.getData()
@@ -24,14 +34,26 @@ export default class Home extends Component {
         DeviceEventEmitter.removeListener(EVENT.ADD_BOOK_EVENT, this.getData)
     }
 
-    getData = ()=>{
-        
+    getData = async ()=>{
+        var models = await DeviceStorage.getBook(this.state.year, this.state.month)
+        this.setState({
+            models: models
+        })
     }
 
-    _onConfirm = (year, month, day)=>{
+    _onChangeDate = (year, month)=>{
+        console.log("===================================");
         
+        this.setState({
+            year: year,
+            month: month
+        })
+        setTimeout(() => {
+            DeviceEventEmitter.emit(EVENT.ADD_BOOK_EVENT, {});
+        }, 0);
     }
     
+    // 导航栏
     hasTitleComponent = ()=>{
         return (
             <HomeNavigation/>
@@ -46,9 +68,13 @@ export default class Home extends Component {
                 hasTitle={false} 
                 hasTitleComponent={this.hasTitleComponent}
             >
-                <HomeHeader/>
-                <HomeTable/>
-                <KKDatePicker ref={'picker'} onConfirm={this._onConfirm}/>
+                <HomeHeader 
+                    year={this.state.year}
+                    month={this.state.month}
+                    models={this.state.models}
+                    onChangeDate={this._onChangeDate}
+                />
+                <HomeTable models={this.state.models}/>
             </BaseContainer>
         );
     }

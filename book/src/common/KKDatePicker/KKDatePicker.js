@@ -59,7 +59,11 @@ export default class KKDatePicker extends Component {
                 }}
             >
                 <Animated.View style={styles.container}>
-                    <TouchableOpacity activeOpacity={1.0} onPress={this.hide} style={[styles.shadowTouch]}>
+                    <TouchableOpacity 
+                        activeOpacity={1.0} 
+                        onPress={this.hide} 
+                        style={[styles.shadowTouch]}
+                    >
                         <Animated.View style={[styles.shadow, {
                             opacity: this.state.contentAnim.interpolate({
                                 inputRange: [-contentH, 0],

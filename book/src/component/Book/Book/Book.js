@@ -84,8 +84,6 @@ export default class Book extends Component {
         else {
             var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
             var bookSyncedArr = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
-            console.log("========================");
-            console.log(bookArr);
             BKModel.addObject(bookArr, bkmodel)
             BKModel.addObject(bookSyncedArr, bkmodel)
             await DeviceStorage.save(SAVE.PIN_BOOK, bookArr)
@@ -96,17 +94,21 @@ export default class Book extends Component {
         DeviceEventEmitter.emit(EVENT.ADD_BOOK_EVENT, {});
 
 
-
-        // // 新增
-        // if (!_model) {
-            
-        //     NSMutableArray *bookArr = [NSUserDefaults objectForKey:PIN_BOOK];
-        //     NSMutableArray *bookSyncedArr = [NSUserDefaults objectForKey:PIN_BOOK_SYNCED];
-        //     [bookArr addObject:model];
-        //     [bookSyncedArr addObject:model];
-        //     [NSUserDefaults setObject:bookArr forKey:PIN_BOOK];
-        //     [NSUserDefaults setObject:bookArr forKey:PIN_BOOK_SYNCED];
+        const { goBack } = this.props.navigation;
+        goBack()
+        
+        // if (self.navigationController.viewControllers.count != 1) {
+        //     [self.navigationController popViewControllerAnimated:true];
+        //     [[NSNotificationCenter defaultCenter] postNotificationName:NOT_BOOK_COMPLETE object:model];
+        // } else {
+        //     [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        //         [[NSNotificationCenter defaultCenter] postNotificationName:NOT_BOOK_COMPLETE object:model];
+        //     }];
         // }
+
+
+
+   
         // // 修改
         // else {
         //     _model.price = [price floatValue];
@@ -129,15 +131,6 @@ export default class Book extends Component {
         //     [NSUserDefaults setObject:bookArr forKey:PIN_BOOK_SYNCED];
         // }
         
-        
-        // if (self.navigationController.viewControllers.count != 1) {
-        //     [self.navigationController popViewControllerAnimated:true];
-        //     [[NSNotificationCenter defaultCenter] postNotificationName:NOT_BOOK_COMPLETE object:model];
-        // } else {
-        //     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        //         [[NSNotificationCenter defaultCenter] postNotificationName:NOT_BOOK_COMPLETE object:model];
-        //     }];
-        // }
     }
 
     // 取消

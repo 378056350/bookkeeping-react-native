@@ -2,6 +2,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { BKCModel } from '~/services/Interfaces'
+import DateExtension from '~/utils/DateExtension'
 const cateList = require('~/assets/json/Category.json')
 const ACA = require('~/assets/json/ACA.json')
 
@@ -46,6 +47,78 @@ export const SAVE = {
 
 
 export default class DeviceStorage {
+
+    /**
+     * 获取记账信息
+     */
+    static getBook = async (year, month, day)=>{
+        // 数据
+        var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+        bookArr = bookArr.filter(function(item, index, array) {
+            if (day) {
+                return item.year == year && item.month == month && item.day == day
+            } else if (month) {
+                return item.year == year && item.month == month
+            } else if (year) {
+                return item.year == year
+            }
+            return true
+        })
+
+        // 统计数据
+        var dictm = {}
+        for (var i=0; i<bookArr.length; i++) {
+            var model = bookArr[i]
+            var date = new Date(model.year, model.month, model.day)
+            var dateStr = DateExtension.dateToStr(date)            
+            // 初始化
+            if (Object.keys(dictm).indexOf(dateStr) == -1) {
+                var submodel = {}
+                submodel.list = []
+                submodel.income = 0
+                submodel.pay = 0
+                submodel.date = dateStr
+                dictm[dateStr] = submodel
+            }
+            // 添加数据
+            var submodel = dictm[dateStr]
+            submodel.list.push(model)
+            // 收入
+            if (model.cmodel.is_income == true) {
+                submodel.income = submodel.income + model.price
+            }
+            // 支出
+            else {
+                submodel.pay = submodel.pay + model.price
+            }
+            dictm[dateStr] = submodel
+        }
+
+        // 排序
+        var arrm = []
+        for (var i=0; i<Object.keys(dictm).length; i++) {
+            var subkey = Object.keys(dictm)[i]
+            arrm.push(dictm[subkey])
+        }
+        arrm = arrm.sort((a, b)=>{
+            return a.date - b.date
+        })
+
+        // 添加key
+        var newarrm = []
+        for (var i=0; i<arrm.length; i++) {
+            var model = arrm[i]
+            model.list = model.list.map((item,index) =>{
+                return Object.assign(item, {key: i + '.' + index })
+            })
+            newarrm.push({'title': i, 'data': model.list})
+        }
+        
+        return newarrm
+
+
+
+    }
 
     /**
      * 添加自定义分类(添加分类 页面)

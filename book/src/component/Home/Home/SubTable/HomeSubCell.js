@@ -5,18 +5,23 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
-const default_header = require('~/assets/image/default_header.png')
+import { ImageManager } from '~/assets/json/ImageManager'
 
 export default class HomeSubCell extends Component {
 
     render() {
+        const model = this.props.model
         return (
             <View style={styles.container}>
                 <View style={styles.left}>
-                    <Image source={default_header} resizeMode={'contain'} style={styles.icon}/>
-                    <Text style={styles.name}>彩票</Text>
+                    <Image 
+                        source={ImageManager[model.cmodel.icon_l]} 
+                        resizeMode={'contain'} 
+                        style={styles.icon}
+                    />
+                    <Text style={styles.name}>{model.cmodel.name}</Text>
                 </View>
-                <Text style={styles.detail}>-555</Text>
+                <Text style={styles.detail}>{model.cmodel.is_income == true ? parseFloat(model.price) + "" : '-' + parseFloat(model.price)}</Text>
             </View>
         );
     }
@@ -38,15 +43,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        width: countcoordinatesX(50),
-        height: countcoordinatesX(50),
+        width: countcoordinatesX(60),
+        height: countcoordinatesX(60),
     },
     name: {
         fontSize: FONT_SIZE(12),
         fontWeight: '300',
         fontFamily: 'Helvetica Neue',
         color: kColor_Text_Black,
-        paddingLeft: countcoordinatesX(10),
+        paddingLeft: countcoordinatesX(20),
     },
     detail: {
         fontSize: FONT_SIZE(12),
