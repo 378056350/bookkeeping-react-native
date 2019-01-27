@@ -14,19 +14,6 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
 export default class HomeSubTable extends Component {
 
-    constructor(props) {
-		super(props);
-		this.state = {
-			// listViewData: Array(20).fill('').map((_,i) => ({key: `${i}`, text: `item #${i}`})),
-			// sectionListData: Array(5).fill('').map((_,i) => ({title: `title${i + 1}`, data: [...Array(5).fill('').map((_, j) => ({key: `${i}.${j}`, text: `item #${j}`}))]})),
-		};
-
-		// this.rowSwipeAnimatedValues = {};
-		// Array(20).fill('').forEach((_, i) => {
-		// 	this.rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
-		// });
-	}
-
 	closeRow(rowMap, rowKey) {
 		if (rowMap[rowKey]) {
 			rowMap[rowKey].closeRow();
@@ -34,11 +21,13 @@ export default class HomeSubTable extends Component {
 	}
 
 	deleteRow(rowMap, rowKey) {
-		this.closeRow(rowMap, rowKey);
-		const newData = [...this.state.listViewData];
-		const prevIndex = this.state.listViewData.findIndex(item => item.key === rowKey);
-		newData.splice(prevIndex, 1);
-		this.setState({listViewData: newData});
+        console.log("==================================");
+        
+		// this.closeRow(rowMap, rowKey);
+		// const newData = [...this.state.listViewData];
+		// const prevIndex = this.state.listViewData.findIndex(item => item.key === rowKey);
+		// newData.splice(prevIndex, 1);
+		// this.setState({listViewData: newData});
 	}
 
 	deleteSectionRow(rowMap, rowKey) {
@@ -103,30 +92,32 @@ export default class HomeSubTable extends Component {
 
     render() {
         return (
-            <SwipeListView
-                useSectionList
-                style={styles.list}
-                sections={this.props.models}
-                renderItem={this._renderItem}
-                renderHiddenItem={this._renderHiddenItem}
-                renderSectionHeader={this._renderSectionHeader}
-                ItemSeparatorComponent={this._ItemSeparatorComponent}
-                ListEmptyComponent={this._ListEmptyComponent}
-                previewRowKey={'0'}
-                previewOpenValue={-40}
-                previewOpenDelay={3000}
-                rightOpenValue={-75}
-                onRowDidOpen={this.onRowDidOpen}
-            />
+            <View style={styles.container}>
+                <SwipeListView
+                    useSectionList
+                    sections={this.props.models}
+                    renderItem={this._renderItem}
+                    renderHiddenItem={this._renderHiddenItem}
+                    renderSectionHeader={this._renderSectionHeader}
+                    ItemSeparatorComponent={this._ItemSeparatorComponent}
+                    ListEmptyComponent={this._ListEmptyComponent}
+                    previewRowKey={'0'}
+                    previewOpenValue={-40}
+                    previewOpenDelay={3000}
+                    rightOpenValue={-75}
+                    onRowDidOpen={this.onRowDidOpen}
+                />
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    list: {
-        
+    container: {
+        flex: 1,
     },
     line: {
+		width: SCREEN_WIDTH,
         height: countcoordinatesX(1),
         backgroundColor: kColor_Line_Color,
     }
