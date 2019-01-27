@@ -3,6 +3,7 @@ package com.book;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.hzl.pulltorefresh.RefreshReactPackage;
 import com.horcrux.svg.SvgPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RefreshReactPackage(),
             new SvgPackage(),
             new SplashScreenReactPackage(),
             new RNGestureHandlerPackage()

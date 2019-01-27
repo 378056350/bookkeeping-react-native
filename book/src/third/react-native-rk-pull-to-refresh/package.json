@@ -1,0 +1,56 @@
+{
+  "_from": "react-native-rk-pull-to-refresh",
+  "_id": "react-native-rk-pull-to-refresh@1.2.1",
+  "_inBundle": false,
+  "_integrity": "sha1-j4jJispy3KGljL/iGwy2rO/+Md4=",
+  "_location": "/react-native-rk-pull-to-refresh",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-rk-pull-to-refresh",
+    "name": "react-native-rk-pull-to-refresh",
+    "escapedName": "react-native-rk-pull-to-refresh",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/react-native-rk-pull-to-refresh/download/react-native-rk-pull-to-refresh-1.2.1.tgz",
+  "_shasum": "8f88c98aca72dca1a58cbfe21b0cb6aceffe31de",
+  "_spec": "react-native-rk-pull-to-refresh",
+  "_where": "/Users/kk/Documents/GitHub/bookkeeping-rn/book",
+  "author": {
+    "name": "ZhilinHe"
+  },
+  "bugs": {
+    "url": "https://github.com/hzl123456/react-native-rk-pull-to-refresh/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "a pull to refresh component for react-native, same api on both android and ios.",
+  "homepage": "https://github.com/hzl123456/react-native-rk-pull-to-refresh#readme",
+  "keywords": [
+    "react-native-pull-to-refresh",
+    "react-native",
+    "ios",
+    "android",
+    "pull-to-refresh",
+    "pull",
+    "refresh"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "react-native-rk-pull-to-refresh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hzl123456/react-native-rk-pull-to-refresh.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1;"
+  },
+  "version": "1.2.1"
+}

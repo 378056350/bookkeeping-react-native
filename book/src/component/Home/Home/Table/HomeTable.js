@@ -1,29 +1,64 @@
 import React, { Component } from 'react';
-import {
-    View,
-    FlatList,
-    PanResponder,
+import { 
+    View,  
+    Text,
     StyleSheet
 } from 'react-native';
+import { PullFlatList } from '~/third/react-native-rk-pull-to-refresh'
 import HomeSubTable from '~/component/Home/Home/SubTable/HomeSubTable'
 
-
-export default class Home extends Component {
+const tableH = (SCREEN_HEIGHT - NAVIGATION_HEIGHT - HOME_HEADER_H - STATUS_TABBAR_HEIGHT)
+export default class HomeTable extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            refreshing: false,
-        };
+			showFoot: 1
+		};
+    }
+    
+    componentDidMount = () => {
+      
     }
 
-    _onRefresh = () => {
-        this.setState({refreshing: true});
-        setTimeout(() => {
-            this.setState({refreshing: false});
-        }, 1000);
+    _onScrollEndDrag = (e)=>{
+        const contentOffsetY = e.nativeEvent.contentOffset.y
+        const contentSizeY = e.nativeEvent.contentSize.height < tableH ? tableH : e.nativeEvent.contentSize.height
+        const layoutMeasurementY = e.nativeEvent.layoutMeasurement.height
+        
+        console.log("contentOffsetY: " + contentOffsetY);
+        console.log("contentSizeY: " + contentSizeY);
+        console.log("layoutMeasurementY: " + layoutMeasurementY);
+        
+
+        if ((layoutMeasurementY + contentOffsetY) > (contentSizeY + 44)) {
+            this.props.pullUpRefresh()
+        }
+        
     }
 
+    render() {
+        return (
+            <View style={styles.container}>
+                <PullFlatList
+                    ref={(e) => this.list = e}
+                    contentInset={{top: 0, left: 0, bottom: 44, right: 0}}
+                    onPushing={this.props.onPushing}
+                    onPullRelease={this._onPullRelease}
+                    showsVerticalScrollIndicator={false}
+                    data={[{key: '1'}]}
+                    renderItem={this._renderItem}
+                    pulling={'下拉查看下月数据'}
+                    pullok={'松开可查看下月数据'}
+                    pullrelease={'查找数据中'}
+                    hideStyle={styles.hide}
+                    isContentScroll={true}
+                    onScrollEndDrag={this._onScrollEndDrag}
+                />
+            </View>
+        )
+    }
+    
     _renderItem = ({item, separators})=>{
         return (
             <HomeSubTable 
@@ -33,52 +68,25 @@ export default class Home extends Component {
         )
     }
 
-
-
-
-    // 重置刷新的操作
-    resetDefaultXYHandler = () => {
-        Animated.timing(this.state.pullPan, {
-            toValue: this.defaultXY,
-            easing: Easing.linear,
-            duration: this.duration
-        }).start(() => {
-            //ui要进行刷新
-            this.onPullStateChange(-1)
-        });
+    // 刷新
+    _onPullRelease = () => {
+        setTimeout(() => {
+            this.list && this.list.finishRefresh()
+            this.props.pullRefresh()
+        }, 0);
     }
-    
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <FlatList
-                    ref={(e) => {this.scroll = e;}}
-                    renderItem={this._renderItem}
-                    onRefresh={this._onRefresh}
-                    refreshing={this.state.refreshing}
-                    showsVerticalScrollIndicator={false}
-                    data={[
-                        {title: 'Title Text', key: 'item1'},
-                        // {title: 'Title Text', key: 'item2'},
-                        // {title: 'Title Text', key: 'item3'}
-                    ]}
-                    models={this.props.models}
-                />
-            </View>
-        );
-    }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: 'white',
         width: SCREEN_WIDTH,
-        backgroundColor: 'white',
+        height: SCREEN_HEIGHT - NAVIGATION_HEIGHT - HOME_HEADER_H - STATUS_TABBAR_HEIGHT,
     },
-    subtable: {
-        backgroundColor: 'white',
-    },
+    hide: {
+        fontSize: FONT_SIZE(12),
+        fontWeight: '300',
+        color: kColor_Text_Black,
+    }
 });

@@ -120,27 +120,6 @@ export default class HomeSubTable extends Component {
             />
         )
     }
-
-
-    
-
-    // render() {
-    //     return (
-    //         <View style={[styles.container, {...this.props.style}]}>
-    //             <SectionList
-    //                 renderSectionHeader={this._renderSectionHeader}
-    //                 sections={[
-    //                     { title: "Title1", data: ["item1", "item2"] },
-    //                     { title: "Title2", data: ["item3", "item4"] },
-    //                     { title: "Title3", data: ["item5", "item6"] }
-    //                 ]}
-    //                 keyExtractor={(item, index) => item + index}
-    //                 renderItem={this._renderItem}
-    //                 ItemSeparatorComponent={this._ItemSeparatorComponent}
-    //             />
-    //         </View>
-    //     );
-    // }
 }
 
 const styles = StyleSheet.create({
