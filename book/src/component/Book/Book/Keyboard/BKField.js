@@ -35,6 +35,7 @@ export default class BKField extends Component {
                     onChangeText={(text) => this.setState({text})}
                     selectionColor={kColor_Main_Color}
                     returnKeyType={'done'}
+                    autoCorrect={false}
                 />
                 <Text style={styles.money}>{this.props.money}</Text>
             </Animated.View>

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
     View,
     FlatList,
+    PanResponder,
     StyleSheet
 } from 'react-native';
 import HomeSubTable from '~/component/Home/Home/SubTable/HomeSubTable'
-import REListView from '~/third/REListView/REListView'
 
 
 export default class Home extends Component {
@@ -34,10 +34,26 @@ export default class Home extends Component {
     }
 
 
+
+
+    // 重置刷新的操作
+    resetDefaultXYHandler = () => {
+        Animated.timing(this.state.pullPan, {
+            toValue: this.defaultXY,
+            easing: Easing.linear,
+            duration: this.duration
+        }).start(() => {
+            //ui要进行刷新
+            this.onPullStateChange(-1)
+        });
+    }
+    
+
     render() {
         return (
             <View style={styles.container}>
                 <FlatList
+                    ref={(e) => {this.scroll = e;}}
                     renderItem={this._renderItem}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
