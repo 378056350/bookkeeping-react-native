@@ -9,7 +9,9 @@ import BaseContainer from '~/common/Base/BaseContainer'
 import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './Table/HomeTable'
-import DeviceStorage from '~/utils/DeviceStorage'
+import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
+import { BKModel } from '~/services/Interfaces'
+
 
 const scrollH = (SCREEN_HEIGHT - NAVIGATION_HEIGHT - HOME_HEADER_H - STATUS_TABBAR_HEIGHT)
 export default class Home extends Component {
@@ -29,6 +31,7 @@ export default class Home extends Component {
     componentDidMount = async () => {
         DeviceStorage.initialization()
         DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
+        DeviceEventEmitter.addListener(EVENT.REMOVE_BOOK_EVENT, this.getData);
         this.getData()
         setTimeout(() => {
             this.refs.scroll.scrollTo({x: 0, y: scrollH, animated: false})
@@ -37,6 +40,7 @@ export default class Home extends Component {
 
     componentWillUnmount = () => {
         DeviceEventEmitter.removeListener(EVENT.ADD_BOOK_EVENT, this.getData)
+        DeviceEventEmitter.removeListener(EVENT.REMOVE_BOOK_EVENT, this.getData)
     }
 
     getData = async ()=>{
@@ -44,6 +48,28 @@ export default class Home extends Component {
         this.setState({
             models2: models
         })
+    }
+
+
+    // 操作(删除)
+    _onActionShow = async (rowKey)=>{
+        const section = parseInt(rowKey.split('.')[0])
+        const row = parseInt(rowKey.split('.')[1])
+        const model = this.state.models2[section].data[row]
+
+        
+        var bookArrm = await DeviceStorage.load(SAVE.PIN_BOOK)
+        var bookSyncedArrm = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
+        if (BKModel.indexOfObject(bookSyncedArrm, model) != -1) {
+            BKModel.removeOfObject(bookSyncedArrm, model)
+        }
+        BKModel.removeOfObject(bookArrm, model)
+        
+        await DeviceStorage.save(SAVE.PIN_BOOK, bookArrm)
+        await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArrm)
+
+        // 发送通知(删除笔记)
+        DeviceEventEmitter.emit(EVENT.REMOVE_BOOK_EVENT, {});
     }
 
     // 改变时间
@@ -137,6 +163,7 @@ export default class Home extends Component {
                         models={this.state.models2} 
                         pullRefresh={this._pullRefresh}
                         pullUpRefresh={this._pullUpRefresh}
+                        actionRow={this._onActionShow}
                     />
                     <HomeTable models={this.state.models3}/>
                 </ScrollView>

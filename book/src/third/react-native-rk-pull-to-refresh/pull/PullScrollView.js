@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import {ScrollView, ListView,View} from 'react-native';
+import { ScrollView, ListView, View } from 'react-native';
 import Pullable from '../local/Pullable';
 
 //ScrollView 暂时没有找到比较好的方法去判断时候滚动到顶部，

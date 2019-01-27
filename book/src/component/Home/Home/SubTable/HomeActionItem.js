@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
+		width: SCREEN_WIDTH,
+		height: countcoordinatesX(100),
 	},
 	backRightBtn: {
 		alignItems: 'center',

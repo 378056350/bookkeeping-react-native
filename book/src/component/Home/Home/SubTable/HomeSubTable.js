@@ -20,33 +20,21 @@ export default class HomeSubTable extends Component {
 		}
 	}
 
-	deleteRow(rowMap, rowKey) {
-        console.log("==================================");
-        
-		// this.closeRow(rowMap, rowKey);
-		// const newData = [...this.state.listViewData];
-		// const prevIndex = this.state.listViewData.findIndex(item => item.key === rowKey);
-		// newData.splice(prevIndex, 1);
-		// this.setState({listViewData: newData});
-	}
-
-	deleteSectionRow(rowMap, rowKey) {
-		this.closeRow(rowMap, rowKey);
-		var [section, row] = rowKey.split('.');
-		const newData = [...this.state.sectionListData];
-		const prevIndex = this.state.sectionListData[section].data.findIndex(item => item.key === rowKey);
-		newData[section].data.splice(prevIndex, 1);
-		this.setState({sectionListData: newData});
+	// 关闭
+	_closeRow(rowMap, rowKey) {
+		if (rowMap[rowKey]) {
+			rowMap[rowKey].closeRow();
+		}
+    }
+    
+	_actionRow(rowMap, rowKey) {
+		this._closeRow(rowMap, rowKey);
+		this.props.actionRow(rowKey)
 	}
 
 	onRowDidOpen = (rowKey, rowMap) => {
 		console.log('This row opened', rowKey);
 	}
-
-	onSwipeValueChange = (swipeData) => {
-		const { key, value } = swipeData;
-		this.rowSwipeAnimatedValues[key].setValue(Math.abs(value));
-    }
     
     _renderItem = ({item, index, section})=>{
         return (
@@ -94,6 +82,7 @@ export default class HomeSubTable extends Component {
         return (
             <View style={styles.container}>
                 <SwipeListView
+                    style={{width: SCREEN_WIDTH}}
                     useSectionList
                     sections={this.props.models}
                     renderItem={this._renderItem}

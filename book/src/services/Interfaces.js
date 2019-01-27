@@ -23,7 +23,7 @@ export const BKModel = {
       return 1
     }
     await DeviceStorage.save("BOOK_ID", id + 1)
-    return id
+    return id + 1
   },
 
   // 对象在数组所在的位置

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { 
     View,  
-    Text,
     StyleSheet
 } from 'react-native';
 import { PullFlatList } from '~/third/react-native-rk-pull-to-refresh'
@@ -63,7 +62,7 @@ export default class HomeTable extends Component {
         return (
             <HomeSubTable 
                 models={this.props.models} 
-                style={styles.subtable}
+                actionRow={this.props.actionRow}
             />
         )
     }
@@ -88,5 +87,5 @@ const styles = StyleSheet.create({
         fontSize: FONT_SIZE(12),
         fontWeight: '300',
         color: kColor_Text_Black,
-    }
+    },
 });
