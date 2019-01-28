@@ -13,8 +13,11 @@ export default class FDTable extends Component {
 
 
     _ListHeaderComponent = ()=>{
+        console.log("========================================");
+        console.log(this.props.models.main);
+        
         return (
-            <FDHeader/>
+            <FDHeader data={this.props.models.main}/>
         )
     }
     _renderSectionHeader = ()=>{
@@ -24,7 +27,7 @@ export default class FDTable extends Component {
     }
     _renderItem = ({ item, index, section })=>{
         return (
-            <FDCell/>
+            <FDCell model={item}/>
         )
     }
     render() {
@@ -34,9 +37,8 @@ export default class FDTable extends Component {
                 renderItem={this._renderItem}
                 ListHeaderComponent={this._ListHeaderComponent}
                 renderSectionHeader={this._renderSectionHeader}
-                sections={[
-                    { title: "Title1", data: ["item1", "item2"] }
-                ]}
+                showsVerticalScrollIndicator={false}
+                sections={this.props.models.data}
                 keyExtractor={(item, index) => item + index}
             />
         );

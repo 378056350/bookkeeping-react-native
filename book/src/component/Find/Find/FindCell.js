@@ -31,8 +31,9 @@ export default class FindCell extends Component {
     }
 
     getData = async ()=>{
+        const date = new Date()
         this.setState({
-            data: await DeviceStorage.getFindMonth()
+            data: await DeviceStorage.getFind(date.getFullYear(), date.getMonth() + 1)
         })
     }
 

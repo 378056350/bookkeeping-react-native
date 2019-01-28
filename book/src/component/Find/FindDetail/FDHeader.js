@@ -10,25 +10,30 @@ import {
 export default class FDHeader extends Component {
 
     render() {
+        console.log("=================================");
+        console.log(this.props.data);
+        
         return (
             <View style={styles.container}>
                 <Text style={styles.name}>结余</Text>
-                <Text style={styles.detail}>-55.00</Text>
+                <Text style={styles.detail}>{this.props.data.data.toFixed(2)}</Text> 
                 <View style={styles.info}>
                     <View style={styles.infoDetail}>
                         <Text style={styles.idName}>收入</Text>
-                        <Text style={styles.idDetail}>0.00</Text>
+                        <Text style={styles.idDetail}>{this.props.data.income.toFixed(2)}</Text>
                     </View>
                     <View style={styles.line}/>
                     <View style={styles.infoDetail}>
                         <Text style={styles.idName}>支出</Text>
-                        <Text style={styles.idDetail}>55.00</Text>
+                        <Text style={styles.idDetail}>{this.props.data.pay.toFixed(2)}</Text>
                     </View>
                 </View>
             </View>
         );
     }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

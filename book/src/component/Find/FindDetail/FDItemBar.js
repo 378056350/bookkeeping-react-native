@@ -14,7 +14,7 @@ export default class FDItemBar extends Component {
         return (
             <TouchableOpacity style={styles.container} onPress={this.props.onPress} activeOpacity={0.9}>
                 <View style={styles.view}>
-                    <Text style={styles.name}>2019年</Text>
+                    <Text style={styles.name}>{this.props.year}</Text>
                     <Image source={time_down} resizeMode={'contain'} style={styles.icon}/>
                 </View>
             </TouchableOpacity>

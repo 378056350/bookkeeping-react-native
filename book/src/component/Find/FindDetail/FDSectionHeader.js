@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: SCREEN_WIDTH,
         height: countcoordinatesX(80),
-        paddingLeft: countcoordinatesX(30),
+        paddingLeft: countcoordinatesX(40),
         paddingRight: countcoordinatesX(30),
         borderBottomColor: kColor_Line_Color,
         borderBottomWidth: countcoordinatesX(1),

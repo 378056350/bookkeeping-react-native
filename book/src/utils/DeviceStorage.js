@@ -259,11 +259,14 @@ export default class DeviceStorage {
     /**
      * 获取数据 (发现 页面)
      */
-    static getFindMonth = async ()=>{
+    static getFind = async (year, month)=>{
         const date = new Date()
         var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
         bookArr = bookArr.filter(function(item, index, array) {
-            return item.year == date.getFullYear() && item.month == (date.getMonth() + 1)
+            if (month) {
+                return item.year == year && item.month == month
+            }
+            return item.year == year
         })
 
         var income = 0
@@ -279,12 +282,38 @@ export default class DeviceStorage {
             }
         })
 
-        console.log("=====================================");
-        console.log({'income': income, 'pay': pay, 'data': income - pay});
-        
         return {'income': income, 'pay': pay, 'data': income - pay}
     }
 
+    /**
+     * 获取数据 (发现详情 页面)
+     */
+    static getFindDetail = async (year)=>{
+        const main = await DeviceStorage.getFind(year)
+        var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+        bookArr = bookArr.filter(function(item, index, array) {
+            return item.year == year
+        })
+
+        var maxMonth = 1
+        if (bookArr.length == 0) {
+            return {'main': main, 'data': [{ title: "title1", data: [] }]}
+        }
+
+        for (var i=0; i<bookArr.length; i++) {
+            const month = bookArr[i].month
+            if (maxMonth < month) {
+                maxMonth = month
+            }
+        }
+        var arr = []
+        for (var i=1; i<=maxMonth; i++) {
+            var param = await DeviceStorage.getFind(year, i)
+            param.month = i
+            arr.push(param)
+        }
+        return {'main': main, 'data': [{ title: "title1", data: arr }]}
+    }
 
     /**
      * 初始化
