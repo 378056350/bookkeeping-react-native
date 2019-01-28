@@ -63,6 +63,7 @@ export default class HomeTable extends Component {
             <HomeSubTable 
                 models={this.props.models} 
                 actionRow={this.props.actionRow}
+                onPress={this.props.onPress}
             />
         )
     }

@@ -165,7 +165,7 @@ const TabbarStack = createBottomTabNavigator(
       style: {
         backgroundColor: 'white',
         borderTopColor: 'rgba(230, 230, 230, 1)',
-        height: STATUS_TABBAR_HEIGHT,
+        height: STATUS_TABBAR_HEIGHT - SAFE_AREA_BOTTOM_HEIGHT,
       },
     },
   }

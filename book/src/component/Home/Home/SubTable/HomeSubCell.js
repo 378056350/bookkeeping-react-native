@@ -3,6 +3,7 @@ import {
     View,
     Text,
     Image,
+    TouchableHighlight,
     StyleSheet
 } from 'react-native';
 import { ImageManager } from '~/assets/json/ImageManager'
@@ -12,22 +13,32 @@ export default class HomeSubCell extends Component {
     render() {
         const model = this.props.model
         return (
-            <View style={styles.container}>
-                <View style={styles.left}>
-                    <Image 
-                        source={ImageManager[model.cmodel.icon_l]} 
-                        resizeMode={'contain'} 
-                        style={styles.icon}
-                    />
-                    <Text style={styles.name}>{model.cmodel.name}</Text>
+            <TouchableHighlight 
+                underlayColor={kColor_BG} 
+                onPress={this.props.onPress} 
+                style={styles.containerTouch}
+            >
+                <View style={styles.container}>
+                    <View style={styles.left}>
+                        <Image 
+                            source={ImageManager[model.cmodel.icon_l]} 
+                            resizeMode={'contain'} 
+                            style={styles.icon}
+                        />
+                        <Text style={styles.name}>{model.cmodel.name}</Text>
+                    </View>
+                    <Text style={styles.detail}>{model.cmodel.is_income == true ? parseFloat(model.price) + "" : '-' + parseFloat(model.price)}</Text>
                 </View>
-                <Text style={styles.detail}>{model.cmodel.is_income == true ? parseFloat(model.price) + "" : '-' + parseFloat(model.price)}</Text>
-            </View>
+            </TouchableHighlight>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    containerTouch: {
+        width: SCREEN_WIDTH,
+        height: countcoordinatesX(100),
+    },
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',

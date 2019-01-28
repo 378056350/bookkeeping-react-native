@@ -50,6 +50,10 @@ export default class Home extends Component {
         })
     }
 
+    // 点击
+    _onPress = (item, index, section)=>{
+        this.props.navigation.navigate('BookDetail', {'model': item})
+    }
 
     // 操作(删除)
     _onActionShow = async (rowKey)=>{
@@ -121,7 +125,6 @@ export default class Home extends Component {
         }, 300);
     }
 
-    
     // 导航栏
     hasTitleComponent = ()=>{
         return (
@@ -154,6 +157,7 @@ export default class Home extends Component {
                         pullRefresh={this._pullRefresh}
                         pullUpRefresh={this._pullUpRefresh}
                         actionRow={this._onActionShow}
+                        onPress={this._onPress}
                     />
                     <HomeTable models={this.state.models3}/>
                 </ScrollView>

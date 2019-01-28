@@ -43,6 +43,8 @@ export default class ChartDate extends Component {
             duration: 300,
             easing: Easing.elastic(0),
             toValue: countcoordinatesX(200) * index + countcoordinatesX(50)
+        }).start(()=>{
+            
         })
     }
 

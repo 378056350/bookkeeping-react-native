@@ -13,9 +13,6 @@ export default class FDTable extends Component {
 
 
     _ListHeaderComponent = ()=>{
-        console.log("========================================");
-        console.log(this.props.models.main);
-        
         return (
             <FDHeader data={this.props.models.main}/>
         )

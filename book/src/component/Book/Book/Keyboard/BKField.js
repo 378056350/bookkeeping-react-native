@@ -20,6 +20,12 @@ export default class BKField extends Component {
         return this.state.text
     }
 
+    setText = (text)=>{
+        this.setState({
+            text: text
+        })
+    }
+
     // 初始化
     render() {
         return (
@@ -36,6 +42,7 @@ export default class BKField extends Component {
                     selectionColor={kColor_Main_Color}
                     returnKeyType={'done'}
                     autoCorrect={false}
+                    value={this.state.text}
                 />
                 <Text style={styles.money}>{this.props.money}</Text>
             </Animated.View>

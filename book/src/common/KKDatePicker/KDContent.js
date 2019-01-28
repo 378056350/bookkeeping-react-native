@@ -12,7 +12,6 @@ import KDHeader from './KDHeader'
 
 export default class KDContent extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +21,19 @@ export default class KDContent extends Component {
         }   
     }
 
+    // 设置日期
+    setDate = (year, month, day)=>{
+        this.setState({
+            year: year,
+            month: month, 
+            day: day,
+        })
+        setTimeout(() => {
+            this._onConfirm()
+        }, 0);
+    }
 
+    // 日期改变
     _onValueChange = (itemValue, itemIndex, section)=>{
         
         if (section == 1) {
@@ -70,7 +81,12 @@ export default class KDContent extends Component {
             this.setState({day: itemValue})
         }
     }
-   
+
+    // 确定
+    _onConfirm = ()=>{
+        this.props.onConfirm(this.state.year, this.state.month, this.state.day)
+    }
+
     picker = ()=>{
         const minDate = new Date(this.props.minDate)
         const maxDate = new Date(this.props.maxDate)
@@ -161,13 +177,6 @@ export default class KDContent extends Component {
         }
         return arr
     }
-
-
-    // 确定
-    _onConfirm = ()=>{
-        this.props.onConfirm(this.state.year, this.state.month, this.state.day)
-    }
-
 
     render() {
         return (

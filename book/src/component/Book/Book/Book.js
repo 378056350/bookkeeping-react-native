@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    View,
     Text,
     TouchableOpacity,
     DeviceEventEmitter,
@@ -29,6 +30,21 @@ export default class Book extends Component {
             this.setState({
                 models: datas
             })
+
+            // 修改, 设置默认model
+            const { params } = this.props.navigation.state
+            if (!!params['model']) {
+                var index = 0;
+                const models = this.state.models[this.state.navigationIndex]
+                for (var i=0; i<models.length; i++) {
+                    if (models[i].id === params['model'].cmodel.id) {
+                        index = i
+                    }
+                }
+                setTimeout(() => {
+                    this.refs.scroll._onItemPress(index, params['model'])
+                }, 300);
+            }
         });
     };
     
@@ -159,13 +175,14 @@ export default class Book extends Component {
     }
 
     render() {
+        const { params } = this.props.navigation.state
         return (
             <BaseContainer 
                 navigation={this.props.navigation} 
                 hasBack={false}
                 hasRight={true}
                 hasTitle={false}
-                hasContentRight={this.hasContentRight}
+                hasContentRight={!!params['model'] ? ()=><View/> : this.hasContentRight}
                 hasTitleComponent={this.hasTitleComponent}
             >
                 <BookScroll 
@@ -176,7 +193,11 @@ export default class Book extends Component {
                     onMomentumScrollEnd={this._onMomentumScrollEnd}
                     onItemPress={this._onItemPress}
                 />
-                <BookKeyboard ref={'keyboard'} onBookPress={this._onBookPress}/>
+                <BookKeyboard 
+                    ref={'keyboard'} 
+                    onBookPress={this._onBookPress}
+                    model={params['model']}
+                />
             </BaseContainer>
         );
     }

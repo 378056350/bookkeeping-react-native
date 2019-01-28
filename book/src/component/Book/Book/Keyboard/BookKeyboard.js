@@ -28,6 +28,15 @@ export default class BookKeyboard extends Component {
     componentDidMount = () => {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardDidHide);
+        // 修改
+        if (this.props.model) {
+            const model = this.props.model
+            this.setState({
+                money: parseFloat(model.price) + "",
+            })
+            this.refs.field.setText(model.mark)
+            this._onConfirm(model.year, model.month, model.day)
+        }
     }
     componentWillUnmount () {
         this.keyboardDidShowListener.remove();
@@ -100,8 +109,14 @@ export default class BookKeyboard extends Component {
     // 确认
     _onConfirm = (year, month, day)=>{
         const date = new Date(year, month-1, day)
-        const dateStr = DateExtension.dateToStr(date)
-        this.setState({ date: dateStr })
+        if (!DateExtension.isToday(date)) {
+            const dateStr = DateExtension.dateToStr(date)
+            this.setState({ date: dateStr })
+        } else {
+            this.setState({ date: '今天' })
+        }
+
+
     }
 
 

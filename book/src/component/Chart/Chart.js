@@ -24,12 +24,21 @@ export default class Chart extends Component {
         this.refs.hud._switchAnimation()
     }
     
+    // navigationIndex 改变
     _hudPress = (index)=>{
         this.setState({
             navigationIndex: index
         })
     }
 
+    // dateIndex 改变
+    _datePress = (index)=>{
+        this.setState({
+            dateIndex: index
+        })
+    }
+
+    
     hasTitleComponent = ()=>{
         return (
             <ChartNavigation 
@@ -50,7 +59,7 @@ export default class Chart extends Component {
                 <ChartSegmentedControl/>
                 <ChartDate 
                     dateIndex={this.state.dateIndex}
-                    onPress={(index)=>this.setState({dateIndex: index})} 
+                    onPress={this._datePress} 
                 />
                 <ChartTable/>
                 <ChartHUD 
@@ -64,10 +73,5 @@ export default class Chart extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
+    
 });

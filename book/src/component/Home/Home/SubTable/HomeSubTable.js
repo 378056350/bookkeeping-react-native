@@ -38,7 +38,7 @@ export default class HomeSubTable extends Component {
     
     _renderItem = ({item, index, section})=>{
         return (
-            <HomeSubCell model={item}/>
+            <HomeSubCell model={item} onPress={()=>this.props.onPress(item, index, section)}/>
         )
     }
 

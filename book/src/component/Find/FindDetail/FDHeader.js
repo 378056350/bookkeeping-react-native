@@ -10,9 +10,6 @@ import {
 export default class FDHeader extends Component {
 
     render() {
-        console.log("=================================");
-        console.log(this.props.data);
-        
         return (
             <View style={styles.container}>
                 <Text style={styles.name}>结余</Text>

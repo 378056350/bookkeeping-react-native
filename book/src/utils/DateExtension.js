@@ -26,5 +26,16 @@ export default class DateExtension {
         return str
     }
 
+    // 是否是今天
+    static isToday = (date)=>{
+        const now = new Date()
+        if (date.getFullYear() == now.getFullYear() && 
+            date.getMonth() == now.getMonth() &&
+            date.getDate() == now.getDate()) {
+            return true
+        }
+        return false
+    }
+
 
 }
