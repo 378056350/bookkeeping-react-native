@@ -1,7 +1,7 @@
 import {
   AsyncStorage
 } from 'react-native';
-import { BKCModel } from '~/services/Interfaces'
+import { BKCModel, BKModel } from '~/services/Interfaces'
 import DateExtension from '~/utils/DateExtension'
 const cateList = require('~/assets/json/Category.json')
 const ACA = require('~/assets/json/ACA.json')
@@ -132,7 +132,6 @@ export default class DeviceStorage {
         await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArrm)
     }
 
-
     /**
      * 添加自定义分类(添加分类 页面)
      */
@@ -201,7 +200,6 @@ export default class DeviceStorage {
         return await [pay, income]
     }
 
-
     /**
      * 类别设置(类别设置 页面)
      */
@@ -258,7 +256,34 @@ export default class DeviceStorage {
         return newmodels
     }
     
+    /**
+     * 获取数据 (发现 页面)
+     */
+    static getFindMonth = async ()=>{
+        const date = new Date()
+        var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+        bookArr = bookArr.filter(function(item, index, array) {
+            return item.year == date.getFullYear() && item.month == (date.getMonth() + 1)
+        })
 
+        var income = 0
+        var pay = 0
+        bookArr.forEach((val, index, arr)=>{
+            // 支出
+            if (val.cmodel.is_income == 0) {
+                pay += parseFloat(val.price)
+            }
+            // 收入
+            else {
+                income += parseFloat(val.price)
+            }
+        })
+
+        console.log("=====================================");
+        console.log({'income': income, 'pay': pay, 'data': income - pay});
+        
+        return {'income': income, 'pay': pay, 'data': income - pay}
+    }
 
 
     /**

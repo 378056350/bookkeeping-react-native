@@ -56,20 +56,9 @@ export default class Home extends Component {
         const section = parseInt(rowKey.split('.')[0])
         const row = parseInt(rowKey.split('.')[1])
         const model = this.state.models2[section].data[row]
-
-        DeviceStorage.removeBook(model)
-        
-        // var bookArrm = await DeviceStorage.load(SAVE.PIN_BOOK)
-        // var bookSyncedArrm = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
-        // if (BKModel.indexOfObject(bookSyncedArrm, model) != -1) {
-        //     BKModel.removeOfObject(bookSyncedArrm, model)
-        // }
-        // BKModel.removeOfObject(bookArrm, model)
-        // await DeviceStorage.save(SAVE.PIN_BOOK, bookArrm)
-        // await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArrm)
-        
-
-        // 发送通知(删除笔记)
+        // 删除
+        await DeviceStorage.removeBook(model)
+        // 通知
         DeviceEventEmitter.emit(EVENT.REMOVE_BOOK_EVENT, {});
     }
 

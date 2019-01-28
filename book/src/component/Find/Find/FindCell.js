@@ -4,11 +4,37 @@ import {
     Text,
     Image,
     TouchableHighlight,
+    DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
+import DeviceStorage from '~/utils/DeviceStorage'
+import DateExtension from '~/utils/DateExtension'
 const ad_arrow = require('~/assets/image/ad_arrow.png')
 
 export default class FindCell extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: {'income': 0, 'pay': 0, 'data': 0}
+        }
+    }
+
+    componentDidMount = () => {
+        DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
+        DeviceEventEmitter.addListener(EVENT.REMOVE_BOOK_EVENT, this.getData);
+        this.getData()
+    }
+    componentWillUnmount = () => {
+        DeviceEventEmitter.removeListener(EVENT.ADD_BOOK_EVENT, this.getData)
+        DeviceEventEmitter.removeListener(EVENT.REMOVE_BOOK_EVENT, this.getData)
+    }
+
+    getData = async ()=>{
+        this.setState({
+            data: await DeviceStorage.getFindMonth()
+        })
+    }
 
     header = ()=>{
         return (
@@ -23,16 +49,18 @@ export default class FindCell extends Component {
             <View style={styles.bottom}>
                 {this.bottomMonth()}
                 {this.bottomLine()}
-                {this.bottomInfo('收入', '0.00')}
-                {this.bottomInfo('支出', '0.00')}
-                {this.bottomInfo('结余', '0.00')}
+                {this.bottomInfo('收入', this.state.data.income.toFixed(2))}
+                {this.bottomInfo('支出', this.state.data.pay.toFixed(2))}  
+                {this.bottomInfo('结余', this.state.data.data.toFixed(2))}
             </View>
         )
     }
     bottomMonth = ()=>{
+        const date = new Date()
+        const month = DateExtension.supplement(date.getMonth() + 1)
         return (
             <View style={styles.bM}>
-                <Text style={styles.bMMonth}>01</Text>
+                <Text style={styles.bMMonth}>{month}</Text>
                 <Text style={styles.bMText}>月</Text>
             </View>
         )
