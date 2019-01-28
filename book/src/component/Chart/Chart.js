@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    View,
     StyleSheet
 } from 'react-native';
 import BaseContainer from '~/common/Base/BaseContainer'
@@ -10,19 +9,21 @@ import ChartDate from '~/component/Chart/ChartDate/ChartDate'
 import ChartTable from '~/component/Chart/Table/ChartTable'
 import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 
+
 export default class Chart extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            navigationIndex: 0
+            navigationIndex: 0,
+            dateIndex: 0,
         }
     }
 
-
     _navigationPress = ()=>{
-        // this.setState({navigationIndex: this.state.navigationIndex == 0 ? 1 : 0})
         this.refs.hud._switchAnimation()
     }
+    
     _hudPress = (index)=>{
         this.setState({
             navigationIndex: index
@@ -31,7 +32,10 @@ export default class Chart extends Component {
 
     hasTitleComponent = ()=>{
         return (
-            <ChartNavigation onPress={this._navigationPress} navigationIndex={this.state.navigationIndex}/>
+            <ChartNavigation 
+                navigationIndex={this.state.navigationIndex}
+                onPress={this._navigationPress} 
+            />
         )
     }
 
@@ -43,9 +47,11 @@ export default class Chart extends Component {
                 hasTitle={false} 
                 hasTitleComponent={this.hasTitleComponent}
             >
-                
                 <ChartSegmentedControl/>
-                <ChartDate/>
+                <ChartDate 
+                    dateIndex={this.state.dateIndex}
+                    onPress={(index)=>this.setState({dateIndex: index})} 
+                />
                 <ChartTable/>
                 <ChartHUD 
                     ref={'hud'} 

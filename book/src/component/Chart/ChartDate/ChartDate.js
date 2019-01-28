@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Animated,
     Easing,
     UIManager,
@@ -12,28 +11,23 @@ import {
 import ChartDateCell from './ChartDateCell'
 
 const count = 20
-
 export default class ChartDate extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            leftAnim: new Animated.Value(countcoordinatesX(50))
+        }
+    }
 
     componentDidMount = () => {
       
     }
 
-    layout=(e)=>{  console.log(e)  }
-    
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            choose: 0,
-            leftAnim: new Animated.Value(countcoordinatesX(50))
-        }
-    }
-
     // 点击
     _onPress = (index)=>{
-        // 设置
-        this.setState({choose: index})
+        // 回调
+        this.props.onPress(index)
         // 滚动
         UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, itemW)=>{
             const itemX = index * itemW
@@ -49,16 +43,19 @@ export default class ChartDate extends Component {
             duration: 300,
             easing: Easing.elastic(0),
             toValue: countcoordinatesX(200) * index + countcoordinatesX(50)
-        }).start((result)=>{
-          
-        });
+        })
     }
 
     subitem = ()=>{
         var arr = []
         for (let i=0; i<=count; i++) {
             arr.push(
-                <ChartDateCell key={i} ref={'item'+i} onPress={()=>this._onPress(i)} choose={i == this.state.choose}/>
+                <ChartDateCell 
+                    key={i} 
+                    ref={'item'+i} 
+                    onPress={()=>this._onPress(i)} 
+                    choose={i == this.props.dateIndex}
+                />
             )
         }
         return arr
@@ -73,7 +70,11 @@ export default class ChartDate extends Component {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
-                    <View style={styles.content} onLayout={(e) => this.scrollLayout= e.nativeEvent.layout} ref={'scrollContent'}>
+                    <View 
+                        style={styles.content}  
+                        ref={'scrollContent'}
+                        onLayout={(e) => this.scrollLayout= e.nativeEvent.layout}
+                    >
                         {this.subitem()}
                     </View>
                     <Animated.View style={[styles.line, {left: this.state.leftAnim}]}/>

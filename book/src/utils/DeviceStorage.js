@@ -49,7 +49,7 @@ export const SAVE = {
 export default class DeviceStorage {
 
     /**
-     * 获取记账信息
+     * 获取记账信息(首页 页面)
      */
     static getBook = async (year, month, day)=>{
         // 数据
@@ -115,10 +115,23 @@ export default class DeviceStorage {
         }
         
         return newarrm
-
-
-
     }
+
+    /**
+     * 删除记账信息(首页 页面)
+     */
+    static removeBook = async (model)=>{
+        var bookArrm = await DeviceStorage.load(SAVE.PIN_BOOK)
+        var bookSyncedArrm = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
+        if (BKModel.indexOfObject(bookSyncedArrm, model) != -1) {
+            BKModel.removeOfObject(bookSyncedArrm, model)
+        }
+        BKModel.removeOfObject(bookArrm, model)
+        
+        await DeviceStorage.save(SAVE.PIN_BOOK, bookArrm)
+        await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArrm)
+    }
+
 
     /**
      * 添加自定义分类(添加分类 页面)

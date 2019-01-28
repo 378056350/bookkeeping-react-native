@@ -3,9 +3,9 @@ import React from 'react';
 import { ScrollView, ListView, View } from 'react-native';
 import Pullable from '../local/Pullable';
 
-//ScrollView 暂时没有找到比较好的方法去判断时候滚动到顶部，
-//所以这里用ListView配合ScrollView进行使用
-export default  class PullScrollView extends Pullable {
+// ScrollView 暂时没有找到比较好的方法去判断时候滚动到顶部，
+// 所以这里用ListView配合ScrollView进行使用
+export default class PullScrollView extends Pullable {
 
     getScrollable=()=> {
         return (

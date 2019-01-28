@@ -33,9 +33,9 @@ export default class ChartHUD extends Component {
     }
     
     // 显示/隐藏 
-    _switchAnimation = ()=>{
+    _switchAnimation = (index)=>{
         if (this.state.isShow == true) {
-            this._hide()
+            this._hide(index)
         } else {
             this._show()
         }
@@ -60,7 +60,7 @@ export default class ChartHUD extends Component {
             })
         })
     }
-    _hide = ()=>{
+    _hide = (index)=>{
         this.setState({isAnimation: true})
         Animated.parallel([   
             Animated.timing(this.state.opacityAnim,{ 
@@ -78,13 +78,15 @@ export default class ChartHUD extends Component {
                 isAnimation: false,
                 isShow: false
             })
+            if (index != undefined) {
+                this.props.onPress(index)
+            }
         })
     }
 
     // 点击
     _onPress = (index)=>{
-        this._switchAnimation()
-        this.props.onPress(index)
+        this._switchAnimation(index)
     }
 
     render() {
