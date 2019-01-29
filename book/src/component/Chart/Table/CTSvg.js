@@ -5,23 +5,10 @@ import {
     StyleSheet
 } from 'react-native';
 // Utils
-import Svg,{
+import Svg, {
     Circle,
     Text,
-    Ellipse,
-    G,
-    LinearGradient,
-    RadialGradient,
     Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Use,
-    Defs,
-    Stop,
-    TSpan
 } from 'react-native-svg';
 
 
@@ -32,7 +19,7 @@ const titleH = countcoordinatesX(40)
 const pointL = countcoordinatesX(1)
 const pointR = countcoordinatesX(5)
 const pointW = (pointR + pointL / 2)
-const chartCount = 7
+const chartCount = 10
 const pointPadding = (chartW - pointW * chartCount - pointW) / (chartCount - 1)
 const pointLeft = (index)=>{
     return pointW + pointPadding * index + pointW * index
@@ -58,6 +45,7 @@ const textAnchor = (index)=>{
 
 
 export default class CTSvg extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -152,6 +140,7 @@ export default class CTSvg extends Component {
         }
         return arr
     }
+    // 初始化
     render() {
         return (
             <View style={styles.container}>
@@ -179,7 +168,15 @@ CTSvg.propTypes = {
 CTSvg.defaultProps = {
     chooseColor: kColor_Main_Color,
     normalColor: 'white',
-    lineColor: kColor_Three_Color
+    lineColor: kColor_Three_Color,
+    models: [{ 
+        title: "title", 
+        max: 0, 
+        sum: 0, 
+        avg: 0,
+        chart: {year: 0, month: 0, day: 0, week: 0, count: 0},
+        data: [] 
+    }],
 };
 
 

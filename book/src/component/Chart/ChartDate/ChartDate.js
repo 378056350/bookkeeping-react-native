@@ -59,7 +59,7 @@ export default class ChartDate extends Component {
                     name={this.props.dates[i]}
                     // onPress={()=>this.props.onPress(i, true)} 
                     onPress={()=>this.props.onPress(i)}
-                    choose={i == this.props.dateIndex}
+                    choose={i == this.props.subdateIndex}
                 />
             )
         }

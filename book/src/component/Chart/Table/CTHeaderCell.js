@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: countcoordinatesX(3),
         borderBottomLeftRadius: countcoordinatesX(3),
         borderBottomRightRadius: countcoordinatesX(3),
-        backgroundColor: 'orange',
+        backgroundColor: kColor_Main_Color,
     },
     name: {
         fontSize: FONT_SIZE(10),

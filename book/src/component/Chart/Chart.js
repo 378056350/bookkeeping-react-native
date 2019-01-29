@@ -10,6 +10,7 @@ import ChartDate from '~/component/Chart/ChartDate/ChartDate'
 import ChartTable from '~/component/Chart/Table/ChartTable'
 import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 import DeviceStorage from '~/utils/DeviceStorage'
+import DateExtension from '~/utils/DateExtension'
 
 export default class Chart extends Component {
 
@@ -49,13 +50,43 @@ export default class Chart extends Component {
         // 列表数据
         var arr = await DeviceStorage.getChart(this.state.subdates[subdates.index], this.state.dateIndex)
         var max = 0
+        var sum = 0
+        var avg = 0
         for (var i=0; i<arr.length; i++) {
             var model = arr[i]
+            sum += parseFloat(model.price)
             if (max < parseFloat(model.price)) {
                 max = parseFloat(model.price)
             }
         }
-        this.refs.table.setModel([{ title: "title", max: max, data: arr }])
+        if (this.state.dateIndex == 0) {
+            avg = sum / 7
+        } else if (this.state.dateIndex == 1) {
+            avg = sum / 30
+        } else if (this.state.dateIndex == 2) {
+            avg = sum / 12
+        } 
+
+
+        console.log("================== 111");
+        
+        var chart
+        if (this.state.navigationIndex == 0) {
+            chart = DateExtension.weekToStr(this.state.subdates[subdates.index])
+        } else if (this.state.navigationIndex == 1) {
+            chart = DateExtension.monthToStr(this.state.subdates[subdates.index])
+        } else if (this.state.navigationIndex == 2) {
+            chart = DateExtension.yearToStr(this.state.subdates[subdates.index])
+        } 
+
+        this.refs.table.setModel([{ 
+            title: "title", 
+            max: max, 
+            sum: sum, 
+            avg: avg,
+            chart: chart,
+            data: arr 
+        }])
     }
 
     changeData = async ()=>{
@@ -64,13 +95,23 @@ export default class Chart extends Component {
         // 列表数据
         var arr = await DeviceStorage.getChart(this.state.subdates[this.state.subdateIndex], this.state.dateIndex)
         var max = 0
+        var sum = 0
+        var avg = 0
         for (var i=0; i<arr.length; i++) {
             var model = arr[i]
+            sum += parseFloat(model.price)
             if (max < parseFloat(model.price)) {
                 max = parseFloat(model.price)
             }
         }
-        this.refs.table.setModel([{ title: "title", max: max, data: arr }])
+        if (this.state.dateIndex == 0) {
+            avg = sum / 7
+        } else if (this.state.dateIndex == 1) {
+            avg = sum / 30
+        } else if (this.state.dateIndex == 2) {
+            avg = sum / 12
+        } 
+        this.refs.table.setModel([{ title: "title", max: max, sum: sum, avg: avg, data: arr }])
     }
 
     _navigationPress = ()=>{
@@ -131,13 +172,14 @@ export default class Chart extends Component {
                 />
                 <ChartDate 
                     ref={'date'}
-                    dateIndex={this.state.subdateIndex}
+                    subdateIndex={this.state.subdateIndex}
                     onPress={this._subdatePress} 
                     dates={this.state.subdates}
                 />
                 <ChartTable 
                     ref={'table'} 
-                    models={this.state.listdatas}
+                    dateIndex={this.state.dateIndex}
+                    subdateIndex={this.state.subdateIndex}
                     navigationIndex={this.state.navigationIndex}
                 />
                 <ChartHUD 

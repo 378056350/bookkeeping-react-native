@@ -16,7 +16,14 @@ export default class ChartTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            models: [{ title: "Title1", max: 0, data: [] }]
+            models: [{ 
+                title: "title", 
+                max: 0, 
+                sum: 0, 
+                avg: 0,
+                chart: {year: 0, month: 0, day: 0, week: 0, count: 0},
+                data: [] 
+            }]
         }
     }
 
@@ -28,12 +35,20 @@ export default class ChartTable extends Component {
 
     _ListHeaderComponent = ()=>{
         return (
-            <CTHeader/>
+            <CTHeader 
+                models={this.state.models}
+                dateIndex={this.props.dateIndex}
+                subdateIndex={this.props.subdateIndex}
+                navigationIndex={this.props.navigationIndex}
+            />
         )
     }
     _renderSectionHeader = ()=>{
         return (
-            <CTSectionHeader navigationIndex={this.props.navigationIndex}/>
+            <CTSectionHeader 
+                models={this.state.models} 
+                navigationIndex={this.props.navigationIndex}
+            />
         )
     }
     _renderItem = ({ item, index, section })=>{

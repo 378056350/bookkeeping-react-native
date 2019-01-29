@@ -10,11 +10,17 @@ import CTSvg from '~/component/Chart/Table/CTSvg'
 
 export default class ChartTableHeader extends Component {
     render() {
+        const str = this.props.navigationIndex == 0 ? '总支出' : '总收入'
         return (
             <View style={styles.container}>
-                <Text style={styles.name}>总支出: 0</Text>
-                <Text style={styles.detail}>平均值: 0</Text>
-                <CTSvg/>
+                <Text style={styles.name}>{str}: {this.props.models[0].sum}</Text>
+                <Text style={styles.detail}>平均值: {parseFloat(this.props.models[0].avg.toFixed(2))}</Text>
+                <CTSvg 
+                    models={this.props.models}
+                    dateIndex={this.props.dateIndex}
+                    subdateIndex={this.props.subdateIndex}
+                    navigationIndex={this.props.navigationIndex}
+                />
             </View>
         );
     }

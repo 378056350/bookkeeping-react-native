@@ -189,50 +189,51 @@ export default class DateExtension {
     static weekToStr = (str)=>{
         if (str === '本周') {
             const date = new Date()
-            return {'year': date.getFullYear(), 'week': DateExtension.getWeek(date)}
+            return {year: date.getFullYear(), week: DateExtension.getWeek(date), count: 7}
         } else if (str === '上周') {
             const date = new Date()
             var last = DateExtension.dateAddDay(date, -7)
-            return {'year': date.getFullYear(), 'week': DateExtension.getWeek(last)}
+            return {year: date.getFullYear(), week: DateExtension.getWeek(last), count: 7}
         } else {
             str = str.replace('周', '');
             var year = parseFloat(str.split('-')[0])
             var week = parseFloat(str.split('-')[1])
-            return {'year': year, 'week': week}
+            return {year: year, week: week, count: 7}
         }
     }
-
 
     // 2019-02月 获取月信息 
     static monthToStr = (str)=>{
         if (str === '本月') {
             const date = new Date()
-            return {'year': date.getFullYear(), 'month': date.getMonth() + 1}
+            const month = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+            return {year: date.getFullYear(), month: date.getMonth() + 1, count: month.getDate()}
         } else if (str === '上月') {
             const date = new Date()
-            var last = DateExtension.dateAddMonth(date, -1)
-            return {'year': last.getFullYear(), 'month': last.getMonth() + 1}
+            const last = DateExtension.dateAddMonth(date, -1)
+            const month = new Date(last.getFullYear(), last.getMonth() + 1, 0)
+            return {year: last.getFullYear(), month: last.getMonth() + 1, count: month.getDate()}
         } else {
             str = str.replace('月', '');
             var year = parseFloat(str.split('-')[0])
-            var week = parseFloat(str.split('-')[1])
-            return {'year': year, 'month': week}
+            var month = parseFloat(str.split('-')[1])
+            const monthDate = new Date(year, month, 0)
+            return {year: year, month: week, count: monthDate.getDate()}
         }
     }
-
 
     // 2019年 获取年信息 
     static yearToStr = (str)=>{
         if (str === '今年') {
             const date = new Date()
-            return {'year': date.getFullYear()}
+            return {year: date.getFullYear(), count: 12}
         } else if (str === '去年') {
             const date = new Date()
             var last = DateExtension.dateAddMonth(date, -1)
-            return {'year': last.getFullYear()}
+            return {year: last.getFullYear(), count: 12}
         } else {
             str = str.replace('年', '');
-            return {'year': parseFloat(str)}
+            return {year: parseFloat(str), count: 12}
         }
     }
 
