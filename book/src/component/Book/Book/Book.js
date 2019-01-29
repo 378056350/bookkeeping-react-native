@@ -87,25 +87,28 @@ export default class Book extends Component {
                 date = new Date(dateStr)
             }
 
-            var model = params['model']
-            model.price = money
-            model.mark = mark
-            model.year = date.getFullYear()
-            model.month = date.getMonth() + 1
-            model.day = date.getDate()
+            const model = this.refs.scroll.getChooseModel()
+            var bkmodel = params['model']
+            bkmodel.price = money
+            bkmodel.mark = mark
+            bkmodel.year = date.getFullYear()
+            bkmodel.month = date.getMonth() + 1
+            bkmodel.day = date.getDate()
+            bkmodel.category_id = model.id
+            bkmodel.cmodel = model
             
             var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
             var bookSyncedArr = await DeviceStorage.load(SAVE.PIN_BOOK_SYNCED)
 
-            const index = BKModel.indexOfObject(bookArr, model)
-            bookArr[index] = model
-            if (BKModel.indexOfObject(bookSyncedArr, model) != -1) {
-                bookSyncedArr[index] = model
+            const index = BKModel.indexOfObject(bookArr, bkmodel)
+            bookArr[index] = bkmodel
+            if (BKModel.indexOfObject(bookSyncedArr, bkmodel) != -1) {
+                bookSyncedArr[index] = bkmodel
             }
             await DeviceStorage.save(SAVE.PIN_BOOK, bookArr)
             await DeviceStorage.save(SAVE.PIN_BOOK_SYNCED, bookArr)
             // 通知
-            DeviceEventEmitter.emit(EVENT.REPLACE_BOOK_EVENT, model);
+            DeviceEventEmitter.emit(EVENT.REPLACE_BOOK_EVENT, bkmodel);
         } 
         // 新增
         else {
