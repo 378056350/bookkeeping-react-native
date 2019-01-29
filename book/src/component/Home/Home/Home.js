@@ -10,7 +10,6 @@ import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './Table/HomeTable'
 import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
-import { BKModel } from '~/services/Interfaces'
 
 
 const scrollH = (SCREEN_HEIGHT - NAVIGATION_HEIGHT - HOME_HEADER_H - STATUS_TABBAR_HEIGHT)
@@ -32,6 +31,7 @@ export default class Home extends Component {
         DeviceStorage.initialization()
         DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
         DeviceEventEmitter.addListener(EVENT.REMOVE_BOOK_EVENT, this.getData);
+        DeviceEventEmitter.addListener(EVENT.REPLACE_BOOK_EVENT, this.getData);
         this.getData()
         setTimeout(() => {
             this.refs.scroll.scrollTo({x: 0, y: scrollH, animated: false})
@@ -41,6 +41,7 @@ export default class Home extends Component {
     componentWillUnmount = () => {
         DeviceEventEmitter.removeListener(EVENT.ADD_BOOK_EVENT, this.getData)
         DeviceEventEmitter.removeListener(EVENT.REMOVE_BOOK_EVENT, this.getData)
+        DeviceEventEmitter.removeListener(EVENT.REPLACE_BOOK_EVENT, this.getData)
     }
 
     getData = async ()=>{

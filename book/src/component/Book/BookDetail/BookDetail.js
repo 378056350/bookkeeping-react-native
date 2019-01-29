@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Text,
     DeviceEventEmitter,
     StyleSheet
 } from 'react-native';
@@ -9,11 +8,35 @@ import BookHeader from './BookHeader'
 import BookTable from './BookTable'
 import BookBottom from './BookBottom'
 import BDRightItem from './BDRightItem'
-import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 
 export default class BookDetail extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            model: null
+        };
+    }
+
+    componentDidMount = () => {
+        DeviceEventEmitter.addListener(EVENT.REPLACE_BOOK_EVENT, this.getData);
+        this.getData(this.props.navigation.state.params.model)
+    };
+
+
+    componentWillUnmount = () => {
+        DeviceEventEmitter.removeListener(EVENT.REPLACE_BOOK_EVENT, this.getData)
+    }
+
+    getData = (model)=>{
+        this.refs.table.setModel(model)
+        this.setState({
+            model: model
+        })
+    }
+    
 
     _hasContentRight = ()=>{
         return (
@@ -46,8 +69,8 @@ export default class BookDetail extends Component {
                 hasRight={true}
                 hasContentRight={this._hasContentRight}
             >
-                <BookHeader model={params.model}/>
-                <BookTable model={params.model}/>
+                <BookHeader model={this.state.model ? this.state.model : params.model}/>
+                <BookTable ref={'table'}/>
                 <BookBottom 
                     onEditPress={this._onEditPress} 
                     onRemovePress={this._onRemovePress}

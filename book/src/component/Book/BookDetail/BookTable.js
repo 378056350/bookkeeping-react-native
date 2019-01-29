@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     FlatList,
     StyleSheet
 } from 'react-native';
@@ -18,12 +17,19 @@ export default class BookTable extends Component {
                 {key: '2', 'name': '金额'}, 
                 {key: '3', 'name': '日期'}, 
                 {key: '4', 'name': '备注'}
-            ]
+            ],
+            model: {'price':0,  'year': 0, 'month': 0, 'day': 0, 'mark': '', 'cmodel': {'is_income': 0, 'name': ''}}
         }
     }
 
+    setModel = (model)=>{
+        this.setState({
+            model: model
+        })
+    }
+
     _renderItem = ({item})=>{
-        const model = this.props.model
+        const model = this.state.model
         var str = ''
         if (item.key == '1') {
             str = model.cmodel.is_income == 0 ? '支出' : '收入'
@@ -48,12 +54,15 @@ export default class BookTable extends Component {
 
     render() {
         return (
-            <FlatList
-                style={styles.container}
-                data={this.state.data}
-                renderItem={this._renderItem}
-                ItemSeparatorComponent={this._ItemSeparatorComponent}
-            />
+            <View style={{flex: 1}}>
+                <FlatList
+                    style={styles.container}
+                    data={this.state.data}
+                    renderItem={this._renderItem}
+                    ItemSeparatorComponent={this._ItemSeparatorComponent}
+                    extraData={this.state}
+                />
+            </View>
         );
     }
 }
