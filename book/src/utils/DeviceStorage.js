@@ -49,18 +49,44 @@ export default class DeviceStorage {
     /**
      * 获取数据
      */
-    static getChart = (year, month, day, week, status)=>{
+    static getChart = async (str, status)=>{
+        var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
         // 周
         if (status == 0) {
-            
+            var data = DateExtension.weekToStr(str)
+            var arr = []
+            for (var i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                const week = DateExtension.getWeek(DateExtension.strToDate(model.year, model.month, model.day))
+                if (model.year == data.year && data.week == week) {
+                    arr.push(model) 
+                }  
+            }
+            return arr
         }
         // 月
         else if (status == 1) {
-
+            var data = DateExtension.monthToStr(str)
+            var arr = []
+            for (var i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                if (model.year == data.year && model.month == data.month) {
+                    arr.push(model) 
+                }  
+            }
+            return arr
         }
         // 年
         else if (status == 2) {
-
+            var data = DateExtension.yearToStr(str)
+            var arr = []
+            for (var i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                if (model.year == data.year) {
+                    arr.push(model) 
+                }  
+            }
+            return arr
         }
     }
 

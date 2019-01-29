@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import {
     View,
     Text,
@@ -12,6 +13,18 @@ import CTHeaderCell from './CTHeaderCell'
 
 export default class ChartTable extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            models: [{ title: "Title1", max: 0, data: [] }]
+        }
+    }
+
+    setModel = (models)=>{
+        this.setState({
+            models: models
+        })
+    }
 
     _ListHeaderComponent = ()=>{
         return (
@@ -20,12 +33,12 @@ export default class ChartTable extends Component {
     }
     _renderSectionHeader = ()=>{
         return (
-            <CTSectionHeader/>
+            <CTSectionHeader navigationIndex={this.props.navigationIndex}/>
         )
     }
     _renderItem = ({ item, index, section })=>{
         return (
-            <CTHeaderCell/>
+            <CTHeaderCell model={item} max={this.state.models[0].max}/>
         )
     }
 
@@ -38,14 +51,15 @@ export default class ChartTable extends Component {
                     renderSectionHeader={this._renderSectionHeader}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => item + index}
-                    sections={[
-                        { title: "Title1", data: ["item1", "item2"] }
-                    ]}
+                    sections={this.state.models}
+                    extraData={this.state}
                 />
             </View>
         );
     }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

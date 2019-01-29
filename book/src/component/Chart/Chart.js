@@ -19,7 +19,8 @@ export default class Chart extends Component {
             navigationIndex: 0,
             dateIndex: 0,
             subdateIndex: 0,
-            subdates: []
+            subdates: [],
+            listdatas: []
         }
     }
 
@@ -37,16 +38,39 @@ export default class Chart extends Component {
     }
     
     getData = async ()=>{
+        // 时间范围
         var subdates = await DeviceStorage.getChartDateRange(this.state.navigationIndex, this.state.dateIndex)
         this.setState({
-            subdates: subdates.arr
+            subdates: subdates.arr,
+            subdateIndex: subdates.index,
         })
-        setTimeout(() => {
-            // 滚动
-            this.refs.date._onPress(subdates.index)
-            // 请求
-            
-        }, 0);
+        // 滚动
+        this.refs.date._onPress(subdates.index)
+        // 列表数据
+        var arr = await DeviceStorage.getChart(this.state.subdates[subdates.index], this.state.dateIndex)
+        var max = 0
+        for (var i=0; i<arr.length; i++) {
+            var model = arr[i]
+            if (max < parseFloat(model.price)) {
+                max = parseFloat(model.price)
+            }
+        }
+        this.refs.table.setModel([{ title: "title", max: max, data: arr }])
+    }
+
+    changeData = async ()=>{
+        // 滚动
+        this.refs.date._onPress(this.state.subdateIndex)
+        // 列表数据
+        var arr = await DeviceStorage.getChart(this.state.subdates[this.state.subdateIndex], this.state.dateIndex)
+        var max = 0
+        for (var i=0; i<arr.length; i++) {
+            var model = arr[i]
+            if (max < parseFloat(model.price)) {
+                max = parseFloat(model.price)
+            }
+        }
+        this.refs.table.setModel([{ title: "title", max: max, data: arr }])
     }
 
     _navigationPress = ()=>{
@@ -78,6 +102,9 @@ export default class Chart extends Component {
         this.setState({
             subdateIndex: index
         })
+        setTimeout(() => {
+            this.changeData() 
+        }, 0);
     }
 
     
@@ -108,7 +135,11 @@ export default class Chart extends Component {
                     onPress={this._subdatePress} 
                     dates={this.state.subdates}
                 />
-                <ChartTable/>
+                <ChartTable 
+                    ref={'table'} 
+                    models={this.state.listdatas}
+                    navigationIndex={this.state.navigationIndex}
+                />
                 <ChartHUD 
                     ref={'hud'} 
                     navigationIndex={this.state.navigationIndex}

@@ -109,7 +109,7 @@ export default class DateExtension {
 
     // 日期在当年的第几周
     static getWeek = (dt)=>{
-        dt = DateExtension.dateAddDay(dt, 1)
+        dt = DateExtension.dateAddDay(dt, 0)
         let d1 = new Date(dt);
         let d2 = new Date(dt);
         d2.setMonth(0);
@@ -189,7 +189,7 @@ export default class DateExtension {
     static weekToStr = (str)=>{
         if (str === '本周') {
             const date = new Date()
-            return {'year': date.getFullYear(), 'week': DateExtension.getWeek(last)}
+            return {'year': date.getFullYear(), 'week': DateExtension.getWeek(date)}
         } else if (str === '上周') {
             const date = new Date()
             var last = DateExtension.dateAddDay(date, -7)
@@ -197,8 +197,42 @@ export default class DateExtension {
         } else {
             str = str.replace('周', '');
             var year = parseFloat(str.split('-')[0])
-            var month = parseFloat(str.split('-'))[1]
-            
+            var week = parseFloat(str.split('-')[1])
+            return {'year': year, 'week': week}
+        }
+    }
+
+
+    // 2019-02月 获取月信息 
+    static monthToStr = (str)=>{
+        if (str === '本月') {
+            const date = new Date()
+            return {'year': date.getFullYear(), 'month': date.getMonth() + 1}
+        } else if (str === '上月') {
+            const date = new Date()
+            var last = DateExtension.dateAddMonth(date, -1)
+            return {'year': last.getFullYear(), 'month': last.getMonth() + 1}
+        } else {
+            str = str.replace('月', '');
+            var year = parseFloat(str.split('-')[0])
+            var week = parseFloat(str.split('-')[1])
+            return {'year': year, 'month': week}
+        }
+    }
+
+
+    // 2019年 获取年信息 
+    static yearToStr = (str)=>{
+        if (str === '今年') {
+            const date = new Date()
+            return {'year': date.getFullYear()}
+        } else if (str === '去年') {
+            const date = new Date()
+            var last = DateExtension.dateAddMonth(date, -1)
+            return {'year': last.getFullYear()}
+        } else {
+            str = str.replace('年', '');
+            return {'year': parseFloat(str)}
         }
     }
 

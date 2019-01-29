@@ -5,20 +5,21 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
+import { ImageManager } from '~/assets/json/ImageManager';
 
-
+const lineW = (SCREEN_WIDTH - countcoordinatesX(30) - countcoordinatesX(60) - countcoordinatesX(20) - countcoordinatesX(30))
 export default class CTHeaderCell extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image resizeMode={'contain'} style={styles.icon}/>
+                <Image source={ImageManager[this.props.model.cmodel.icon_l]} resizeMode={'contain'} style={styles.icon}/>
                 <View style={styles.contentRight}>
                     <View style={styles.contentTop}>
-                        <Text style={styles.name}>彩票</Text>
-                        <Text style={styles.name}>55</Text>
+                        <Text style={styles.name}>{this.props.model.cmodel.name}</Text>
+                        <Text style={styles.name}>{parseFloat(this.props.model.price)}</Text>
                     </View>
                     <View style={styles.contentBottom}>
-                        <View style={styles.line}/>
+                        <View style={[styles.line, {width: lineW / this.props.max * parseFloat(this.props.model.price)}]}/>
                     </View>
                 </View>
             </View>
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     icon: {
         width: countcoordinatesX(60),
         height: countcoordinatesX(60),
-        backgroundColor: 'red',
     },
     contentRight: {
         flex: 1,
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     line: {
-        width: countcoordinatesX(100),
         height: countcoordinatesX(6),
         borderTopLeftRadius: countcoordinatesX(3),
         borderTopRightRadius: countcoordinatesX(3),

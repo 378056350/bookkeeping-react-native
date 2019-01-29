@@ -150,8 +150,8 @@ const MineStack = createStackNavigator({
 
 const TabbarStack = createBottomTabNavigator(
   {
-    Chart: ChartStack,
     Home: HomeStack,
+    Chart: ChartStack,
     None: NoneStack,
     Find: FindStack,
     Mine: MineStack,

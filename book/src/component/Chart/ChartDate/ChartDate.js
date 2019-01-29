@@ -9,6 +9,7 @@ import {
     StyleSheet
 } from 'react-native';
 import ChartDateCell from './ChartDateCell'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 const count = 20
 export default class ChartDate extends Component {
@@ -26,18 +27,18 @@ export default class ChartDate extends Component {
 
     // 点击
     _onPress = (index)=>{
-        // 回调
-        this.props.onPress(index)
-        // 滚动
-        UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, itemW)=>{
-            const itemX = index * itemW
-            const scrollW = this.scrollLayout.width
-            const screenX = (SCREEN_WIDTH - itemW) / 2
-            var offsetX = itemX - screenX
-            offsetX = scrollW > (offsetX + screenX * 2 + itemW) ? offsetX : scrollW - SCREEN_WIDTH
-            offsetX = offsetX < 0 ? 0 : offsetX
-            this.refs.scroll.scrollTo({ x: offsetX, y: 0, animated: true })
-        })
+        setTimeout(() => {
+            // 滚动
+            UIManager.measure(findNodeHandle(this.refs['item'+index]),(x, y, itemW)=>{
+                const itemX = index * itemW
+                const scrollW = this.scrollLayout.width
+                const screenX = (SCREEN_WIDTH - itemW) / 2
+                var offsetX = itemX - screenX
+                offsetX = scrollW > (offsetX + screenX * 2 + itemW) ? offsetX : scrollW - SCREEN_WIDTH
+                offsetX = offsetX < 0 ? 0 : offsetX
+                this.refs.scroll.scrollTo({ x: offsetX, y: 0, animated: true })
+            })
+        }, 0);
         // 动画
         Animated.timing(this.state.leftAnim,{ 
             duration: 300,
@@ -56,7 +57,8 @@ export default class ChartDate extends Component {
                     key={i} 
                     ref={'item'+i} 
                     name={this.props.dates[i]}
-                    onPress={()=>this._onPress(i)} 
+                    // onPress={()=>this.props.onPress(i, true)} 
+                    onPress={()=>this.props.onPress(i)}
                     choose={i == this.props.dateIndex}
                 />
             )

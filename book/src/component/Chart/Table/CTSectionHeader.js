@@ -10,7 +10,7 @@ export default class CTSectionHeader extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.name}>支出排行榜</Text>
+                <Text style={styles.name}>{this.props.navigationIndex == 0 ? '支出排行榜' : '收入排行榜'}</Text>
             </View>
         );
     }
