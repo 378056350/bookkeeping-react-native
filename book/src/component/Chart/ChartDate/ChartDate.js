@@ -21,7 +21,7 @@ export default class ChartDate extends Component {
     }
 
     componentDidMount = () => {
-      
+        
     }
 
     // 点击
@@ -36,7 +36,7 @@ export default class ChartDate extends Component {
             var offsetX = itemX - screenX
             offsetX = scrollW > (offsetX + screenX * 2 + itemW) ? offsetX : scrollW - SCREEN_WIDTH
             offsetX = offsetX < 0 ? 0 : offsetX
-            this.refs.scroll.scrollTo({x: offsetX, y: 0, animated: true})
+            this.refs.scroll.scrollTo({ x: offsetX, y: 0, animated: true })
         })
         // 动画
         Animated.timing(this.state.leftAnim,{ 
@@ -50,11 +50,12 @@ export default class ChartDate extends Component {
 
     subitem = ()=>{
         var arr = []
-        for (let i=0; i<=count; i++) {
+        for (let i=0; i<this.props.dates.length; i++) {
             arr.push(
                 <ChartDateCell 
                     key={i} 
                     ref={'item'+i} 
+                    name={this.props.dates[i]}
                     onPress={()=>this._onPress(i)} 
                     choose={i == this.props.dateIndex}
                 />

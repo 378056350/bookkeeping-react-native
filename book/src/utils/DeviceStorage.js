@@ -44,9 +44,134 @@ export const SAVE = {
     
 }
 
-
-
 export default class DeviceStorage {
+
+    /**
+     * 获取数据
+     */
+    static getChart = (year, month, day, week, status)=>{
+        // 周
+        if (status == 0) {
+            
+        }
+        // 月
+        else if (status == 1) {
+
+        }
+        // 年
+        else if (status == 2) {
+
+        }
+    }
+
+    /**
+     * 获取时间范围(图表 页面)
+     * @param is_income  0: 支出  1: 收入
+     * @param status  0: 周  1: 月  2:  年
+     */
+    static getChartDateRange = async (is_income, status)=>{
+        var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+        bookArr = bookArr.filter((item, index, array)=>{
+            return item.cmodel.is_income == is_income
+        })
+        const minDate = DeviceStorage.getMinDate(bookArr)
+        const maxDate = DeviceStorage.getMaxDate(bookArr)
+        // 周
+        if (status == 0) {
+            if (minDate == undefined || maxDate == undefined) {
+                return {'index': 0, 'arr': ['本周']}
+            }
+
+            const week = DateExtension.compareWeek(minDate, maxDate)
+            var arr = []
+            var index = -1
+            for (var i=0; i<week; i++) {
+                const date = DateExtension.dateAddDay(minDate, i == 0 ? 0 : 7 * i)
+                arr.push(DateExtension.dateToWeekStr(date))
+                if (DateExtension.isWeekNow(date)) {
+                    index = i
+                }
+            }
+            index = index == -1 ? arr.length - 1 : index
+            return {'index': index, 'arr': arr}
+        }
+        // 月
+        else if (status == 1) {
+            if (minDate == undefined || maxDate == undefined) {
+                return {'index': 0, 'arr': ['本月']}
+            }
+
+            var arr = []
+            var index = -1
+            for (var i=minDate.getFullYear(); i<=maxDate.getFullYear(); i++) {
+                const minMonth = i == minDate.getFullYear() ? minDate.getMonth() + 1 : 1
+                const maxMonth = i == maxDate.getFullYear() ? maxDate.getMonth() + 1 : 12
+                for (var y=minMonth; y<=maxMonth; y++) {
+                    arr.push(DateExtension.dateToMonthStr(i, y))
+                }
+                if (DateExtension.isMonthNow(i, y)) {
+                    index = arr.length - 1
+                }
+            }
+            index = index == -1 ? arr.length - 1 : index
+            return {'index': index, 'arr': arr}
+        }
+        // 年
+        else if (status == 2) {
+            if (minDate == undefined || maxDate == undefined) {
+                return {'index': 0, 'arr': ['今年']}
+            }
+
+            var arr = []
+            var index = -1
+            for (var i=minDate.getFullYear(); i<=maxDate.getFullYear(); i++) {
+                arr.push(DateExtension.dateToYearStr(i))
+                if (DateExtension.isYearNow(i)) {
+                    index = arr.length - 1
+                }
+            }
+            index = index == -1 ? arr.length - 1 : index
+            return {'index': index, 'arr': arr}
+        }
+    }   
+
+    /**
+     * 获取最小时间
+     */
+    static getMinDate = (array)=>{
+        var minDate = undefined
+        for (var i=0; i<array.length; i++) {
+            const model = array[i]
+            const date = DateExtension.strToDate(model.year, model.month, model.day)
+            if (minDate != undefined) {
+                if (minDate > date) {
+                    minDate = date
+                }
+            } else {
+                minDate = date
+            }
+        }
+        return minDate
+    }
+
+    /**
+     * 获取最大时间
+     */
+    static getMaxDate = (array)=>{
+        var maxDate = undefined
+        for (var i=0; i<array.length; i++) {
+            const model = array[i]
+            const date = DateExtension.strToDate(model.year, model.month, model.day)
+            if (maxDate != undefined) {
+                if (maxDate < date) {
+                    maxDate = date
+                }
+            } else {
+                maxDate = date
+            }
+        }
+        return maxDate
+    }
 
     /**
      * 获取记账信息(首页 页面)
@@ -207,12 +332,6 @@ export default class DeviceStorage {
         var pay1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_PAY)
         var pay2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_PAY)
         var pay3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_PAY)
-        // var payInsert = [...pay1, ...pay2].map((item,index) =>{
-        //     return Object.assign(item, {key: '0.'+index })
-        // })
-        // var payRemove = pay3.map((item,index) =>{
-        //     return Object.assign(item,{key: '1.'+index })
-        // })
         var payInsert = [...pay1, ...pay2]
         var payRemove = pay3
         var pay = [{'title': 0, 'data': payInsert}, {'title': 1, 'data': payRemove}]
@@ -221,12 +340,6 @@ export default class DeviceStorage {
         var income1 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_HAS_INCOME)
         var income2 = await DeviceStorage.load(SAVE.PIN_CATE_CUS_HAS_INCOME)
         var income3 = await DeviceStorage.load(SAVE.PIN_CATE_SYS_REMOVE_INCOME)
-        // var incomeInsert = [...income1, ...income2].map((item,index) =>{
-        //     return Object.assign(item, {key: '0.'+index })
-        // })
-        // var incomeRemove = income3.map((item,index) =>{
-        //     return Object.assign(item,{key: '1.'+index })
-        // })
         var incomeInsert = [...income1, ...income2]
         var incomeRemove = income3
         var income = [{'title': 0, 'data': incomeInsert}, {'title': 1, 'data': incomeRemove}]
@@ -377,7 +490,6 @@ export default class DeviceStorage {
         });
     }
 
-
     /**
      * 保存
      * @param key
@@ -387,7 +499,6 @@ export default class DeviceStorage {
     static save(key, value) {
         return AsyncStorage.setItem(key, JSON.stringify(value));
     }
-
 
     /**
      * 更新
@@ -401,7 +512,6 @@ export default class DeviceStorage {
             return AsyncStorage.setItem(key, JSON.stringify(value));
         });
     }
-
 
     /**
      * 删除
