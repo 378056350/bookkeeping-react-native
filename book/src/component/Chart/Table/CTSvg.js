@@ -130,12 +130,12 @@ export default class CTSvg extends Component {
         )    
         return arr;
     }
-    
     // 原点
     circle = ()=>{
         var arr = []
         for (let i=0; i<this.props.chartCount; i++) {
-            const chartMax = this.props.models[0].chartMax
+            const chartMax = this.props.models[0].chartMax 
+            chartMax = chartMax == 0 ? chartH : chartMax
             const data = this.props.models[0].chartData[i]
             arr.push(
                 <Circle
@@ -143,7 +143,7 @@ export default class CTSvg extends Component {
                     cx={this.state.pointLeft(i) + ""}
                     cy={(chartH - (chartH - pointW) / chartMax * data.price)+""}
                     r={pointR+""}
-                    fill={this.props.chooseColor}
+                    fill={this.props.normalColor}
                     stroke={kColor_Three_Color}
                     strokeWidth={pointL+""}
                 />
@@ -156,10 +156,12 @@ export default class CTSvg extends Component {
         var points = ''
         for (var i=0; i<this.props.chartCount; i++) {
             const chartMax = this.props.models[0].chartMax
-            const data = this.props.models[0].chartData[i]
-            const x = this.state.pointLeft(i)
-            const y = chartH - (chartH - pointW) / chartMax * data.price
-            points += x + ',' + y + ' '
+            if (chartMax != 0) {
+                const data = this.props.models[0].chartData[i]
+                const x = this.state.pointLeft(i)
+                const y = chartH - (chartH - pointW) / chartMax * data.price
+                points += x + ',' + y + ' '
+            }
         }
         if (points.length == 0) {
             points = '0,0'

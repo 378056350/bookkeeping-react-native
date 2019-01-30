@@ -66,14 +66,6 @@ export default class DeviceStorage {
                 }  
                 return true
             })
-
-            // for (var i=0; i<bookArr.length; i++) {
-            //     var model = bookArr[i]
-            //     const week = DateExtension.getWeek(DateExtension.strToDate(model.year, model.month, model.day))
-            //     if (model.year == data.year && data.week == week && model.cmodel.is_income == navigationIndex) {
-            //         arr.push(model) 
-            //     }  
-            // }
         }
         // 月
         else if (status == 1) {
@@ -130,8 +122,8 @@ export default class DeviceStorage {
                 var date = DateExtension.dateAddDay(first, i)
                 chartArrData.push({'date': DateExtension.supplement(date.getMonth() + 1) + '-' + DateExtension.supplement(date.getDate()), 'price': 0})
             }
-            for (let i=0; i<bookArr.length; i++) {
-                var model = bookArr[i]
+            for (let i=0; i<arr.length; i++) {
+                var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
                 chartArrData[(date.getDay() - 1) % 7].price += parseFloat(model.price)
             }
@@ -147,8 +139,8 @@ export default class DeviceStorage {
                 const str = (i == 1 || i == monthDate.getDate() || (i % 5 == 0 && (i + 1 != monthDate.getDate()))) ? i + '' : ''
                 chartArrData.push({'date': str, 'price': 0})
             }
-            for (let i=0; i<bookArr.length; i++) {
-                var model = bookArr[i]
+            for (let i=0; i<arr.length; i++) {
+                var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
                 chartArrData[date.getDate() - 1].price += parseFloat(model.price)
             }
@@ -163,8 +155,8 @@ export default class DeviceStorage {
                 const str = (i == 1 || i % 3 == 0) ? i + '月' : ''
                 chartArrData.push({'date': str, month: i, price: 0})
             }
-            for (let i=0; i<bookArr.length; i++) {
-                var model = bookArr[i]
+            for (let i=0; i<arr.length; i++) {
+                var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
                 chartArrData[date.getMonth()].price += parseFloat(model.price)
             }
@@ -174,7 +166,6 @@ export default class DeviceStorage {
                 }
             }
         } 
-
         return [{ 
             title: "title", 
             max: max, 

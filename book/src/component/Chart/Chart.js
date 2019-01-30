@@ -53,11 +53,11 @@ export default class Chart extends Component {
         this.refs.table.setModel(data)
     }
 
-    changeData = async ()=>{
+    changeData = async (subdateIndex)=>{
         // 滚动
-        this.refs.date._onPress(this.state.subdateIndex)
+        this.refs.date._onPress(subdateIndex)
         // 列表数据
-        var data = await DeviceStorage.getChart(this.state.subdates[this.state.subdateIndex], this.state.navigationIndex, this.state.dateIndex)
+        var data = await DeviceStorage.getChart(this.state.subdates[subdateIndex], this.state.navigationIndex, this.state.dateIndex)
         this.refs.table.setModel(data)
     }
 
@@ -91,7 +91,7 @@ export default class Chart extends Component {
             subdateIndex: index
         })
         setTimeout(() => {
-            this.changeData() 
+            this.changeData(index) 
         }, 0);
     }
 
