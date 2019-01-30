@@ -12,6 +12,7 @@ import ChartHUD from '~/component/Chart/Hud/ChartHUD'
 import DeviceStorage from '~/utils/DeviceStorage'
 import DateExtension from '~/utils/DateExtension'
 
+
 export default class Chart extends Component {
 
     constructor(props) {
@@ -68,17 +69,15 @@ export default class Chart extends Component {
         } 
 
 
-        console.log("================== 111");
         
         var chart
-        if (this.state.navigationIndex == 0) {
+        if (this.state.dateIndex == 0) {
             chart = DateExtension.weekToStr(this.state.subdates[subdates.index])
-        } else if (this.state.navigationIndex == 1) {
+        } else if (this.state.dateIndex == 1) {
             chart = DateExtension.monthToStr(this.state.subdates[subdates.index])
-        } else if (this.state.navigationIndex == 2) {
+        } else if (this.state.dateIndex == 2) {
             chart = DateExtension.yearToStr(this.state.subdates[subdates.index])
         } 
-
         this.refs.table.setModel([{ 
             title: "title", 
             max: max, 
@@ -125,7 +124,7 @@ export default class Chart extends Component {
         })
         setTimeout(() => {
             this.getData() 
-        }, 0);
+        }, 1000);
     }
 
     // dateIndex 改变
@@ -146,6 +145,11 @@ export default class Chart extends Component {
         setTimeout(() => {
             this.changeData() 
         }, 0);
+    }
+
+    // 点击cell
+    _onCellPress = (item)=>{
+        this.props.navigation.navigate('BookDetail', {'model': item})
     }
 
     
@@ -181,6 +185,7 @@ export default class Chart extends Component {
                     dateIndex={this.state.dateIndex}
                     subdateIndex={this.state.subdateIndex}
                     navigationIndex={this.state.navigationIndex}
+                    onPress={this._onCellPress}
                 />
                 <ChartHUD 
                     ref={'hud'} 

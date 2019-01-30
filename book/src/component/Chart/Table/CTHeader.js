@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Image,
     StyleSheet
 } from 'react-native';
 import CTSvg from '~/component/Chart/Table/CTSvg'
 
 
 export default class ChartTableHeader extends Component {
+
     render() {
         const str = this.props.navigationIndex == 0 ? '总支出' : '总收入'
         return (
@@ -16,7 +16,9 @@ export default class ChartTableHeader extends Component {
                 <Text style={styles.name}>{str}: {this.props.models[0].sum}</Text>
                 <Text style={styles.detail}>平均值: {parseFloat(this.props.models[0].avg.toFixed(2))}</Text>
                 <CTSvg 
+                    ref={'svg'}
                     models={this.props.models}
+                    chartCount={this.props.models[0].chart.count}
                     dateIndex={this.props.dateIndex}
                     subdateIndex={this.props.subdateIndex}
                     navigationIndex={this.props.navigationIndex}

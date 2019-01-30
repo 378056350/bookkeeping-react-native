@@ -3,6 +3,7 @@ import {
     View,
     Text,
     Image,
+    TouchableHighlight,
     StyleSheet
 } from 'react-native';
 import { ImageManager } from '~/assets/json/ImageManager';
@@ -11,28 +12,33 @@ const lineW = (SCREEN_WIDTH - countcoordinatesX(30) - countcoordinatesX(60) - co
 export default class CTHeaderCell extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Image source={ImageManager[this.props.model.cmodel.icon_l]} resizeMode={'contain'} style={styles.icon}/>
-                <View style={styles.contentRight}>
-                    <View style={styles.contentTop}>
-                        <Text style={styles.name}>{this.props.model.cmodel.name}</Text>
-                        <Text style={styles.name}>{parseFloat(this.props.model.price)}</Text>
-                    </View>
-                    <View style={styles.contentBottom}>
-                        <View style={[styles.line, {width: lineW / this.props.max * parseFloat(this.props.model.price)}]}/>
+            <TouchableHighlight onPress={this.props.onPress} underlayColor={kColor_Line_Color} style={styles.containerTouch}>
+                <View style={styles.container}>
+                    <Image source={ImageManager[this.props.model.cmodel.icon_l]} resizeMode={'contain'} style={styles.icon}/>
+                    <View style={styles.contentRight}>
+                        <View style={styles.contentTop}>
+                            <Text style={styles.name}>{this.props.model.cmodel.name}</Text>
+                            <Text style={styles.name}>{parseFloat(this.props.model.price)}</Text>
+                        </View>
+                        <View style={styles.contentBottom}>
+                            <View style={[styles.line, {width: lineW / this.props.max * parseFloat(this.props.model.price)}]}/>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    containerTouch: {
         width: SCREEN_WIDTH,
         height: countcoordinatesX(90),
+    },
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
         paddingLeft: countcoordinatesX(30),
         borderBottomColor: kColor_Line_Color,
         borderBottomWidth: countcoordinatesX(1),

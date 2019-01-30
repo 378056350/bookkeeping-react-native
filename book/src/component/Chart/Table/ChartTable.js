@@ -53,7 +53,11 @@ export default class ChartTable extends Component {
     }
     _renderItem = ({ item, index, section })=>{
         return (
-            <CTHeaderCell model={item} max={this.state.models[0].max}/>
+            <CTHeaderCell 
+                model={item} 
+                max={this.state.models[0].max}
+                onPress={()=>this.props.onPress(item)}
+            />
         )
     }
 

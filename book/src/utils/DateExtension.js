@@ -218,7 +218,7 @@ export default class DateExtension {
             var year = parseFloat(str.split('-')[0])
             var month = parseFloat(str.split('-')[1])
             const monthDate = new Date(year, month, 0)
-            return {year: year, month: week, count: monthDate.getDate()}
+            return {year: year, month: month, count: monthDate.getDate()}
         }
     }
 

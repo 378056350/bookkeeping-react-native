@@ -4,7 +4,6 @@ import {
     View,
     StyleSheet
 } from 'react-native';
-// Utils
 import Svg, {
     Circle,
     Text,
@@ -12,46 +11,83 @@ import Svg, {
 } from 'react-native-svg';
 
 
-const chartX = countcoordinatesX(30)
-const chartW = (SCREEN_WIDTH - chartX * 2)
-const chartH = countcoordinatesX(180)
-const titleH = countcoordinatesX(40)
-const pointL = countcoordinatesX(1)
-const pointR = countcoordinatesX(5)
-const pointW = (pointR + pointL / 2)
-const chartCount = 10
-const pointPadding = (chartW - pointW * chartCount - pointW) / (chartCount - 1)
-const pointLeft = (index)=>{
-    return pointW + pointPadding * index + pointW * index
-}
-const textLeft = (index)=>{
-    if (index == 0) {
-        return pointLeft(index) - pointW
-    }
-    else if (index == (chartCount - 1)) {
-        return pointLeft(index) + pointW
-    }
-    return pointLeft(index)
-}
-const textAnchor = (index)=>{
-    if (index == 0) {
-        return "start"
-    } else if (index == (chartCount - 1)) {
-        return "end"
-    } else {
-        return "middle"
-    }
-}
+var chartX = countcoordinatesX(30)
+var chartW = (SCREEN_WIDTH - chartX * 2)
+var chartH = countcoordinatesX(180)
+var titleH = countcoordinatesX(40)
+var pointL = countcoordinatesX(1)
+var pointR = countcoordinatesX(5)
+var pointW = (pointR + pointL / 2)
 
 
 export default class CTSvg extends Component {
 
     constructor(props) {
         super(props);
+        var chartCount = 7
+        var pointPadding = (chartW - pointW * chartCount - pointW) / (chartCount - 1)
+        var pointLeft = (index)=>{
+            return pointW + this.state.pointPadding * index + pointW * index
+        }
+        var textLeft = (index)=>{
+            if (index == 0) {
+                return pointLeft(index) - pointW
+            }
+            else if (index == (chartCount - 1)) {
+                return pointLeft(index) + pointW
+            }
+            return pointLeft(index)
+        }
+        var textAnchor = (index)=>{
+            if (index == 0) {
+                return "start"
+            } else if (index == (chartCount - 1)) {
+                return "end"
+            } else {
+                return "middle"
+            }
+        }
         this.state = {
             currentSelect: -1,
+            chartCount: chartCount,
+            pointPadding: pointPadding,
+            pointLeft: pointLeft,
+            textLeft: textLeft,
+            textAnchor: textAnchor,
         }
     }
+
+    shouldComponentUpdate = (nextProps, nextState) => {
+        if (nextProps.chartCount != this.props.chartCount) {
+            this.setState({
+                pointPadding: (chartW - pointW * nextProps.chartCount - pointW) / (nextProps.chartCount - 1),
+                pointLeft: (index)=>{
+                    return pointW + this.state.pointPadding * index + pointW * index
+                },
+                textLeft: (index)=>{
+                    if (index == 0) {
+                        return this.state.pointLeft(index) - pointW
+                    }
+                    else if (index == (nextProps.chartCount - 1)) {
+                        return this.state.pointLeft(index) + pointW
+                    }
+                    return this.state.pointLeft(index)
+                },
+                textAnchor: (index)=>{
+                    if (index == 0) {
+                        return "start"
+                    } else if (index == (nextProps.chartCount - 1)) {
+                        return "end"
+                    } else {
+                        return "middle"
+                    }
+                },
+            })
+            return false
+        }
+        return true
+    }
+    
 
     // 默认两条线
     defaultLine() {
@@ -83,11 +119,11 @@ export default class CTSvg extends Component {
     // 原点
     circle = ()=>{
         var arr = []
-        for (var i=0; i<chartCount; i++) {
+        for (let i=0; i<this.props.chartCount; i++) {
             arr.push(
                 <Circle
                     key={i}
-                    cx={pointLeft(i) + ""}
+                    cx={this.state.pointLeft(i) + ""}
                     cy={chartH+""}
                     r={pointR+""}
                     fill={this.props.chooseColor}
@@ -101,9 +137,9 @@ export default class CTSvg extends Component {
     // 折线
     polyline = ()=>{
         var arr = []
-        for (var i=0; i<(chartCount-1); i++) {
-            const x1 = pointLeft(i)
-            const x2 = pointLeft(i + 1)
+        for (var i=0; i<(this.props.chartCount-1); i++) {
+            var x1 = this.state.pointLeft(i)
+            var x2 = this.state.pointLeft(i + 1)
             arr.push(
                 <Line
                     key={i}
@@ -122,7 +158,7 @@ export default class CTSvg extends Component {
     // 文字
     text = ()=>{
         var arr = []
-        for (var i=0; i<chartCount; i++) {
+        for (var i=0; i<this.props.chartCount; i++) {
             arr.push (
                 <Text
                     key={i}
@@ -130,11 +166,11 @@ export default class CTSvg extends Component {
                     fontSize={FONT_SIZE(8) + ""}
                     fontFamily={"Helvetica Neue"}
                     fontWeight={"300"}
-                    x={textLeft(i)}
+                    x={this.state.textLeft(i)}
                     y={(chartH + 13)+""}
-                    textAnchor={textAnchor(i)}
+                    textAnchor={this.state.textAnchor(i)}
                 >
-                    哈哈哈哈
+                    {this.props.dateIndex == 0 ? '哈哈哈哈' : '嘿嘿嘿嘿'}
                 </Text>
             )
         }
@@ -169,14 +205,6 @@ CTSvg.defaultProps = {
     chooseColor: kColor_Main_Color,
     normalColor: 'white',
     lineColor: kColor_Three_Color,
-    models: [{ 
-        title: "title", 
-        max: 0, 
-        sum: 0, 
-        avg: 0,
-        chart: {year: 0, month: 0, day: 0, week: 0, count: 0},
-        data: [] 
-    }],
 };
 
 
