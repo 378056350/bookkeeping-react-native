@@ -114,17 +114,20 @@ export default class DeviceStorage {
         // 图表数据
         var chart
         var chartMax = 0
+        var chartArr = []
         var chartArrData = []
         if (status == 0) {
             chart = DateExtension.weekToStr(str)
             var first = DateExtension.weekToDate(chart.year, chart.week)
             for (let i=0; i<7; i++) {
                 var date = DateExtension.dateAddDay(first, i)
+                chartArr.push([])
                 chartArrData.push({'date': DateExtension.supplement(date.getMonth() + 1) + '-' + DateExtension.supplement(date.getDate()), 'price': 0})
             }
             for (let i=0; i<arr.length; i++) {
                 var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArr[(date.getDay() - 1) % 7].push(model)
                 chartArrData[(date.getDay() - 1) % 7].price += parseFloat(model.price)
             }
             for (let i=0; i<chartArrData.length; i++) {
@@ -137,11 +140,13 @@ export default class DeviceStorage {
             const monthDate = new Date(chart.year, chart.month, 0)
             for (let i=1; i<=monthDate.getDate(); i++) {
                 const str = (i == 1 || i == monthDate.getDate() || (i % 5 == 0 && (i + 1 != monthDate.getDate()))) ? i + '' : ''
+                chartArr.push([])
                 chartArrData.push({'date': str, 'price': 0})
             }
             for (let i=0; i<arr.length; i++) {
                 var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArr[date.getDate() - 1].push(model)
                 chartArrData[date.getDate() - 1].price += parseFloat(model.price)
             }
             for (let i=0; i<chartArrData.length; i++) {
@@ -153,11 +158,13 @@ export default class DeviceStorage {
             chart = DateExtension.yearToStr(str)
             for (var i=1; i<=12; i++) {
                 const str = (i == 1 || i % 3 == 0) ? i + '月' : ''
+                chartArr.push([])
                 chartArrData.push({'date': str, month: i, price: 0})
             }
             for (let i=0; i<arr.length; i++) {
                 var model = arr[i]
                 var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArr[date.getMonth()].push(model)
                 chartArrData[date.getMonth()].price += parseFloat(model.price)
             }
             for (let i=0; i<chartArrData.length; i++) {
@@ -175,6 +182,7 @@ export default class DeviceStorage {
             data: arr,
             chartMax: chartMax,
             chartData: chartArrData,    // 图表数据
+            chartArr: chartArr,
         }]
     }
 

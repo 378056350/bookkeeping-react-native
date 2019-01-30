@@ -287,6 +287,8 @@ export default class CTSvg extends Component {
                 <CTTag 
                     left={this.state.pointLeft(this.state.currentSelect) - pointW / 2} 
                     bottom={bottom}
+                    currentSelect={this.state.currentSelect}
+                    models={this.props.models}
                 />}
             </View>
         );
