@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Svg, {
     Circle,
+    Polyline,
     Text,
     Line,
 } from 'react-native-svg';
@@ -88,9 +89,9 @@ export default class CTSvg extends Component {
         return true
     }
     
-
-    // 默认两条线
+    // 顶部 + 底部 + 平均线
     defaultLine() {
+        const {models} = this.props
         var arr = [];
         arr.push(
             <Line
@@ -114,17 +115,33 @@ export default class CTSvg extends Component {
                 strokeWidth={countcoordinatesX(1)+""}
             />
         )    
+        // 平均值
+        arr.push(
+            <Line
+                key={3}
+                x1={0+""}
+                y1={(chartH / models[0].max * (models[0].max - models[0].avg))+""}
+                x2={chartW+""}
+                y2={(chartH / models[0].max * (models[0].max - models[0].avg))+""}
+                stroke={this.props.lineColor}
+                strokeWidth={countcoordinatesX(1)+""}
+                strokeDasharray={'5'}
+            />
+        )    
         return arr;
     }
+    
     // 原点
     circle = ()=>{
         var arr = []
         for (let i=0; i<this.props.chartCount; i++) {
+            const chartMax = this.props.models[0].chartMax
+            const data = this.props.models[0].chartData[i]
             arr.push(
                 <Circle
                     key={i}
                     cx={this.state.pointLeft(i) + ""}
-                    cy={chartH+""}
+                    cy={(chartH - (chartH - pointW) / chartMax * data.price)+""}
                     r={pointR+""}
                     fill={this.props.chooseColor}
                     stroke={kColor_Three_Color}
@@ -136,43 +153,48 @@ export default class CTSvg extends Component {
     }
     // 折线
     polyline = ()=>{
-        var arr = []
-        for (var i=0; i<(this.props.chartCount-1); i++) {
-            var x1 = this.state.pointLeft(i)
-            var x2 = this.state.pointLeft(i + 1)
-            arr.push(
-                <Line
-                    key={i}
-                    x1={x1+""}
-                    y1={5 * 20+""}
-                    x2={x2+""}
-                    y2={20+""}
-                    stroke={this.props.lineColor}
-                    stroke={'red'}
-                    strokeWidth={countcoordinatesX(1)+""}
-                />
-            )
+        var points = ''
+        for (var i=0; i<this.props.chartCount; i++) {
+            const chartMax = this.props.models[0].chartMax
+            const data = this.props.models[0].chartData[i]
+            const x = this.state.pointLeft(i)
+            const y = chartH - (chartH - pointW) / chartMax * data.price
+            points += x + ',' + y + ' '
         }
-        return arr
+        if (points.length == 0) {
+            points = '0,0'
+        }
+        return (
+            <Polyline
+                points={points}
+                fill="none"
+                stroke={this.props.lineColor}
+                strokeWidth="1"
+            />
+        )
     }
     // 文字
     text = ()=>{
         var arr = []
         for (var i=0; i<this.props.chartCount; i++) {
-            arr.push (
-                <Text
-                    key={i}
-                    fill={kColor_Text_Black}
-                    fontSize={FONT_SIZE(8) + ""}
-                    fontFamily={"Helvetica Neue"}
-                    fontWeight={"300"}
-                    x={this.state.textLeft(i)}
-                    y={(chartH + 13)+""}
-                    textAnchor={this.state.textAnchor(i)}
-                >
-                    {this.props.dateIndex == 0 ? '哈哈哈哈' : '嘿嘿嘿嘿'}
-                </Text>
-            )
+            const data = this.props.models[0].chartData[i]
+            // const data = {date: '123'}
+            if (data.date.length != 0) {
+                arr.push (
+                    <Text
+                        key={i}
+                        fill={kColor_Text_Black}
+                        fontSize={FONT_SIZE(10) + ""}
+                        fontFamily={"Helvetica Neue"}
+                        fontWeight={"300"}
+                        x={this.state.textLeft(i)}
+                        y={(chartH + 13)+""}
+                        textAnchor={this.state.textAnchor(i)}
+                    >
+                        {data.date}
+                    </Text>
+                )
+            }
         }
         return arr
     }
@@ -186,8 +208,8 @@ export default class CTSvg extends Component {
                     fill={'#000'}
                 >
                     {this.defaultLine()}
-                    {this.circle()}
                     {this.polyline()}
+                    {this.circle()}
                     {this.text()}
                 </Svg>
             </View>

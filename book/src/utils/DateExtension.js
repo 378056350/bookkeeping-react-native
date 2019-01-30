@@ -115,8 +115,8 @@ export default class DateExtension {
         d2.setMonth(0);
         d2.setDate(1);
         let rq = d1 - d2;
-        let days = Math.ceil(rq/(24*60*60*1000));
-        let num = Math.ceil(days/7);
+        let days = Math.ceil(rq / (24*60*60*1000));
+        let num = Math.ceil(days / 7);
         return num;
     }
 
@@ -185,7 +185,7 @@ export default class DateExtension {
     }
 
 
-    // 2019-02周 获取周信息 
+    // 2019-02周 获取周信息 {year: 2019, week: 2}
     static weekToStr = (str)=>{
         if (str === '本周') {
             const date = new Date()
@@ -196,13 +196,20 @@ export default class DateExtension {
             return {year: date.getFullYear(), week: DateExtension.getWeek(last), count: 7}
         } else {
             str = str.replace('周', '');
-            var year = parseFloat(str.split('-')[0])
-            var week = parseFloat(str.split('-')[1])
+            var year = parseInt(str.split('-')[0])
+            var week = parseInt(str.split('-')[1])
             return {year: year, week: week, count: 7}
         }
     }
 
-    // 2019-02月 获取月信息 
+    // 2019-02周 获取日期 通过 {year: 年份, week: 周}
+    static weekToDate = (year, week)=>{
+        var date = new Date(year, 0, 1)
+        date = DateExtension.dateAddDay(date, week * 7 - 1)
+        return date
+    }
+
+    // 2019-02月 获取月信息  {year: 2019, month: 2}
     static monthToStr = (str)=>{
         if (str === '本月') {
             const date = new Date()
@@ -222,7 +229,7 @@ export default class DateExtension {
         }
     }
 
-    // 2019年 获取年信息 
+    // 2019年 获取年信息   {year: 2019}
     static yearToStr = (str)=>{
         if (str === '今年') {
             const date = new Date()
@@ -236,5 +243,4 @@ export default class DateExtension {
             return {year: parseFloat(str), count: 12}
         }
     }
-
 }

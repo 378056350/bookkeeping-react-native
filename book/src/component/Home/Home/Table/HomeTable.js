@@ -25,11 +25,6 @@ export default class HomeTable extends Component {
         const contentSizeY = e.nativeEvent.contentSize.height < tableH ? tableH : e.nativeEvent.contentSize.height
         const layoutMeasurementY = e.nativeEvent.layoutMeasurement.height
         
-        console.log("contentOffsetY: " + contentOffsetY);
-        console.log("contentSizeY: " + contentSizeY);
-        console.log("layoutMeasurementY: " + layoutMeasurementY);
-        
-
         if ((layoutMeasurementY + contentOffsetY) > (contentSizeY + 44)) {
             this.props.pullUpRefresh()
         }

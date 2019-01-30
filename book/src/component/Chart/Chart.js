@@ -49,68 +49,16 @@ export default class Chart extends Component {
         // 滚动
         this.refs.date._onPress(subdates.index)
         // 列表数据
-        var arr = await DeviceStorage.getChart(this.state.subdates[subdates.index], this.state.dateIndex)
-        var max = 0
-        var sum = 0
-        var avg = 0
-        for (var i=0; i<arr.length; i++) {
-            var model = arr[i]
-            sum += parseFloat(model.price)
-            if (max < parseFloat(model.price)) {
-                max = parseFloat(model.price)
-            }
-        }
-        if (this.state.dateIndex == 0) {
-            avg = sum / 7
-        } else if (this.state.dateIndex == 1) {
-            avg = sum / 30
-        } else if (this.state.dateIndex == 2) {
-            avg = sum / 12
-        } 
-
-
-        
-        var chart
-        if (this.state.dateIndex == 0) {
-            chart = DateExtension.weekToStr(this.state.subdates[subdates.index])
-        } else if (this.state.dateIndex == 1) {
-            chart = DateExtension.monthToStr(this.state.subdates[subdates.index])
-        } else if (this.state.dateIndex == 2) {
-            chart = DateExtension.yearToStr(this.state.subdates[subdates.index])
-        } 
-        this.refs.table.setModel([{ 
-            title: "title", 
-            max: max, 
-            sum: sum, 
-            avg: avg,
-            chart: chart,
-            data: arr 
-        }])
+        var data = await DeviceStorage.getChart(this.state.subdates[subdates.index], this.state.navigationIndex, this.state.dateIndex)
+        this.refs.table.setModel(data)
     }
 
     changeData = async ()=>{
         // 滚动
         this.refs.date._onPress(this.state.subdateIndex)
         // 列表数据
-        var arr = await DeviceStorage.getChart(this.state.subdates[this.state.subdateIndex], this.state.dateIndex)
-        var max = 0
-        var sum = 0
-        var avg = 0
-        for (var i=0; i<arr.length; i++) {
-            var model = arr[i]
-            sum += parseFloat(model.price)
-            if (max < parseFloat(model.price)) {
-                max = parseFloat(model.price)
-            }
-        }
-        if (this.state.dateIndex == 0) {
-            avg = sum / 7
-        } else if (this.state.dateIndex == 1) {
-            avg = sum / 30
-        } else if (this.state.dateIndex == 2) {
-            avg = sum / 12
-        } 
-        this.refs.table.setModel([{ title: "title", max: max, sum: sum, avg: avg, data: arr }])
+        var data = await DeviceStorage.getChart(this.state.subdates[this.state.subdateIndex], this.state.navigationIndex, this.state.dateIndex)
+        this.refs.table.setModel(data)
     }
 
     _navigationPress = ()=>{

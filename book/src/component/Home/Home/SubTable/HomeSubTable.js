@@ -33,7 +33,7 @@ export default class HomeSubTable extends Component {
 	}
 
 	onRowDidOpen = (rowKey, rowMap) => {
-		console.log('This row opened', rowKey);
+        
 	}
     
     _renderItem = ({item, index, section})=>{

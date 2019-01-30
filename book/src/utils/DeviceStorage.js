@@ -49,45 +49,142 @@ export default class DeviceStorage {
     /**
      * 获取数据
      */
-    static getChart = async (str, status)=>{
+    static getChart = async (str, navigationIndex, status)=>{
         var bookArr = await DeviceStorage.load(SAVE.PIN_BOOK)
+        var max = 0
+        var sum = 0
+        var avg = 0
+        var arr = []
+        // 列表数据
         // 周
         if (status == 0) {
             var data = DateExtension.weekToStr(str)
-            var arr = []
-            for (var i=0; i<bookArr.length; i++) {
-                var model = bookArr[i]
-                const week = DateExtension.getWeek(DateExtension.strToDate(model.year, model.month, model.day))
-                if (model.year == data.year && data.week == week) {
-                    arr.push(model) 
+            bookArr = bookArr.filter((item, index, array)=>{
+                const week = DateExtension.getWeek(DateExtension.strToDate(item.year, item.month, item.day))
+                if (data.year == item.year && data.week == week && item.cmodel.is_income == navigationIndex) {
+                    arr.push(item) 
                 }  
-            }
-            return arr
+                return true
+            })
+
+            // for (var i=0; i<bookArr.length; i++) {
+            //     var model = bookArr[i]
+            //     const week = DateExtension.getWeek(DateExtension.strToDate(model.year, model.month, model.day))
+            //     if (model.year == data.year && data.week == week && model.cmodel.is_income == navigationIndex) {
+            //         arr.push(model) 
+            //     }  
+            // }
         }
         // 月
         else if (status == 1) {
             var data = DateExtension.monthToStr(str)
-            var arr = []
-            for (var i=0; i<bookArr.length; i++) {
-                var model = bookArr[i]
-                if (model.year == data.year && model.month == data.month) {
-                    arr.push(model) 
+            bookArr = bookArr.filter((item, index, array)=>{
+                if (item.year == data.year && item.month == data.month && item.cmodel.is_income == navigationIndex) {
+                    arr.push(item) 
                 }  
-            }
-            return arr
+                return true
+            })
+            
+            // for (var i=0; i<bookArr.length; i++) {
+            //     var model = bookArr[i]
+            //     if (model.year == data.year && model.month == data.month && model.cmodel.is_income == navigationIndex) {
+            //         arr.push(model) 
+            //     }  
+            // }
         }
         // 年
         else if (status == 2) {
             var data = DateExtension.yearToStr(str)
-            var arr = []
             for (var i=0; i<bookArr.length; i++) {
                 var model = bookArr[i]
-                if (model.year == data.year) {
+                if (model.year == data.year && model.cmodel.is_income == navigationIndex) {
                     arr.push(model) 
                 }  
             }
-            return arr
         }
+
+        // 最大值/求和/平均数
+        for (var i=0; i<arr.length; i++) {
+            var model = arr[i]
+            sum += parseFloat(model.price)
+            if (max < parseFloat(model.price)) {
+                max = parseFloat(model.price)
+            }
+        }
+        if (status == 0) {
+            avg = sum / 7
+        } else if (status == 1) {
+            avg = sum / 30
+        } else if (status == 2) {
+            avg = sum / 12
+        } 
+        
+        // 图表数据
+        var chart
+        var chartMax = 0
+        var chartArrData = []
+        if (status == 0) {
+            chart = DateExtension.weekToStr(str)
+            var first = DateExtension.weekToDate(chart.year, chart.week)
+            for (let i=0; i<7; i++) {
+                var date = DateExtension.dateAddDay(first, i)
+                chartArrData.push({'date': DateExtension.supplement(date.getMonth() + 1) + '-' + DateExtension.supplement(date.getDate()), 'price': 0})
+            }
+            for (let i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArrData[(date.getDay() - 1) % 7].price += parseFloat(model.price)
+            }
+            for (let i=0; i<chartArrData.length; i++) {
+                if (chartMax < chartArrData[i].price) {
+                    chartMax = chartArrData[i].price
+                }
+            }
+        } else if (status == 1) {
+            chart = DateExtension.monthToStr(str)
+            const monthDate = new Date(chart.year, chart.month, 0)
+            for (let i=1; i<=monthDate.getDate(); i++) {
+                const str = (i == 1 || i == monthDate.getDate() || (i % 5 == 0 && (i + 1 != monthDate.getDate()))) ? i + '' : ''
+                chartArrData.push({'date': str, 'price': 0})
+            }
+            for (let i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArrData[date.getDate() - 1].price += parseFloat(model.price)
+            }
+            for (let i=0; i<chartArrData.length; i++) {
+                if (chartMax < chartArrData[i].price) {
+                    chartMax = chartArrData[i].price
+                }
+            }
+        } else if (status == 2) {
+            chart = DateExtension.yearToStr(str)
+            for (var i=1; i<=12; i++) {
+                const str = (i == 1 || i % 3 == 0) ? i + '月' : ''
+                chartArrData.push({'date': str, month: i, price: 0})
+            }
+            for (let i=0; i<bookArr.length; i++) {
+                var model = bookArr[i]
+                var date = DateExtension.strToDate(model.year, model.month, model.day)
+                chartArrData[date.getMonth()].price += parseFloat(model.price)
+            }
+            for (let i=0; i<chartArrData.length; i++) {
+                if (chartMax < chartArrData[i].price) {
+                    chartMax = chartArrData[i].price
+                }
+            }
+        } 
+
+        return [{ 
+            title: "title", 
+            max: max, 
+            sum: sum, 
+            avg: avg,
+            chart: chart,
+            data: arr,
+            chartMax: chartMax,
+            chartData: chartArrData,    // 图表数据
+        }]
     }
 
     /**

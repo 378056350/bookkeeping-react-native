@@ -72,6 +72,7 @@ export default class ChartTable extends Component {
                     keyExtractor={(item, index) => item + index}
                     sections={this.state.models}
                     extraData={this.state}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
         );
