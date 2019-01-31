@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import {FlatList} from 'react-native';
+import { FlatList } from 'react-native';
 import Pullable from '../local/Pullable';
 
 export default class PullFlatList extends Pullable {

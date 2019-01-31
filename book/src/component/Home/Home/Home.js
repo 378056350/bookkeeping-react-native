@@ -27,7 +27,7 @@ export default class Home extends Component {
         };
     }
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
         DeviceStorage.initialization()
         DeviceEventEmitter.addListener(EVENT.ADD_BOOK_EVENT, this.getData);
         DeviceEventEmitter.addListener(EVENT.REMOVE_BOOK_EVENT, this.getData);
@@ -36,6 +36,7 @@ export default class Home extends Component {
         setTimeout(() => {
             this.refs.scroll.scrollTo({x: 0, y: scrollH, animated: false})
         }, 0);
+        
     }
 
     componentWillUnmount = () => {
