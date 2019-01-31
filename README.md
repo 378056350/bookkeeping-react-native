@@ -8,10 +8,13 @@
 ### 一. 运行方式
 
 ```
-iOS:
+安装:
 1. 终端中 cd ./book 目录下
-2. 执行 pod install
-3. 运行 book/ios/book.xcodeproj
+2. 执行 npm install
+
+iOS 运行:
+1. 终端中 cd ./book 目录下
+2. Xcode 运行 ./book/ios/book.xcodeproj
 ```
 
 ### 二. 效果展示
