@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Animated,
-    Text,
     StyleSheet
 } from 'react-native';
 import HomeSubHeader from '~/component/Home/Home/SubTable/HomeSubHeader'

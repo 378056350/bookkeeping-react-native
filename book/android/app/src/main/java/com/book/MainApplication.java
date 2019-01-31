@@ -3,10 +3,9 @@ package com.book;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.hzl.pulltorefresh.RefreshReactPackage;
-import com.horcrux.svg.SvgPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -27,10 +26,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RefreshReactPackage(),
-            new SvgPackage(),
             new SplashScreenReactPackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new SvgPackage()
       );
     }
 
