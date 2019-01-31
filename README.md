@@ -28,7 +28,9 @@ iOS 运行:
 |            删除账单            |            修改账单            |            删除账单            |            添加类别            |
 
 #### Android
-
+| ![记账](https://github.com/378056350/bookkeeping-rn/blob/master/gif/8.gif?raw=true) | ![图表](https://github.com/378056350/bookkeeping-rn/blob/master/gif/9.gif?raw=true) | ![图表](https://github.com/378056350/bookkeeping-rn/blob/master/gif/10.gif?raw=true) | ![图表](https://github.com/378056350/bookkeeping-rn/blob/master/gif/11.gif?raw=true) |
+| :--------------------------------------: | :--------------------------------------: | :--------------------------------------: | :--------------------------------------: |
+|            记账            |            账单列表            |            类别管理            |            图表            |
 
 
 
@@ -49,6 +51,8 @@ iOS 运行:
 - [ ] 添加徽章
 - [ ] 添加声音功能
 - [ ] 优化代码
+- [ ] Android首页有问题
+- [ ] 图表页面弹框遮挡的问题
 
 ### 五.更多
 * 如果您发现了bug 请尽可能详细地描述系统版本、手机型号和复现步骤等信息 提一个issue.
