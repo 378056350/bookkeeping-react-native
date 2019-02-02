@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
     View,
     Text,
@@ -10,12 +10,7 @@ import KKDatePicker from '~/common/KKDatePicker/KKDatePicker'
 const triangle = require('~/assets/image/time_down.png')
 
 
-export default class HomeHeader extends Component {
-
-    // 确认时间
-    _onConfirm = (year, month, day)=>{
-        
-    }
+export default class HomeHeader extends PureComponent {
 
     itemMonth = ()=>{
         return (

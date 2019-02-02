@@ -9,7 +9,7 @@ import BaseContainer from '~/common/Base/BaseContainer'
 import HomeNavigation from './HomeNavigation'
 import HomeHeader from './HomeHeader'
 import HomeTable from './Table/HomeTable'
-import DeviceStorage, {SAVE} from '~/utils/DeviceStorage'
+import DeviceStorage from '~/utils/DeviceStorage'
 
 
 const scrollH = (SCREEN_HEIGHT - NAVIGATION_HEIGHT - HOME_HEADER_H - STATUS_TABBAR_HEIGHT)

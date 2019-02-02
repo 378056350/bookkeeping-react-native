@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     SectionList,
     StyleSheet
 } from 'react-native';
 import FindCell from '~/component/Find/Find/FindCell'
+
 
 export default class FindTable extends Component {
 
