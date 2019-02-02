@@ -14,7 +14,7 @@ export default class HomeSubCell extends Component {
         const model = this.props.model
         return (
             <TouchableHighlight 
-                underlayColor={kColor_BG} 
+                underlayColor={kColor_Text_Gray} 
                 onPress={this.props.onPress} 
                 style={styles.containerTouch}
             >

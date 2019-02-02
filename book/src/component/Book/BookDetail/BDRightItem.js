@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     name: {
-        fontSize: FONT_SIZE(16),
+        fontSize: FONT_SIZE(14),
         fontWeight: '400',
         color: kColor_Text_Black,
     }

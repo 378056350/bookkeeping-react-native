@@ -76,13 +76,6 @@ export default class DeviceStorage {
                 }  
                 return true
             })
-            
-            // for (var i=0; i<bookArr.length; i++) {
-            //     var model = bookArr[i]
-            //     if (model.year == data.year && model.month == data.month && model.cmodel.is_income == navigationIndex) {
-            //         arr.push(model) 
-            //     }  
-            // }
         }
         // 年
         else if (status == 2) {
@@ -174,15 +167,15 @@ export default class DeviceStorage {
             }
         } 
         return [{ 
-            title: "title", 
-            max: max, 
-            sum: sum, 
-            avg: avg,
-            chart: chart,
-            data: arr,
-            chartMax: chartMax,
+            title: "title", // 这个没用
+            max: max,       // 最大值
+            sum: sum,       // 总和
+            avg: avg,       // 平均值
+            chart: chart,   // 图表
+            data: arr,      // 列表
+            chartMax: chartMax,         // 图表最大
             chartData: chartArrData,    // 图表数据
-            chartArr: chartArr,
+            chartArr: chartArr,         // 图表日期
         }]
     }
 
