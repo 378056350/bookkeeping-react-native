@@ -23,6 +23,7 @@ export default class MineTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            contentHeight: countcoordinatesX(200),
             data: [
                 { data: [{"icon": mine_badge, "name": "徽章", row: 0, section: 0, detail: '123'}]},
                 { data: [
@@ -79,12 +80,22 @@ export default class MineTable extends Component {
             <View style={styles.line}/>
         )
     }
+    _onScroll = (e)=>{
+        const normal = countcoordinatesX(200)
+        const contentOffsetY = e.nativeEvent.contentOffset.y
+        const height = -contentOffsetY < 0 ? normal - contentOffsetY : -contentOffsetY + normal
+        this.setState({
+            contentHeight: height
+        })
+    }
     // 初始化
     render() {
         return (
             <View style={styles.container}>
+                <View style={[styles.back, {height: this.state.contentHeight}]}/>
                 <SectionList
                     style={styles.table}
+                    onScroll={this._onScroll}
                     renderItem={({ item, index, section }) => this._renderItem(item, index, section)}
                     renderSectionHeader={this._renderSectionHeader}
                     sections={this.state.data}
@@ -103,10 +114,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    back: {
+        width: SCREEN_WIDTH,
+        backgroundColor: kColor_Main_Color,
+        position: 'absolute',
+        top: 0,
+    },
     table: {
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT - STATUS_TABBAR_HEIGHT,
-        backgroundColor: kColor_BG,
     },
     header: {
         width: SCREEN_WIDTH,
