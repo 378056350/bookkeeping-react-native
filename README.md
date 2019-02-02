@@ -15,6 +15,10 @@
 iOS 运行:
 1. 终端中 cd ./book 目录下
 2. Xcode 运行 ./book/ios/book.xcodeproj
+
+Android 运行:
+1. Android Studio 加载 Android 文件夹
+2. 运行程序
 ```
 
 ### 二. 效果展示
